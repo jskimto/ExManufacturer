@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TIIS防爆型式検定 合格品申請者 全国マップ</title>
+<title>防爆型式検定 合格品申請者 全国マップ</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -49,7 +49,7 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;backgroun
 <body>
 <div id="header">
   <div>
-    <h1>⚡ TIIS 防爆型式検定 合格品 申請者 全国分布マップ</h1>
+    <h1>⚡ 防爆型式検定 合格品 申請者 全国分布マップ</h1>
     <p>産業安全技術協会 公式リスト（2025年8月末現在）全59社 — No.1〜59</p>
   </div>
   <div id="controls">
@@ -219,7 +219,7 @@ function addMarkers(data) {
       <div class="popup-sub">
         📍 ${c.pref}<br>
         🏭 ${c.short}<br>
-        📋 TIIS合格件数：約${c.count}件<br>
+        📋 合格件数：約${c.count}件<br>
         🏷️ ${CAT_LABELS[c.cat]}
       </div>
     `, { maxWidth: 280 });
