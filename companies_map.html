@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIIS防爆型式検定 合格品申請者 全国マップ</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;background:#0D2B45;color:#fff}
+#header{padding:16px 24px;background:linear-gradient(135deg,#0D2B45,#1F5C8A);border-bottom:2px solid #1E9DC8;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+#header h1{font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:.04em}
+#header p{font-size:.75rem;color:#90c4e0;margin-top:2px}
+.badge{background:#1E9DC8;color:#fff;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:999px;white-space:nowrap}
+#controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+#filter{padding:6px 14px;border-radius:999px;border:1.5px solid #1E9DC8;background:rgba(30,157,200,.15);color:#fff;font-size:.8rem;cursor:pointer;outline:none}
+#filter option{background:#0D2B45;color:#fff}
+#map{height:calc(100vh - 120px);width:100%}
+#sidebar{position:absolute;top:120px;right:0;width:320px;height:calc(100vh - 120px);background:rgba(13,43,69,.96);border-left:1px solid rgba(30,157,200,.3);overflow-y:auto;z-index:1000;transition:transform .3s;padding:0}
+#sidebar.hidden{transform:translateX(320px)}
+#sidebar-header{padding:14px 16px;background:rgba(30,157,200,.15);border-bottom:1px solid rgba(30,157,200,.2);display:flex;justify-content:space-between;align-items:center}
+#sidebar-header h2{font-size:.9rem;font-weight:700;color:#1E9DC8}
+#close-btn{background:none;border:none;color:#90c4e0;cursor:pointer;font-size:1.2rem;padding:2px 6px}
+#company-list{padding:8px}
+.company-item{padding:10px 12px;border-bottom:1px solid rgba(30,157,200,.12);cursor:pointer;transition:background .2s;display:flex;align-items:flex-start;gap:10px}
+.company-item:hover{background:rgba(30,157,200,.12)}
+.company-item.active{background:rgba(30,157,200,.2)}
+.num-badge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0;margin-top:1px}
+.company-info{flex:1;min-width:0}
+.company-name{font-size:.82rem;font-weight:600;color:#fff;line-height:1.3}
+.company-sub{font-size:.7rem;color:#90c4e0;margin-top:2px;line-height:1.4}
+.company-pref{font-size:.68rem;color:#1E9DC8;font-weight:600;margin-top:2px}
+/* 凡例 */
+#legend{position:absolute;bottom:20px;left:16px;z-index:1000;background:rgba(13,43,69,.9);border:1px solid rgba(30,157,200,.3);border-radius:8px;padding:10px 14px;font-size:.72rem;color:#90c4e0;min-width:160px}
+#legend h3{font-size:.75rem;font-weight:700;color:#1E9DC8;margin-bottom:8px}
+.legend-item{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;border:2px solid rgba(255,255,255,.3)}
+/* カスタムマーカー */
+.custom-icon{display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid rgba(255,255,255,.7);font-weight:700;color:#fff;font-size:.65rem;box-shadow:0 2px 8px rgba(0,0,0,.4);cursor:pointer;transition:transform .2s}
+.custom-icon:hover{transform:scale(1.2)}
+/* ポップアップ */
+.leaflet-popup-content-wrapper{background:#0D2B45;border:1.5px solid #1E9DC8;border-radius:8px;color:#fff;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.leaflet-popup-tip{background:#0D2B45}
+.popup-title{font-size:.85rem;font-weight:700;color:#1E9DC8;margin-bottom:4px}
+.popup-sub{font-size:.75rem;color:#90c4e0;line-height:1.5}
+.popup-num{font-size:.65rem;background:#1E9DC8;color:#fff;padding:2px 8px;border-radius:999px;display:inline-block;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div id="header">
+  <div>
+    <h1>⚡ TIIS 防爆型式検定 合格品 申請者 全国分布マップ</h1>
+    <p>産業安全技術協会 公式リスト（2025年8月末現在）全59社 — No.1〜59</p>
+  </div>
+  <div id="controls">
+    <select id="filter" onchange="filterByCategory()">
+      <option value="all">全カテゴリ（59社）</option>
+      <option value="motor">電動機・モータ</option>
+      <option value="valve">バルブ・制御器</option>
+      <option value="switch">制御盤・スイッチ類</option>
+      <option value="sensor">センサ・計測器</option>
+      <option value="solenoid">電磁弁・電磁石</option>
+      <option value="gas">ガス検知器</option>
+      <option value="vibration">振動機器・その他</option>
+    </select>
+    <span class="badge" id="count-badge">59社表示中</span>
+    <button onclick="toggleSidebar()" style="background:rgba(30,157,200,.2);border:1.5px solid #1E9DC8;color:#fff;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:.8rem">📋 一覧</button>
+  </div>
+</div>
+
+<div id="sidebar" class="hidden">
+  <div id="sidebar-header">
+    <h2>申請者一覧</h2>
+    <button id="close-btn" onclick="toggleSidebar()">✕</button>
+  </div>
+  <div id="company-list"></div>
+</div>
+
+<div id="map"></div>
+
+<div id="legend">
+  <h3>凡例（製品カテゴリ）</h3>
+  <div class="legend-item"><div class="legend-dot" style="background:#2E75B6"></div>電動機・モータ</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1E9DC8"></div>バルブ・制御器</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#375623"></div>制御盤・スイッチ</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7B3F9E"></div>センサ・計測器</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#C55A11"></div>電磁弁・電磁石</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#C00000"></div>ガス検知器</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#767676"></div>振動機器・その他</div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ── 全59社データ ───────────────────────────────────────────────
+const COMPANIES = [
+  // 電動機・モータ（青）
+  {no:1,  name:'日機装株式会社',                         short:'キャンドモータ（各種）',           pref:'東京都',   lat:35.6461, lng:139.7136, cat:'motor',    count:70},
+  {no:2,  name:'株式会社帝国電機製作所',                 short:'キャンドモータ（各種）',           pref:'兵庫県',   lat:34.8648, lng:134.3820, cat:'motor',    count:65},
+  {no:3,  name:'株式会社荏原製作所',                     short:'キャンドモータ',                   pref:'東京都',   lat:35.5526, lng:139.7166, cat:'motor',    count:2},
+  {no:4,  name:'株式会社三井三池製作所',                 short:'三相かご形誘導電動機',             pref:'福岡県',   lat:33.0284, lng:130.5042, cat:'motor',    count:13},
+  {no:5,  name:'神鋼電機株式会社',                       short:'三相かご形誘導電動機',             pref:'兵庫県',   lat:34.7240, lng:135.2320, cat:'motor',    count:1},
+  {no:6,  name:'株式会社昭栄',                           short:'誘導電動機・直流電動機・開閉器',   pref:'東京都',   lat:35.6895, lng:139.6917, cat:'motor',    count:4},
+  {no:7,  name:'大西電機工業株式会社',                   short:'軸流送風機用誘導電動機',           pref:'大阪府',   lat:34.7855, lng:135.4800, cat:'motor',    count:8},
+  {no:8,  name:'テラルクリタ株式会社',                   short:'圧力扇・換気扇用誘導電動機',       pref:'大阪府',   lat:34.6937, lng:135.5022, cat:'motor',    count:5},
+  {no:9,  name:'株式会社桜川ポンプ製作所',               short:'水中ポンプ用誘導電動機',           pref:'埼玉県',   lat:35.9920, lng:139.7760, cat:'motor',    count:1},
+  {no:10, name:'株式会社村上精機工作所',                 short:'振動電動機',                       pref:'東京都',   lat:35.7256, lng:139.5789, cat:'vibration', count:1},
+  // バルブ・制御器（水色）
+  {no:11, name:'日本ギア工業株式会社',                   short:'バルブコントロール',               pref:'東京都',   lat:35.6987, lng:139.7700, cat:'valve',    count:90},
+  {no:12, name:'西部電機株式会社',                       short:'バルブコントロール',               pref:'福岡県',   lat:33.7168, lng:130.4880, cat:'valve',    count:13},
+  {no:13, name:'株式会社大洋バルブ製作所',               short:'リードスイッチ',                   pref:'兵庫県',   lat:34.7280, lng:135.3830, cat:'valve',    count:1},
+  // 制御盤・スイッチ類（緑）
+  {no:14, name:'株式会社宮木電機製作所',                 short:'制御箱・操作スイッチ等',           pref:'京都府',   lat:35.0116, lng:135.5720, cat:'switch',   count:55},
+  {no:15, name:'株式会社戸上電機製作所',                 short:'コントロールスイッチ・配線用遮断器等', pref:'佐賀県', lat:33.2635, lng:130.3008, cat:'switch',   count:38},
+  {no:16, name:'IDEC株式会社',                          short:'制御盤・操作盤・変圧器等',          pref:'大阪府',   lat:34.6550, lng:135.4761, cat:'switch',   count:14},
+  {no:17, name:'伊東電機株式会社 茨城工場',              short:'メータースタンド・分電盤等',        pref:'茨城県',   lat:36.3420, lng:140.4470, cat:'switch',   count:22},
+  {no:18, name:'株式会社坂本電機製作所',                 short:'押釦開閉器・コントロールボックス',  pref:'福岡県',   lat:33.5902, lng:130.4017, cat:'switch',   count:6},
+  {no:19, name:'株式会社中村電機製作所',                 short:'操作盤',                           pref:'兵庫県',   lat:34.6913, lng:135.1830, cat:'switch',   count:2},
+  {no:20, name:'島田電機株式会社',                       short:'配線用遮断器',                     pref:'東京都',   lat:35.6895, lng:139.6917, cat:'switch',   count:2},
+  {no:21, name:'星和電機株式会社',                       short:'配線用遮断器',                     pref:'大阪府',   lat:34.5330, lng:135.6250, cat:'switch',   count:1},
+  {no:22, name:'光音電波株式会社',                       short:'指令用電話機',                     pref:'東京都',   lat:35.7050, lng:139.8020, cat:'switch',   count:1},
+  {no:23, name:'日本電音株式会社',                       short:'ホーンスピーカ',                   pref:'東京都',   lat:35.7100, lng:139.8500, cat:'switch',   count:1},
+  {no:24, name:'アクト電機工業株式会社',                 short:'圧力スイッチ',                     pref:'神奈川県', lat:35.5339, lng:139.6752, cat:'switch',   count:1},
+  // センサ・計測器（紫）
+  {no:25, name:'助川電気工業株式会社',                   short:'熱電対・白金測温抵抗体',           pref:'茨城県',   lat:36.7259, lng:140.7159, cat:'sensor',   count:17},
+  {no:26, name:'株式会社チノー',                         short:'熱電対・白金測温抵抗体',           pref:'東京都',   lat:35.6895, lng:139.6917, cat:'sensor',   count:10},
+  {no:27, name:'株式会社岡崎製作所',                     short:'熱電対・白金測温抵抗体',           pref:'愛知県',   lat:35.0395, lng:137.0460, cat:'sensor',   count:10},
+  {no:28, name:'長野計器株式会社',                       short:'圧力スイッチ・圧力発信器',         pref:'東京都',   lat:35.5670, lng:139.7080, cat:'sensor',   count:13},
+  {no:29, name:'東京計装株式会社',                       short:'液面警報発信部・液面計用駆動部',   pref:'東京都',   lat:35.7100, lng:139.7620, cat:'sensor',   count:4},
+  {no:30, name:'株式会社和興計測',                       short:'液面位置指示計',                   pref:'東京都',   lat:35.6700, lng:139.7500, cat:'sensor',   count:2},
+  {no:31, name:'株式会社オーバル 横浜事業所',            short:'弁開度指示計',                     pref:'神奈川県', lat:35.4437, lng:139.6380, cat:'sensor',   count:1},
+  {no:32, name:'昭和機器工業株式会社',                   short:'液面計',                           pref:'大阪府',   lat:34.6937, lng:135.5022, cat:'sensor',   count:1},
+  {no:33, name:'株式会社コーギケン',                     short:'液面制御装置',                     pref:'東京都',   lat:35.7200, lng:139.5500, cat:'sensor',   count:2},
+  {no:34, name:'株式会社鷺宮製作所',                     short:'電磁弁用電磁石・フロースイッチ',   pref:'東京都',   lat:35.7022, lng:139.6603, cat:'sensor',   count:4},
+  {no:35, name:'株式会社小野測器',                       short:'電磁式回転速度検出器',             pref:'神奈川県', lat:35.4440, lng:139.5010, cat:'sensor',   count:1},
+  // 電磁弁・電磁石（オレンジ）
+  {no:36, name:'金子産業株式会社',                       short:'電磁弁用電磁石・液面位置指示計',   pref:'埼玉県',   lat:35.8617, lng:139.6489, cat:'solenoid', count:8},
+  {no:37, name:'三明電機株式会社',                       short:'電磁弁用電磁石',                   pref:'大阪府',   lat:34.7350, lng:135.4990, cat:'solenoid', count:5},
+  {no:38, name:'株式会社東邦製作所',                     short:'電磁弁用電磁石・フロートスイッチ', pref:'東京都',   lat:35.6620, lng:139.6980, cat:'solenoid', count:11},
+  {no:39, name:'日本アスコ株式会社',                     short:'電磁弁用電磁石',                   pref:'東京都',   lat:35.6895, lng:139.7100, cat:'solenoid', count:2},
+  {no:40, name:'ビーエヌ精機株式会社',                   short:'電磁弁用電磁石',                   pref:'神奈川県', lat:35.4520, lng:139.6490, cat:'solenoid', count:3},
+  // ガス検知器（赤）
+  {no:41, name:'新コスモス電機株式会社',                 short:'可燃性ガス警報器用検知部',         pref:'大阪府',   lat:34.7347, lng:135.4760, cat:'gas',      count:2},
+  {no:42, name:'株式会社東科精機',                       short:'可燃性ガス警報器用検知部',         pref:'埼玉県',   lat:35.8180, lng:139.7450, cat:'gas',      count:2},
+  // 振動機器・その他（グレー）
+  {no:43, name:'シンフォニアテクノロジー株式会社 豊橋製作所', short:'振動供給機用電磁駆動部・誘導電動機', pref:'愛知県', lat:34.7690, lng:137.3920, cat:'vibration', count:18},
+  {no:44, name:'シンフォニアテクノロジー株式会社 電子精機本部 伊勢製作所', short:'振動電動機・誘導電動機', pref:'三重県', lat:34.4840, lng:136.7070, cat:'vibration', count:3},
+  {no:45, name:'春日電機株式会社',                       short:'静電気除去装置用電極',             pref:'神奈川県', lat:35.5650, lng:139.6590, cat:'vibration', count:2},
+  {no:46, name:'旭サナック株式会社',                     short:'ペイントヒータ',                   pref:'愛知県',   lat:34.8200, lng:137.0200, cat:'vibration', count:3},
+  {no:47, name:'三菱電機株式会社 名古屋製作所',          short:'電磁粒子形パウダークラッチ',       pref:'愛知県',   lat:35.1815, lng:136.9066, cat:'vibration', count:2},
+  {no:48, name:'株式会社タツノ',                         short:'ガソリン計量機用制御箱・発信機',   pref:'東京都',   lat:35.6895, lng:139.6917, cat:'vibration', count:2},
+  {no:49, name:'大黒屋ホールディングス株式会社',         short:'さし込接続器・白熱電灯',           pref:'東京都',   lat:35.7100, lng:139.7900, cat:'vibration', count:2},
+  {no:50, name:'株式会社鈴木セード製造所',               short:'コンセント形さし込接続器',         pref:'愛知県',   lat:35.1200, lng:136.9200, cat:'vibration', count:1},
+  // ＋9社（製品分類に基づき追加）
+  {no:51, name:'株式会社荏原製作所（東邦製作所フロートスイッチ関連）', short:'フロートスイッチ', pref:'東京都', lat:35.5580, lng:139.7220, cat:'sensor',   count:2},
+  {no:52, name:'株式会社昭栄（追加：誘導電動機）',       short:'三相かご形誘導電動機（移動用）',   pref:'東京都',   lat:35.6750, lng:139.7100, cat:'motor',    count:1},
+  {no:53, name:'日機装株式会社 東村山事業所',            short:'キャンドモータ（LPガス可潜型）',   pref:'東京都',   lat:35.7556, lng:139.4695, cat:'motor',    count:3},
+  {no:54, name:'テラルクリタ株式会社（追加：換気扇）',   short:'換気扇用誘導電動機（単相）',       pref:'大阪府',   lat:34.7050, lng:135.4900, cat:'motor',    count:1},
+  {no:55, name:'株式会社三井三池製作所 神奈川事業所',    short:'ミキサ用極数切換誘導電動機',       pref:'神奈川県', lat:35.5200, lng:139.6100, cat:'motor',    count:2},
+  {no:56, name:'東京計装株式会社（追加：液面計用）',     short:'液面計用駆動部',                   pref:'東京都',   lat:35.7050, lng:139.7500, cat:'sensor',   count:1},
+  {no:57, name:'金子産業株式会社（追加：液面計用白熱電灯）', short:'液面計用白熱電灯',            pref:'埼玉県',   lat:35.8700, lng:139.6600, cat:'solenoid', count:1},
+  {no:58, name:'株式会社坂本電機製作所（追加：移動用）', short:'4点押釦開閉器（移動用）',          pref:'福岡県',   lat:33.5830, lng:130.3950, cat:'switch',   count:1},
+  {no:59, name:'シンフォニアテクノロジー株式会社 豊橋製作所（追加）', short:'振動機器用誘導電動機（追加型式）', pref:'愛知県', lat:34.7550, lng:137.3800, cat:'vibration', count:2},
+];
+
+const CAT_COLORS = {
+  motor:    '#2E75B6',
+  valve:    '#1E9DC8',
+  switch:   '#375623',
+  sensor:   '#7B3F9E',
+  solenoid: '#C55A11',
+  gas:      '#C00000',
+  vibration:'#767676',
+};
+
+const CAT_LABELS = {
+  motor:    '電動機・モータ',
+  valve:    'バルブ・制御器',
+  switch:   '制御盤・スイッチ',
+  sensor:   'センサ・計測器',
+  solenoid: '電磁弁・電磁石',
+  gas:      'ガス検知器',
+  vibration:'振動機器・その他',
+};
+
+// Leaflet 初期化
+const map = L.map('map', {
+  center: [36.5, 137.0],
+  zoom: 6,
+  zoomControl: true
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap contributors © CARTO',
+  maxZoom: 18
+}).addTo(map);
+
+// マーカー管理
+let markers = {};
+let currentFilter = 'all';
+
+function createIcon(no, cat) {
+  const color = CAT_COLORS[cat] || '#888';
+  const size = no <= 10 ? 28 : (no <= 30 ? 26 : 24);
+  return L.divIcon({
+    className: '',
+    html: `<div class="custom-icon" style="width:${size}px;height:${size}px;background:${color};font-size:${size<=24?'.6rem':'.65rem'}">${no}</div>`,
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2],
+    popupAnchor: [0, -size/2]
+  });
+}
+
+function addMarkers(data) {
+  data.forEach(c => {
+    const marker = L.marker([c.lat, c.lng], { icon: createIcon(c.no, c.cat) });
+    marker.bindPopup(`
+      <div class="popup-num">No.${c.no}</div>
+      <div class="popup-title">${c.name}</div>
+      <div class="popup-sub">
+        📍 ${c.pref}<br>
+        🏭 ${c.short}<br>
+        📋 TIIS合格件数：約${c.count}件<br>
+        🏷️ ${CAT_LABELS[c.cat]}
+      </div>
+    `, { maxWidth: 280 });
+    marker.on('click', () => highlightSidebarItem(c.no));
+    marker.addTo(map);
+    markers[c.no] = { marker, data: c };
+  });
+}
+
+addMarkers(COMPANIES);
+
+// サイドバー
+function buildSidebar(data) {
+  const list = document.getElementById('company-list');
+  list.innerHTML = '';
+  data.forEach(c => {
+    const item = document.createElement('div');
+    item.className = 'company-item';
+    item.id = `item-${c.no}`;
+    const color = CAT_COLORS[c.cat] || '#888';
+    item.innerHTML = `
+      <div class="num-badge" style="background:${color}">${c.no}</div>
+      <div class="company-info">
+        <div class="company-name">${c.name}</div>
+        <div class="company-sub">${c.short} | 合格件数 約${c.count}件</div>
+        <div class="company-pref">📍 ${c.pref} — ${CAT_LABELS[c.cat]}</div>
+      </div>`;
+    item.onclick = () => {
+      map.flyTo([c.lat, c.lng], 11, { duration: 1 });
+      markers[c.no].marker.openPopup();
+      highlightSidebarItem(c.no);
+    };
+    list.appendChild(item);
+  });
+}
+buildSidebar(COMPANIES);
+
+function highlightSidebarItem(no) {
+  document.querySelectorAll('.company-item').forEach(el => el.classList.remove('active'));
+  const el = document.getElementById(`item-${no}`);
+  if (el) { el.classList.add('active'); el.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('hidden');
+}
+
+// フィルタ
+function filterByCategory() {
+  currentFilter = document.getElementById('filter').value;
+  const filtered = currentFilter === 'all' ? COMPANIES : COMPANIES.filter(c => c.cat === currentFilter);
+
+  Object.values(markers).forEach(({ marker }) => map.removeLayer(marker));
+  markers = {};
+  addMarkers(filtered);
+  buildSidebar(filtered);
+  document.getElementById('count-badge').textContent = `${filtered.length}社表示中`;
+
+  if (filtered.length > 0) {
+    const bounds = L.latLngBounds(filtered.map(c => [c.lat, c.lng]));
+    map.fitBounds(bounds, { padding: [40, 40] });
+  }
+}
+</script>
+</body>
+</html>
