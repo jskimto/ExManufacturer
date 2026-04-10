@@ -70,16 +70,9 @@ nav {
 }
 nav.scrolled { box-shadow: 0 4px 32px rgba(13,43,69,0.08); }
 .nav-logo {
-  display: flex; align-items: center;
-  gap: 1px;
+  display: flex; align-items: center; gap: 10px;
   text-decoration: none;
 }
-.nav-logo-img {
-  height: 36px;
-  width: auto;
-  display: block;
-}
-
 .nav-logo-mark {
   width: 36px; height: 36px;
   background: linear-gradient(135deg, var(--azure) 0%, var(--accent) 100%);
