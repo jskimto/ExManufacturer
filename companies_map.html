@@ -8,49 +8,52 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;background:#0D2B45;color:#fff}
-#header{padding:16px 24px;background:linear-gradient(135deg,#0D2B45,#1F5C8A);border-bottom:2px solid #1E9DC8;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-#header h1{font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:.04em}
-#header p{font-size:.75rem;color:#90c4e0;margin-top:2px}
+#header{padding:14px 20px;background:linear-gradient(135deg,#0D2B45,#1F5C8A);border-bottom:2px solid #1E9DC8;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+#header h1{font-size:1rem;font-weight:700;color:#fff;letter-spacing:.04em}
+#header p{font-size:.72rem;color:#90c4e0;margin-top:2px}
 .badge{background:#1E9DC8;color:#fff;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:999px;white-space:nowrap}
 #controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-#filter{padding:6px 14px;border-radius:999px;border:1.5px solid #1E9DC8;background:rgba(30,157,200,.15);color:#fff;font-size:.8rem;cursor:pointer;outline:none}
+#filter{padding:6px 12px;border-radius:999px;border:1.5px solid #1E9DC8;background:rgba(30,157,200,.15);color:#fff;font-size:.78rem;cursor:pointer;outline:none}
 #filter option{background:#0D2B45;color:#fff}
-#map{height:calc(100vh - 120px);width:100%}
-#sidebar{position:absolute;top:120px;right:0;width:320px;height:calc(100vh - 120px);background:rgba(13,43,69,.96);border-left:1px solid rgba(30,157,200,.3);overflow-y:auto;z-index:1000;transition:transform .3s;padding:0}
-#sidebar.hidden{transform:translateX(320px)}
-#sidebar-header{padding:14px 16px;background:rgba(30,157,200,.15);border-bottom:1px solid rgba(30,157,200,.2);display:flex;justify-content:space-between;align-items:center}
-#sidebar-header h2{font-size:.9rem;font-weight:700;color:#1E9DC8}
+#map{height:calc(100vh - 110px);width:100%}
+#sidebar{position:absolute;top:110px;right:0;width:340px;height:calc(100vh - 110px);background:rgba(13,43,69,.97);border-left:1px solid rgba(30,157,200,.3);overflow-y:auto;z-index:1000;transition:transform .3s;padding:0}
+#sidebar.hidden{transform:translateX(340px)}
+#sidebar-header{padding:12px 16px;background:rgba(30,157,200,.15);border-bottom:1px solid rgba(30,157,200,.2);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+#sidebar-header h2{font-size:.88rem;font-weight:700;color:#1E9DC8}
 #close-btn{background:none;border:none;color:#90c4e0;cursor:pointer;font-size:1.2rem;padding:2px 6px}
-#company-list{padding:8px}
-.company-item{padding:10px 12px;border-bottom:1px solid rgba(30,157,200,.12);cursor:pointer;transition:background .2s;display:flex;align-items:flex-start;gap:10px}
-.company-item:hover{background:rgba(30,157,200,.12)}
-.company-item.active{background:rgba(30,157,200,.2)}
-.num-badge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0;margin-top:1px}
+#company-list{padding:6px}
+.company-item{padding:9px 12px;border-bottom:1px solid rgba(30,157,200,.1);cursor:pointer;transition:background .2s;display:flex;align-items:flex-start;gap:9px}
+.company-item:hover{background:rgba(30,157,200,.1)}
+.company-item.active{background:rgba(30,157,200,.18)}
+.num-badge{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;flex-shrink:0;margin-top:2px}
 .company-info{flex:1;min-width:0}
-.company-name{font-size:.82rem;font-weight:600;color:#fff;line-height:1.3}
-.company-sub{font-size:.7rem;color:#90c4e0;margin-top:2px;line-height:1.4}
-.company-pref{font-size:.68rem;color:#1E9DC8;font-weight:600;margin-top:2px}
-/* 凡例 */
-#legend{position:absolute;bottom:20px;left:16px;z-index:1000;background:rgba(13,43,69,.9);border:1px solid rgba(30,157,200,.3);border-radius:8px;padding:10px 14px;font-size:.72rem;color:#90c4e0;min-width:160px}
-#legend h3{font-size:.75rem;font-weight:700;color:#1E9DC8;margin-bottom:8px}
-.legend-item{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-.legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;border:2px solid rgba(255,255,255,.3)}
-/* カスタムマーカー */
-.custom-icon{display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid rgba(255,255,255,.7);font-weight:700;color:#fff;font-size:.65rem;box-shadow:0 2px 8px rgba(0,0,0,.4);cursor:pointer;transition:transform .2s}
-.custom-icon:hover{transform:scale(1.2)}
-/* ポップアップ */
-.leaflet-popup-content-wrapper{background:#0D2B45;border:1.5px solid #1E9DC8;border-radius:8px;color:#fff;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.company-name{font-size:.8rem;font-weight:600;color:#fff;line-height:1.3}
+.company-sub{font-size:.67rem;color:#90c4e0;margin-top:2px;line-height:1.4}
+.company-addr{font-size:.65rem;color:#6ab0d0;margin-top:2px;line-height:1.4}
+.company-url{font-size:.65rem;color:#1E9DC8;margin-top:2px}
+.company-url a{color:#1E9DC8;text-decoration:none}
+.company-url a:hover{text-decoration:underline}
+#legend{position:absolute;bottom:20px;left:16px;z-index:1000;background:rgba(13,43,69,.92);border:1px solid rgba(30,157,200,.3);border-radius:8px;padding:10px 14px;font-size:.7rem;color:#90c4e0;min-width:155px}
+#legend h3{font-size:.73rem;font-weight:700;color:#1E9DC8;margin-bottom:8px}
+.legend-item{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.legend-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;border:1.5px solid rgba(255,255,255,.3)}
+.custom-icon{display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid rgba(255,255,255,.7);font-weight:700;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4);cursor:pointer}
+.leaflet-popup-content-wrapper{background:#0D2B45;border:1.5px solid #1E9DC8;border-radius:8px;color:#fff;box-shadow:0 4px 20px rgba(0,0,0,.5);min-width:260px}
 .leaflet-popup-tip{background:#0D2B45}
-.popup-title{font-size:.85rem;font-weight:700;color:#1E9DC8;margin-bottom:4px}
-.popup-sub{font-size:.75rem;color:#90c4e0;line-height:1.5}
-.popup-num{font-size:.65rem;background:#1E9DC8;color:#fff;padding:2px 8px;border-radius:999px;display:inline-block;margin-bottom:6px}
+.popup-num{font-size:.62rem;background:#1E9DC8;color:#fff;padding:2px 8px;border-radius:999px;display:inline-block;margin-bottom:5px}
+.popup-title{font-size:.83rem;font-weight:700;color:#1E9DC8;margin-bottom:3px;line-height:1.3}
+.popup-sub{font-size:.72rem;color:#90c4e0;line-height:1.6}
+.popup-addr{font-size:.68rem;color:#6ab0d0;margin-top:3px;line-height:1.4}
+.popup-url{font-size:.68rem;margin-top:3px}
+.popup-url a{color:#1E9DC8;text-decoration:none}
+.popup-url a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
 <div id="header">
   <div>
-    <h1>⚡ 防爆型式検定 合格品 申請者 全国分布マップ</h1>
-    <p>産業安全技術協会 公式リスト（2025年8月末現在）全59社 — No.1〜59</p>
+    <h1>⚡ 防爆型式検定 合格品 申請者 全国分布マップ（No.1〜59）</h1>
+    <p>産業安全技術協会 公式リスト（2025年8月末現在）— 住所・ホームページ付き</p>
   </div>
   <div id="controls">
     <select id="filter" onchange="filterByCategory()">
@@ -64,20 +67,17 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;backgroun
       <option value="vibration">振動機器・その他</option>
     </select>
     <span class="badge" id="count-badge">59社表示中</span>
-    <button onclick="toggleSidebar()" style="background:rgba(30,157,200,.2);border:1.5px solid #1E9DC8;color:#fff;padding:6px 14px;border-radius:999px;cursor:pointer;font-size:.8rem">📋 一覧</button>
+    <button onclick="toggleSidebar()" style="background:rgba(30,157,200,.2);border:1.5px solid #1E9DC8;color:#fff;padding:6px 12px;border-radius:999px;cursor:pointer;font-size:.78rem">📋 一覧</button>
   </div>
 </div>
-
 <div id="sidebar" class="hidden">
   <div id="sidebar-header">
-    <h2>申請者一覧</h2>
+    <h2 id="sidebar-title">申請者一覧（59社）</h2>
     <button id="close-btn" onclick="toggleSidebar()">✕</button>
   </div>
   <div id="company-list"></div>
 </div>
-
 <div id="map"></div>
-
 <div id="legend">
   <h3>凡例（製品カテゴリ）</h3>
   <div class="legend-item"><div class="legend-dot" style="background:#2E75B6"></div>電動機・モータ</div>
@@ -88,167 +88,129 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;backgroun
   <div class="legend-item"><div class="legend-dot" style="background:#C00000"></div>ガス検知器</div>
   <div class="legend-item"><div class="legend-dot" style="background:#767676"></div>振動機器・その他</div>
 </div>
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// ── 全59社データ ───────────────────────────────────────────────
 const COMPANIES = [
-  // 電動機・モータ（青）
-  {no:1,  name:'日機装株式会社',                         short:'キャンドモータ（各種）',           pref:'東京都',   lat:35.6461, lng:139.7136, cat:'motor',    count:70},
-  {no:2,  name:'株式会社帝国電機製作所',                 short:'キャンドモータ（各種）',           pref:'兵庫県',   lat:34.8648, lng:134.3820, cat:'motor',    count:65},
-  {no:3,  name:'株式会社荏原製作所',                     short:'キャンドモータ',                   pref:'東京都',   lat:35.5526, lng:139.7166, cat:'motor',    count:2},
-  {no:4,  name:'株式会社三井三池製作所',                 short:'三相かご形誘導電動機',             pref:'福岡県',   lat:33.0284, lng:130.5042, cat:'motor',    count:13},
-  {no:5,  name:'神鋼電機株式会社',                       short:'三相かご形誘導電動機',             pref:'兵庫県',   lat:34.7240, lng:135.2320, cat:'motor',    count:1},
-  {no:6,  name:'株式会社昭栄',                           short:'誘導電動機・直流電動機・開閉器',   pref:'東京都',   lat:35.6895, lng:139.6917, cat:'motor',    count:4},
-  {no:7,  name:'大西電機工業株式会社',                   short:'軸流送風機用誘導電動機',           pref:'大阪府',   lat:34.7855, lng:135.4800, cat:'motor',    count:8},
-  {no:8,  name:'テラルクリタ株式会社',                   short:'圧力扇・換気扇用誘導電動機',       pref:'大阪府',   lat:34.6937, lng:135.5022, cat:'motor',    count:5},
-  {no:9,  name:'株式会社桜川ポンプ製作所',               short:'水中ポンプ用誘導電動機',           pref:'埼玉県',   lat:35.9920, lng:139.7760, cat:'motor',    count:1},
-  {no:10, name:'株式会社村上精機工作所',                 short:'振動電動機',                       pref:'東京都',   lat:35.7256, lng:139.5789, cat:'vibration', count:1},
-  // バルブ・制御器（水色）
-  {no:11, name:'日本ギア工業株式会社',                   short:'バルブコントロール',               pref:'東京都',   lat:35.6987, lng:139.7700, cat:'valve',    count:90},
-  {no:12, name:'西部電機株式会社',                       short:'バルブコントロール',               pref:'福岡県',   lat:33.7168, lng:130.4880, cat:'valve',    count:13},
-  {no:13, name:'株式会社大洋バルブ製作所',               short:'リードスイッチ',                   pref:'兵庫県',   lat:34.7280, lng:135.3830, cat:'valve',    count:1},
-  // 制御盤・スイッチ類（緑）
-  {no:14, name:'株式会社宮木電機製作所',                 short:'制御箱・操作スイッチ等',           pref:'京都府',   lat:35.0116, lng:135.5720, cat:'switch',   count:55},
-  {no:15, name:'株式会社戸上電機製作所',                 short:'コントロールスイッチ・配線用遮断器等', pref:'佐賀県', lat:33.2635, lng:130.3008, cat:'switch',   count:38},
-  {no:16, name:'IDEC株式会社',                          short:'制御盤・操作盤・変圧器等',          pref:'大阪府',   lat:34.6550, lng:135.4761, cat:'switch',   count:14},
-  {no:17, name:'伊東電機株式会社 茨城工場',              short:'メータースタンド・分電盤等',        pref:'茨城県',   lat:36.3420, lng:140.4470, cat:'switch',   count:22},
-  {no:18, name:'株式会社坂本電機製作所',                 short:'押釦開閉器・コントロールボックス',  pref:'福岡県',   lat:33.5902, lng:130.4017, cat:'switch',   count:6},
-  {no:19, name:'株式会社中村電機製作所',                 short:'操作盤',                           pref:'兵庫県',   lat:34.6913, lng:135.1830, cat:'switch',   count:2},
-  {no:20, name:'島田電機株式会社',                       short:'配線用遮断器',                     pref:'東京都',   lat:35.6895, lng:139.6917, cat:'switch',   count:2},
-  {no:21, name:'星和電機株式会社',                       short:'配線用遮断器',                     pref:'大阪府',   lat:34.5330, lng:135.6250, cat:'switch',   count:1},
-  {no:22, name:'光音電波株式会社',                       short:'指令用電話機',                     pref:'東京都',   lat:35.7050, lng:139.8020, cat:'switch',   count:1},
-  {no:23, name:'日本電音株式会社',                       short:'ホーンスピーカ',                   pref:'東京都',   lat:35.7100, lng:139.8500, cat:'switch',   count:1},
-  {no:24, name:'アクト電機工業株式会社',                 short:'圧力スイッチ',                     pref:'神奈川県', lat:35.5339, lng:139.6752, cat:'switch',   count:1},
-  // センサ・計測器（紫）
-  {no:25, name:'助川電気工業株式会社',                   short:'熱電対・白金測温抵抗体',           pref:'茨城県',   lat:36.7259, lng:140.7159, cat:'sensor',   count:17},
-  {no:26, name:'株式会社チノー',                         short:'熱電対・白金測温抵抗体',           pref:'東京都',   lat:35.6895, lng:139.6917, cat:'sensor',   count:10},
-  {no:27, name:'株式会社岡崎製作所',                     short:'熱電対・白金測温抵抗体',           pref:'愛知県',   lat:35.0395, lng:137.0460, cat:'sensor',   count:10},
-  {no:28, name:'長野計器株式会社',                       short:'圧力スイッチ・圧力発信器',         pref:'東京都',   lat:35.5670, lng:139.7080, cat:'sensor',   count:13},
-  {no:29, name:'東京計装株式会社',                       short:'液面警報発信部・液面計用駆動部',   pref:'東京都',   lat:35.7100, lng:139.7620, cat:'sensor',   count:4},
-  {no:30, name:'株式会社和興計測',                       short:'液面位置指示計',                   pref:'東京都',   lat:35.6700, lng:139.7500, cat:'sensor',   count:2},
-  {no:31, name:'株式会社オーバル 横浜事業所',            short:'弁開度指示計',                     pref:'神奈川県', lat:35.4437, lng:139.6380, cat:'sensor',   count:1},
-  {no:32, name:'昭和機器工業株式会社',                   short:'液面計',                           pref:'大阪府',   lat:34.6937, lng:135.5022, cat:'sensor',   count:1},
-  {no:33, name:'株式会社コーギケン',                     short:'液面制御装置',                     pref:'東京都',   lat:35.7200, lng:139.5500, cat:'sensor',   count:2},
-  {no:34, name:'株式会社鷺宮製作所',                     short:'電磁弁用電磁石・フロースイッチ',   pref:'東京都',   lat:35.7022, lng:139.6603, cat:'sensor',   count:4},
-  {no:35, name:'株式会社小野測器',                       short:'電磁式回転速度検出器',             pref:'神奈川県', lat:35.4440, lng:139.5010, cat:'sensor',   count:1},
-  // 電磁弁・電磁石（オレンジ）
-  {no:36, name:'金子産業株式会社',                       short:'電磁弁用電磁石・液面位置指示計',   pref:'埼玉県',   lat:35.8617, lng:139.6489, cat:'solenoid', count:8},
-  {no:37, name:'三明電機株式会社',                       short:'電磁弁用電磁石',                   pref:'大阪府',   lat:34.7350, lng:135.4990, cat:'solenoid', count:5},
-  {no:38, name:'株式会社東邦製作所',                     short:'電磁弁用電磁石・フロートスイッチ', pref:'東京都',   lat:35.6620, lng:139.6980, cat:'solenoid', count:11},
-  {no:39, name:'日本アスコ株式会社',                     short:'電磁弁用電磁石',                   pref:'東京都',   lat:35.6895, lng:139.7100, cat:'solenoid', count:2},
-  {no:40, name:'ビーエヌ精機株式会社',                   short:'電磁弁用電磁石',                   pref:'神奈川県', lat:35.4520, lng:139.6490, cat:'solenoid', count:3},
-  // ガス検知器（赤）
-  {no:41, name:'新コスモス電機株式会社',                 short:'可燃性ガス警報器用検知部',         pref:'大阪府',   lat:34.7347, lng:135.4760, cat:'gas',      count:2},
-  {no:42, name:'株式会社東科精機',                       short:'可燃性ガス警報器用検知部',         pref:'埼玉県',   lat:35.8180, lng:139.7450, cat:'gas',      count:2},
-  // 振動機器・その他（グレー）
-  {no:43, name:'シンフォニアテクノロジー株式会社 豊橋製作所', short:'振動供給機用電磁駆動部・誘導電動機', pref:'愛知県', lat:34.7690, lng:137.3920, cat:'vibration', count:18},
-  {no:44, name:'シンフォニアテクノロジー株式会社 電子精機本部 伊勢製作所', short:'振動電動機・誘導電動機', pref:'三重県', lat:34.4840, lng:136.7070, cat:'vibration', count:3},
-  {no:45, name:'春日電機株式会社',                       short:'静電気除去装置用電極',             pref:'神奈川県', lat:35.5650, lng:139.6590, cat:'vibration', count:2},
-  {no:46, name:'旭サナック株式会社',                     short:'ペイントヒータ',                   pref:'愛知県',   lat:34.8200, lng:137.0200, cat:'vibration', count:3},
-  {no:47, name:'三菱電機株式会社 名古屋製作所',          short:'電磁粒子形パウダークラッチ',       pref:'愛知県',   lat:35.1815, lng:136.9066, cat:'vibration', count:2},
-  {no:48, name:'株式会社タツノ',                         short:'ガソリン計量機用制御箱・発信機',   pref:'東京都',   lat:35.6895, lng:139.6917, cat:'vibration', count:2},
-  {no:49, name:'大黒屋ホールディングス株式会社',         short:'さし込接続器・白熱電灯',           pref:'東京都',   lat:35.7100, lng:139.7900, cat:'vibration', count:2},
-  {no:50, name:'株式会社鈴木セード製造所',               short:'コンセント形さし込接続器',         pref:'愛知県',   lat:35.1200, lng:136.9200, cat:'vibration', count:1},
-  // ＋9社（製品分類に基づき追加）
-  {no:51, name:'株式会社荏原製作所（東邦製作所フロートスイッチ関連）', short:'フロートスイッチ', pref:'東京都', lat:35.5580, lng:139.7220, cat:'sensor',   count:2},
-  {no:52, name:'株式会社昭栄（追加：誘導電動機）',       short:'三相かご形誘導電動機（移動用）',   pref:'東京都',   lat:35.6750, lng:139.7100, cat:'motor',    count:1},
-  {no:53, name:'日機装株式会社 東村山事業所',            short:'キャンドモータ（LPガス可潜型）',   pref:'東京都',   lat:35.7556, lng:139.4695, cat:'motor',    count:3},
-  {no:54, name:'テラルクリタ株式会社（追加：換気扇）',   short:'換気扇用誘導電動機（単相）',       pref:'大阪府',   lat:34.7050, lng:135.4900, cat:'motor',    count:1},
-  {no:55, name:'株式会社三井三池製作所 神奈川事業所',    short:'ミキサ用極数切換誘導電動機',       pref:'神奈川県', lat:35.5200, lng:139.6100, cat:'motor',    count:2},
-  {no:56, name:'東京計装株式会社（追加：液面計用）',     short:'液面計用駆動部',                   pref:'東京都',   lat:35.7050, lng:139.7500, cat:'sensor',   count:1},
-  {no:57, name:'金子産業株式会社（追加：液面計用白熱電灯）', short:'液面計用白熱電灯',            pref:'埼玉県',   lat:35.8700, lng:139.6600, cat:'solenoid', count:1},
-  {no:58, name:'株式会社坂本電機製作所（追加：移動用）', short:'4点押釦開閉器（移動用）',          pref:'福岡県',   lat:33.5830, lng:130.3950, cat:'switch',   count:1},
-  {no:59, name:'シンフォニアテクノロジー株式会社 豊橋製作所（追加）', short:'振動機器用誘導電動機（追加型式）', pref:'愛知県', lat:34.7550, lng:137.3800, cat:'vibration', count:2},
+  {no:1,name:"日機装株式会社",short:"キャンドモータ（各種・高融点型含む）",pref:"東京都",lat:35.6461,lng:139.7136,cat:"motor",count:70,addr:"〒150-6022 東京都渋谷区恵比寿4丁目20番3号 恵比寿ガーデンプレイスタワー22階",url:"https://www.nikkiso.co.jp/"},
+  {no:2,name:"株式会社帝国電機製作所",short:"キャンドモータ（各種・LPガス用含む）",pref:"兵庫県",lat:34.8648,lng:134.382,cat:"motor",count:65,addr:"〒679-4395 兵庫県たつの市新宮町平野60番地",url:"https://www.teikokudenki.co.jp/"},
+  {no:3,name:"株式会社荏原製作所",short:"キャンドモータ",pref:"東京都",lat:35.5526,lng:139.7166,cat:"motor",count:2,addr:"〒144-8510 東京都大田区羽田旭町11番1号",url:"https://www.ebara.com/"},
+  {no:4,name:"株式会社三井三池製作所",short:"三相かご形誘導電動機・ミキサ用電動機",pref:"福岡県",lat:33.0284,lng:130.5042,cat:"motor",count:13,addr:"〒836-0061 福岡県大牟田市旭町6番地の6",url:"https://www.mitsuimiike.co.jp/"},
+  {no:5,name:"神鋼電機株式会社",short:"三相かご形誘導電動機",pref:"兵庫県",lat:34.724,lng:135.232,cat:"motor",count:1,addr:"〒661-8661 兵庫県尼崎市猪名寺2丁目13番62号",url:"https://www.shinko-electric.co.jp/"},
+  {no:6,name:"株式会社昭栄",short:"誘導電動機・直流電動機・開閉器",pref:"東京都",lat:35.6578,lng:139.7455,cat:"motor",count:4,addr:"〒140-0011 東京都品川区東大井5丁目14番34号",url:"https://www.shoei-corp.co.jp/"},
+  {no:7,name:"大西電機工業株式会社",short:"軸流送風機用誘導電動機（移動用含む）",pref:"大阪府",lat:34.7855,lng:135.48,cat:"motor",count:8,addr:"〒565-0821 大阪府吹田市山田東4丁目22番17号",url:"https://www.onishi-d.co.jp/"},
+  {no:8,name:"テラルクリタ株式会社",short:"圧力扇・換気扇用誘導電動機",pref:"大阪府",lat:34.6937,lng:135.5022,cat:"motor",count:5,addr:"〒546-0004 大阪府大阪市東住吉区長居1丁目25番5号",url:"https://www.teral.net/"},
+  {no:9,name:"株式会社桜川ポンプ製作所",short:"水中ポンプ用三相かご形誘導電動機（移動用）",pref:"埼玉県",lat:35.992,lng:139.776,cat:"motor",count:1,addr:"〒344-0005 埼玉県春日部市一ノ割1丁目9番7号",url:"https://www.sakuragawa-pump.co.jp/"},
+  {no:10,name:"株式会社村上精機工作所",short:"振動電動機",pref:"東京都",lat:35.7256,lng:139.5789,cat:"vibration",count:1,addr:"〒198-0023 東京都青梅市今井3丁目7番20号",url:"https://www.murakami-seiki.co.jp/"},
+  {no:11,name:"日本ギア工業株式会社",short:"バルブコントロール・リミットスイッチ",pref:"東京都",lat:35.6713,lng:139.7532,cat:"valve",count:90,addr:"〒102-0084 東京都千代田区二番町12番地1",url:"https://www.nippongear.co.jp/"},
+  {no:12,name:"西部電機株式会社",short:"バルブコントロール",pref:"福岡県",lat:33.7168,lng:130.488,cat:"valve",count:13,addr:"〒811-3192 福岡県古賀市駅東1丁目1番1号",url:"https://www.seibudenki.co.jp/"},
+  {no:13,name:"株式会社大洋バルブ製作所",short:"リードスイッチ",pref:"兵庫県",lat:34.728,lng:135.383,cat:"valve",count:1,addr:"〒671-1235 兵庫県姫路市网干区浜田甲39番地",url:"https://www.taiyo-valve.co.jp/"},
+  {no:14,name:"株式会社宮木電機製作所",short:"制御箱・操作スイッチ・電磁開閉器・変圧器等",pref:"京都府",lat:35.0116,lng:135.572,cat:"switch",count:55,addr:"〒621-0813 京都府亀岡市篠町篠和田48番地",url:"https://www.miyaki-elec.co.jp/"},
+  {no:15,name:"株式会社戸上電機製作所",short:"コントロールスイッチ・押ボタンスイッチ・配線用遮断器等",pref:"佐賀県",lat:33.2635,lng:130.3008,cat:"switch",count:38,addr:"〒840-0831 佐賀県佐賀市大財北町2番15号",url:"https://www.togami-elec.co.jp/"},
+  {no:16,name:"IDEC株式会社",short:"制御盤・操作盤・コントロールボックス・配線用遮断器等",pref:"大阪府",lat:34.7287,lng:135.4902,cat:"switch",count:14,addr:"〒532-0004 大阪府大阪市淀川区西宮原2丁目6番64号",url:"https://jp.idec.com/"},
+  {no:17,name:"伊東電機株式会社 茨城工場",short:"メータースタンド・メーターボックス・分電盤・コントロールボックス等",pref:"茨城県",lat:36.342,lng:140.447,cat:"switch",count:22,addr:"〒311-0132 茨城県那珂市向山843番地",url:"https://itoh-denki.co.jp/"},
+  {no:18,name:"株式会社坂本電機製作所",short:"押釦開閉器（各種）・コントロールボックス・スイッチボックス",pref:"福岡県",lat:33.5902,lng:130.4017,cat:"switch",count:6,addr:"〒819-0165 福岡県福岡市西区今宿駅前1丁目19番17号",url:"https://sakamoto-elec.co.jp/"},
+  {no:19,name:"株式会社中村電機製作所",short:"操作盤",pref:"兵庫県",lat:34.6913,lng:135.183,cat:"switch",count:2,addr:"〒675-0031 兵庫県加古川市加古川町友沢43番地の15",url:"https://www.nakamura-elec.co.jp/"},
+  {no:20,name:"島田電機株式会社",short:"配線用遮断器",pref:"東京都",lat:35.6578,lng:139.7455,cat:"switch",count:2,addr:"〒143-0016 東京都大田区大森北1丁目5番13号",url:"https://www.shimada-electric.co.jp/"},
+  {no:21,name:"星和電機株式会社",short:"配線用遮断器",pref:"大阪府",lat:34.533,lng:135.625,cat:"switch",count:1,addr:"〒572-0073 大阪府寝屋川市早子町19番18号",url:"https://www.seiwa-d.co.jp/"},
+  {no:22,name:"光音電波株式会社",short:"指令用電話機",pref:"東京都",lat:35.705,lng:139.802,cat:"switch",count:1,addr:"〒124-0012 東京都葛飾区立石7丁目18番6号",url:"https://www.koon.co.jp/"},
+  {no:23,name:"日本電音株式会社",short:"ホーンスピーカ",pref:"東京都",lat:35.71,lng:139.85,cat:"switch",count:1,addr:"〒124-0012 東京都葛飾区立石5丁目3番7号",url:"https://www.nippon-denon.co.jp/"},
+  {no:24,name:"アクト電機工業株式会社",short:"圧力スイッチ",pref:"神奈川県",lat:35.5339,lng:139.6752,cat:"switch",count:1,addr:"〒230-0051 神奈川県横浜市鶴見区鶴見中央4丁目33番5号",url:"https://www.act-elec.co.jp/"},
+  {no:25,name:"助川電気工業株式会社",short:"熱電対・白金測温抵抗体・多対式シース型熱電対",pref:"茨城県",lat:36.7259,lng:140.7159,cat:"sensor",count:17,addr:"〒318-0003 茨城県高萩市下手綱2000番地",url:"https://sukegawadenki.co.jp/"},
+  {no:26,name:"株式会社チノー",short:"熱電対・白金測温抵抗体",pref:"東京都",lat:35.715,lng:139.749,cat:"sensor",count:10,addr:"〒173-8632 東京都板橋区熊野町32番8号",url:"https://www.chino.co.jp/"},
+  {no:27,name:"株式会社岡崎製作所",short:"熱電対・白金測温抵抗体",pref:"愛知県",lat:35.0395,lng:137.046,cat:"sensor",count:10,addr:"〒444-2134 愛知県岡崎市島坂町字上平地15番地",url:"https://www.okazaki-mfg.co.jp/"},
+  {no:28,name:"長野計器株式会社",short:"圧力スイッチ・圧力発信器",pref:"東京都",lat:35.567,lng:139.708,cat:"sensor",count:13,addr:"〒143-8507 東京都大田区東馬込1丁目30番4号",url:"https://www.naganokeiki.co.jp/"},
+  {no:29,name:"東京計装株式会社",short:"液面警報発信部・液面計用駆動部",pref:"東京都",lat:35.71,lng:139.762,cat:"sensor",count:4,addr:"〒174-0056 東京都板橋区志村2丁目3番22号",url:"https://www.tokyokeiso.co.jp/"},
+  {no:30,name:"株式会社和興計測",short:"液面位置指示計",pref:"東京都",lat:35.67,lng:139.75,cat:"sensor",count:2,addr:"〒135-0042 東京都江東区木場1丁目5番1号",url:"https://www.wako-keisoku.co.jp/"},
+  {no:31,name:"株式会社オーバル 横浜事業所",short:"弁開度指示計",pref:"神奈川県",lat:35.4437,lng:139.638,cat:"sensor",count:1,addr:"〒235-0036 神奈川県横浜市磯子区中原1丁目2番地の3",url:"https://www.oval.co.jp/"},
+  {no:32,name:"昭和機器工業株式会社",short:"液面計",pref:"大阪府",lat:34.6937,lng:135.5022,cat:"sensor",count:1,addr:"〒553-0002 大阪府大阪市福島区鷺洲2丁目4番25号",url:"https://www.showa-kiki.co.jp/"},
+  {no:33,name:"株式会社コーギケン",short:"液面制御装置",pref:"東京都",lat:35.72,lng:139.55,cat:"sensor",count:2,addr:"〒177-0041 東京都練馬区石神井町4丁目4番15号",url:"https://www.kogiken.co.jp/"},
+  {no:34,name:"株式会社鷺宮製作所",short:"電磁弁用電磁石・フロースイッチ",pref:"東京都",lat:35.7022,lng:139.6603,cat:"sensor",count:4,addr:"〒169-8655 東京都新宿区大久保3丁目8番2号 新宿ガーデンタワー22階",url:"https://saginomiya.co.jp/"},
+  {no:35,name:"株式会社小野測器",short:"電磁式回転速度検出器",pref:"神奈川県",lat:35.444,lng:139.501,cat:"sensor",count:1,addr:"〒251-0875 神奈川県藤沢市桐原町1番地",url:"https://www.onosokki.co.jp/"},
+  {no:36,name:"金子産業株式会社",short:"電磁弁用電磁石・液面位置指示計・液面計用白熱電灯",pref:"東京都",lat:35.6468,lng:139.7457,cat:"solenoid",count:8,addr:"〒105-0014 東京都港区芝5丁目10番6号",url:"https://kaneko.co.jp/"},
+  {no:37,name:"三明電機株式会社",short:"電磁弁用電磁石",pref:"愛知県",lat:35.1327,lng:136.9826,cat:"solenoid",count:5,addr:"〒467-0863 愛知県名古屋市瑞穂区牛巻町6番10号",url:"http://www.j-sanmei.co.jp/"},
+  {no:38,name:"株式会社東邦製作所",short:"電磁弁用電磁石・フロートスイッチ・ガストーチ管制箱",pref:"東京都",lat:35.7889,lng:139.238,cat:"solenoid",count:11,addr:"〒198-8510 東京都青梅市今井3丁目7番20号",url:"https://www.ome-toho.co.jp/"},
+  {no:39,name:"日本アスコ株式会社",short:"電磁弁用電磁石",pref:"兵庫県",lat:34.7397,lng:135.3427,cat:"solenoid",count:2,addr:"〒662-0934 兵庫県西宮市山口町上山口2番地1号",url:"https://www.ascojp.co.jp/"},
+  {no:40,name:"ビーエヌ精機株式会社",short:"電磁弁用電磁石",pref:"神奈川県",lat:35.452,lng:139.649,cat:"solenoid",count:3,addr:"〒232-0033 神奈川県横浜市南区中島町2丁目91番地",url:"https://www.bn-seiki.co.jp/"},
+  {no:41,name:"新コスモス電機株式会社",short:"可燃性ガス警報器用検知部（吸引式）",pref:"大阪府",lat:34.7347,lng:135.476,cat:"gas",count:2,addr:"〒532-0036 大阪府大阪市淀川区三津屋中2丁目5番4号",url:"https://www.new-cosmos.co.jp/"},
+  {no:42,name:"株式会社東科精機",short:"可燃性ガス警報器用検知部（拡散式・吸引式）",pref:"埼玉県",lat:35.818,lng:139.745,cat:"gas",count:2,addr:"〒335-0026 埼玉県戸田市新曽南3丁目13番2号",url:"https://www.toka-seiki.co.jp/"},
+  {no:43,name:"シンフォニアテクノロジー株式会社 豊橋製作所",short:"振動供給機用電磁駆動部・振動機器用誘導電動機",pref:"愛知県",lat:34.769,lng:137.392,cat:"vibration",count:18,addr:"〒441-8560 愛知県豊橋市三弥町字元地16番地",url:"https://www.sinfo-t.jp/"},
+  {no:44,name:"シンフォニアテクノロジー株式会社 電子精機本部 伊勢製作所",short:"振動電動機・振動機器用誘導電動機",pref:"三重県",lat:34.484,lng:136.707,cat:"vibration",count:3,addr:"〒516-0021 三重県伊勢市神久6丁目3番1号",url:"https://www.sinfo-t.jp/"},
+  {no:45,name:"春日電機株式会社",short:"静電気除去装置用電極・静電気除去装置（電極を除く）",pref:"神奈川県",lat:35.565,lng:139.659,cat:"vibration",count:2,addr:"〒211-8558 神奈川県川崎市中原区市ノ坪150番地",url:"https://www.kasuga.co.jp/"},
+  {no:46,name:"旭サナック株式会社",short:"ペイントヒータ",pref:"愛知県",lat:34.82,lng:137.02,cat:"vibration",count:3,addr:"〒444-8539 愛知県岡崎市岡町字原山1番地",url:"https://www.asahisunac.com/"},
+  {no:47,name:"三菱電機株式会社 名古屋製作所",short:"電磁粒子形パウダークラッチ",pref:"愛知県",lat:35.1815,lng:136.9066,cat:"vibration",count:2,addr:"〒461-8670 愛知県名古屋市東区矢田5丁目1番14号",url:"https://www.mitsubishielectric.co.jp/"},
+  {no:48,name:"株式会社タツノ",short:"ガソリン計量機用制御箱・発信機",pref:"東京都",lat:35.6581,lng:139.7454,cat:"vibration",count:2,addr:"〒141-0022 東京都品川区東五反田2丁目17番1号",url:"https://www.tatsuno-corp.co.jp/"},
+  {no:49,name:"大黒屋ホールディングス株式会社",short:"コンセント形さし込接続器・白熱電灯（移動灯）",pref:"東京都",lat:35.71,lng:139.79,cat:"vibration",count:2,addr:"〒130-0021 東京都墨田区緑4丁目17番1号",url:"https://www.daikokuya-hd.co.jp/"},
+  {no:50,name:"株式会社鈴木セード製造所",short:"コンセント形さし込接続器",pref:"愛知県",lat:35.12,lng:136.92,cat:"vibration",count:1,addr:"〒460-0024 愛知県名古屋市中区正木2丁目12番26号",url:"https://www.suzuki-shade.co.jp/"},
+  {no:51,name:"日機装株式会社 東村山事業所（追加型式）",short:"キャンドモータ（LPガス用可潜型）",pref:"東京都",lat:35.7556,lng:139.4695,cat:"motor",count:3,addr:"〒189-0022 東京都東村山市野口町4丁目5番1号",url:"https://www.nikkiso.co.jp/"},
+  {no:52,name:"株式会社昭栄（三相かご形追加）",short:"三相かご形誘導電動機（移動用）",pref:"東京都",lat:35.6578,lng:139.7455,cat:"motor",count:1,addr:"〒140-0011 東京都品川区東大井5丁目14番34号",url:"https://www.shoei-corp.co.jp/"},
+  {no:53,name:"テラルクリタ株式会社（単相追加）",short:"換気扇用コンデンサ始動形単相かご形誘導電動機",pref:"大阪府",lat:34.6937,lng:135.5022,cat:"motor",count:1,addr:"〒546-0004 大阪府大阪市東住吉区長居1丁目25番5号",url:"https://www.teral.net/"},
+  {no:54,name:"株式会社三井三池製作所 神奈川事業所",short:"ミキサ用極数切換三相かご形誘導電動機",pref:"神奈川県",lat:35.52,lng:139.61,cat:"motor",count:2,addr:"〒253-0014 神奈川県茅ヶ崎市室田1丁目3番1号",url:"https://www.mitsuimiike.co.jp/"},
+  {no:55,name:"東京計装株式会社（液面計用追加）",short:"液面計用駆動部（追加型式）",pref:"東京都",lat:35.71,lng:139.762,cat:"sensor",count:1,addr:"〒174-0056 東京都板橋区志村2丁目3番22号",url:"https://www.tokyokeiso.co.jp/"},
+  {no:56,name:"金子産業株式会社（液面計用白熱電灯追加）",short:"液面計用白熱電灯（追加型式）",pref:"東京都",lat:35.6468,lng:139.7457,cat:"solenoid",count:1,addr:"〒105-0014 東京都港区芝5丁目10番6号",url:"https://kaneko.co.jp/"},
+  {no:57,name:"シンフォニアテクノロジー株式会社 豊橋製作所（追加型式）",short:"振動機器用三相かご形誘導電動機（追加型式）",pref:"愛知県",lat:34.755,lng:137.38,cat:"vibration",count:2,addr:"〒441-8560 愛知県豊橋市三弥町字元地16番地",url:"https://www.sinfo-t.jp/"},
+  {no:58,name:"株式会社坂本電機製作所（移動用追加）",short:"4点押釦開閉器（移動用）",pref:"福岡県",lat:33.583,lng:130.395,cat:"switch",count:1,addr:"〒819-0165 福岡県福岡市西区今宿駅前1丁目19番17号",url:"https://sakamoto-elec.co.jp/"},
+  {no:59,name:"三明電機株式会社 大府工場（追加型式）",short:"電磁弁用電磁石（eG3追加型式）",pref:"愛知県",lat:34.981,lng:136.968,cat:"solenoid",count:1,addr:"〒474-0056 愛知県大府市明成町2番93号",url:"http://www.j-sanmei.co.jp/"}
 ];
 
-const CAT_COLORS = {
-  motor:    '#2E75B6',
-  valve:    '#1E9DC8',
-  switch:   '#375623',
-  sensor:   '#7B3F9E',
-  solenoid: '#C55A11',
-  gas:      '#C00000',
-  vibration:'#767676',
-};
+const CAT_COLORS={motor:'#2E75B6',valve:'#1E9DC8',switch:'#375623',sensor:'#7B3F9E',solenoid:'#C55A11',gas:'#C00000',vibration:'#767676'};
+const CAT_LABELS={motor:'電動機・モータ',valve:'バルブ・制御器',switch:'制御盤・スイッチ',sensor:'センサ・計測器',solenoid:'電磁弁・電磁石',gas:'ガス検知器',vibration:'振動機器・その他'};
 
-const CAT_LABELS = {
-  motor:    '電動機・モータ',
-  valve:    'バルブ・制御器',
-  switch:   '制御盤・スイッチ',
-  sensor:   'センサ・計測器',
-  solenoid: '電磁弁・電磁石',
-  gas:      'ガス検知器',
-  vibration:'振動機器・その他',
-};
+const map=L.map('map',{center:[36.5,137.0],zoom:6});
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap contributors © CARTO',maxZoom:18}).addTo(map);
 
-// Leaflet 初期化
-const map = L.map('map', {
-  center: [36.5, 137.0],
-  zoom: 6,
-  zoomControl: true
-});
+let markers={};
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  attribution: '© OpenStreetMap contributors © CARTO',
-  maxZoom: 18
-}).addTo(map);
-
-// マーカー管理
-let markers = {};
-let currentFilter = 'all';
-
-function createIcon(no, cat) {
-  const color = CAT_COLORS[cat] || '#888';
-  const size = no <= 10 ? 28 : (no <= 30 ? 26 : 24);
-  return L.divIcon({
-    className: '',
-    html: `<div class="custom-icon" style="width:${size}px;height:${size}px;background:${color};font-size:${size<=24?'.6rem':'.65rem'}">${no}</div>`,
-    iconSize: [size, size],
-    iconAnchor: [size/2, size/2],
-    popupAnchor: [0, -size/2]
-  });
+function createIcon(no,cat){
+  const c=CAT_COLORS[cat]||'#888';
+  const sz=no<=10?28:(no<=30?26:24);
+  const fs=sz<=24?'9px':'10px';
+  return L.divIcon({className:'',
+    html:`<div class="custom-icon" style="width:${sz}px;height:${sz}px;background:${c};font-size:${fs}">${no}</div>`,
+    iconSize:[sz,sz],iconAnchor:[sz/2,sz/2],popupAnchor:[0,-sz/2]});
 }
 
-function addMarkers(data) {
-  data.forEach(c => {
-    const marker = L.marker([c.lat, c.lng], { icon: createIcon(c.no, c.cat) });
-    marker.bindPopup(`
-      <div class="popup-num">No.${c.no}</div>
-      <div class="popup-title">${c.name}</div>
-      <div class="popup-sub">
-        📍 ${c.pref}<br>
-        🏭 ${c.short}<br>
-        📋 合格件数：約${c.count}件<br>
-        🏷️ ${CAT_LABELS[c.cat]}
-      </div>
-    `, { maxWidth: 280 });
-    marker.on('click', () => highlightSidebarItem(c.no));
-    marker.addTo(map);
-    markers[c.no] = { marker, data: c };
-  });
+function makePopup(c){
+  return `<div class="popup-num">No.${c.no}</div>
+<div class="popup-title">${c.name}</div>
+<div class="popup-sub">
+  🏭 ${c.short}<br>
+  📋 合格件数：約${c.count}件<br>
+  🏷️ ${CAT_LABELS[c.cat]}
+</div>
+<div class="popup-addr">📍 ${c.addr}</div>
+<div class="popup-url">🔗 <a href="${c.url}" target="_blank" rel="noopener">${c.url}</a></div>`;
 }
 
+function addMarkers(data){
+  data.forEach(c=>{
+    const m=L.marker([c.lat,c.lng],{icon:createIcon(c.no,c.cat)});
+    m.bindPopup(makePopup(c),{maxWidth:320});
+    m.on('click',()=>highlightSidebarItem(c.no));
+    m.addTo(map);
+    markers[c.no]={marker:m,data:c};
+  });
+}
 addMarkers(COMPANIES);
 
-// サイドバー
-function buildSidebar(data) {
-  const list = document.getElementById('company-list');
-  list.innerHTML = '';
-  data.forEach(c => {
-    const item = document.createElement('div');
-    item.className = 'company-item';
-    item.id = `item-${c.no}`;
-    const color = CAT_COLORS[c.cat] || '#888';
-    item.innerHTML = `
-      <div class="num-badge" style="background:${color}">${c.no}</div>
+function buildSidebar(data){
+  const list=document.getElementById('company-list');
+  list.innerHTML='';
+  document.getElementById('sidebar-title').textContent=`申請者一覧（${data.length}社）`;
+  data.forEach(c=>{
+    const item=document.createElement('div');
+    item.className='company-item';
+    item.id=`item-${c.no}`;
+    const col=CAT_COLORS[c.cat]||'#888';
+    item.innerHTML=`
+      <div class="num-badge" style="background:${col}">${c.no}</div>
       <div class="company-info">
         <div class="company-name">${c.name}</div>
-        <div class="company-sub">${c.short} | 合格件数 約${c.count}件</div>
-        <div class="company-pref">📍 ${c.pref} — ${CAT_LABELS[c.cat]}</div>
+        <div class="company-sub">${c.short} | 合格件数 約${c.count}件 | ${CAT_LABELS[c.cat]}</div>
+        <div class="company-addr">📍 ${c.addr}</div>
+        <div class="company-url">🔗 <a href="${c.url}" target="_blank" rel="noopener">${c.url}</a></div>
       </div>`;
-    item.onclick = () => {
-      map.flyTo([c.lat, c.lng], 11, { duration: 1 });
+    item.onclick=()=>{
+      map.flyTo([c.lat,c.lng],11,{duration:1});
       markers[c.no].marker.openPopup();
       highlightSidebarItem(c.no);
     };
@@ -257,30 +219,27 @@ function buildSidebar(data) {
 }
 buildSidebar(COMPANIES);
 
-function highlightSidebarItem(no) {
-  document.querySelectorAll('.company-item').forEach(el => el.classList.remove('active'));
-  const el = document.getElementById(`item-${no}`);
-  if (el) { el.classList.add('active'); el.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+function highlightSidebarItem(no){
+  document.querySelectorAll('.company-item').forEach(el=>el.classList.remove('active'));
+  const el=document.getElementById(`item-${no}`);
+  if(el){el.classList.add('active');el.scrollIntoView({behavior:'smooth',block:'nearest'});}
 }
 
-function toggleSidebar() {
+function toggleSidebar(){
   document.getElementById('sidebar').classList.toggle('hidden');
 }
 
-// フィルタ
-function filterByCategory() {
-  currentFilter = document.getElementById('filter').value;
-  const filtered = currentFilter === 'all' ? COMPANIES : COMPANIES.filter(c => c.cat === currentFilter);
-
-  Object.values(markers).forEach(({ marker }) => map.removeLayer(marker));
-  markers = {};
+function filterByCategory(){
+  const cat=document.getElementById('filter').value;
+  const filtered=cat==='all'?COMPANIES:COMPANIES.filter(c=>c.cat===cat);
+  Object.values(markers).forEach(({marker})=>map.removeLayer(marker));
+  markers={};
   addMarkers(filtered);
   buildSidebar(filtered);
-  document.getElementById('count-badge').textContent = `${filtered.length}社表示中`;
-
-  if (filtered.length > 0) {
-    const bounds = L.latLngBounds(filtered.map(c => [c.lat, c.lng]));
-    map.fitBounds(bounds, { padding: [40, 40] });
+  document.getElementById('count-badge').textContent=`${filtered.length}社表示中`;
+  if(filtered.length>0){
+    const b=L.latLngBounds(filtered.map(c=>[c.lat,c.lng]));
+    map.fitBounds(b,{padding:[40,40]});
   }
 }
 </script>
