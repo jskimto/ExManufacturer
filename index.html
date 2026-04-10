@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KSC Nippon Co., Ltd. — 防爆認証のパートナー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+</head>
+<body data-lang="ja">
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── NAV ───────────────────────────── -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2L3 7v10l9 5 9-5V7L12 2zm0 2.5l6.5 3.6L12 11.7 5.5 8.1 12 4.5zM5 9.7l6 3.3v6.6L5 16.3V9.7zm8 9.9v-6.6l6-3.3v6.6l-6 3.3z"/></svg>
+    </div>
+    <div>
+      <span class="nav-logo-text">KSC Nippon</span>
+      <span class="nav-logo-sub">防爆認証パートナー</span>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services" data-ja="サービス" data-kr="서비스">サービス</a></li>
+    <li><a href="#certifications" data-ja="認証一覧" data-kr="인증 현황">認証一覧</a></li>
+    <li><a href="#manufacturers" data-ja="メーカー" data-kr="제조사">メーカー</a></li>
+    <li><a href="#roadmap" data-ja="ロードマップ" data-kr="로드맵">ロードマップ</a></li>
+    <li><a href="#contact" data-ja="お問い合わせ" data-kr="문의하기">お問い合わせ</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <button class="lang-btn active" id="btnJa" onclick="setLang('ja')">
+      <span class="flag">🇯🇵</span> JA
+    </button>
+    <button class="lang-btn" id="btnKr" onclick="setLang('kr')">
+      <span class="flag">🇰🇷</span> KR
+    </button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="toggleMenu()" data-ja="サービス" data-kr="서비스">サービス</a>
+  <a href="#certifications" onclick="toggleMenu()" data-ja="認証一覧" data-kr="인증 현황">認証一覧</a>
+  <a href="#manufacturers" onclick="toggleMenu()" data-ja="メーカー" data-kr="제조사">メーカー</a>
+  <a href="#roadmap" onclick="toggleMenu()" data-ja="ロードマップ" data-kr="로드맵">ロードマップ</a>
+  <a href="#contact" onclick="toggleMenu()" data-ja="お問い合わせ" data-kr="문의하기">お問い合わせ</a>
+</div>
+
+<!-- ── HERO ───────────────────────────── -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow" data-ja="防爆認証のグローバルパートナー" data-kr="방폭 인증의 글로벌 파트너">防爆認証のグローバルパートナー</div>
+    <h1 class="hero-title" data-ja="世界基準の<br><em>防爆認証</em>を、<br>ワンストップで。" data-kr="세계 기준의<br><em>방폭 인증</em>을,<br>원스톱으로.">世界基準の<br><em>防爆認証</em>を、<br>ワンストップで。</h1>
+    <p class="hero-desc" data-ja="IECEx・ATEX・TIIS・KCsをはじめ、各国の防爆認証を一括サポート。石油・ガス・化学プラント産業の安全と市場参入を加速します。" data-kr="IECEx·ATEX·TIIS·KCs를 비롯한 각국 방폭 인증을 일괄 지원합니다. 석유·가스·화학 플랜트 산업의 안전과 시장 진입을 가속화합니다.">IECEx・ATEX・TIIS・KCsをはじめ、各国の防爆認証を一括サポート。石油・ガス・化学プラント産業の安全と市場参入を加速します。</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary" data-ja="無料相談を予約する" data-kr="무료 상담 예약">
+        <span>無料相談を予約する</span>
+        <svg class="btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a href="#services" class="btn-secondary" data-ja="サービスを見る" data-kr="서비스 보기">サービスを見る</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="cert-diagram">
+      <div class="cert-ring"></div>
+      <div class="cert-ring cert-ring-2"></div>
+      <div class="cert-ring cert-ring-3"></div>
+      <div class="cert-center"><div class="cert-center-icon">⚡</div></div>
+      <div class="cert-badge">IECEx</div>
+      <div class="cert-badge">ATEX</div>
+      <div class="cert-badge">KCs</div>
+      <div class="cert-badge">TIIS</div>
+      <div class="cert-badge">UL/FM</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ──────────────────────────── -->
+<div class="stats">
+  <div class="stat-item reveal">
+    <div class="stat-num">50<span>+</span></div>
+    <div class="stat-label" data-ja="TIIS認証 申請者数" data-kr="TIIS 인증 신청자 수">TIIS認証 申請者数</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-1">
+    <div class="stat-num">12<span>+</span></div>
+    <div class="stat-label" data-ja="対応認証スキーム" data-kr="대응 인증 스킴">対応認証スキーム</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-2">
+    <div class="stat-num">35<span>+</span></div>
+    <div class="stat-label" data-ja="IECEx加盟国" data-kr="IECEx 가맹국">IECEx加盟国</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-3">
+    <div class="stat-num">2026</div>
+    <div class="stat-label" data-ja="東京 設立予定" data-kr="도쿄 설립 예정">東京 設立予定</div>
+  </div>
+</div>
+
+<!-- ── SERVICES ───────────────────────── -->
+<section class="services" id="services">
+  <div class="section-label" data-ja="サービス" data-kr="서비스">サービス</div>
+  <h2 class="section-title reveal" data-ja="防爆認証の<br>全工程をカバー" data-kr="방폭 인증의<br>전 과정을 커버">防爆認証の<br>全工程をカバー</h2>
+  <p class="section-desc reveal" data-ja="設計段階のアドバイスから申請書類作成・認証機関との交渉・工場審査まで、ワンストップでサポートします。" data-kr="설계 단계 자문부터 신청 서류 작성·인증기관 협상·공장심사까지, 원스톱으로 지원합니다.">設計段階のアドバイスから申請書類作成・認証機関との交渉・工場審査まで、ワンストップでサポートします。</p>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      </div>
+      <div class="service-title" data-ja="認証取得支援・代行" data-kr="인증 취득 지원·대행">認証取得支援・代行</div>
+      <div class="service-desc" data-ja="IECEx・ATEX・KCs・UL等の申請代行、書類作成支援、試験機関調整を一括で行います。" data-kr="IECEx·ATEX·KCs·UL 등의 신청 대행, 서류 작성 지원, 시험기관 조정을 일괄로 수행합니다.">IECEx・ATEX・KCs・UL等の申請代行、書類作成支援、試験機関調整を一括で行います。</div>
+      <div class="service-tags"><span class="tag">IECEx</span><span class="tag">ATEX</span><span class="tag">KCs</span><span class="tag">UL/FM</span></div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+      </div>
+      <div class="service-title" data-ja="型式検定・性能検査" data-kr="형식검정·성능검사">型式検定・性能検査</div>
+      <div class="service-desc" data-ja="産業安全保健法に基づく型式検定代行および製造時検査対応。TIIS合格品の維持管理も支援。" data-kr="산업안전보건법에 근거한 형식검정 대행 및 제조 시 검사 대응. TIIS 합격품 유지관리도 지원합니다.">産業安全保健法に基づく型式検定代行および製造時検査対応。TIIS合格品の維持管理も支援。</div>
+      <div class="service-tags"><span class="tag">TIIS</span><span class="tag">JPEx</span><span class="tag">型式検定</span></div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+      </div>
+      <div class="service-title" data-ja="工場審査・QMSコンサルティング" data-kr="공장심사·QMS 컨설팅">工場審査・QMSコンサルティング</div>
+      <div class="service-desc" data-ja="ISO 9001・防爆QMS構築支援、IECEx工場監査アテンド。QAR取得まで一貫サポート。" data-kr="ISO 9001·방폭 QMS 구축 지원, IECEx 공장감사 어텐드. QAR 취득까지 일관 지원합니다.">ISO 9001・防爆QMS構築支援、IECEx工場監査アテンド。QAR取得まで一貫サポート。</div>
+      <div class="service-tags"><span class="tag">ISO 9001</span><span class="tag">QAR</span><span class="tag">工場監査</span></div>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/></svg>
+      </div>
+      <div class="service-title" data-ja="教育・資格認証" data-kr="교육·자격 인증">教育・資格認証</div>
+      <div class="service-desc" data-ja="IECEx CoPC対策、防爆技術者向けセミナー、社内研修の企画・運営を行います。" data-kr="IECEx CoPC 대책, 방폭 기술자 세미나, 사내 연수 기획·운영을 수행합니다.">IECEx CoPC対策、防爆技術者向けセミナー、社内研修の企画・運営を行います。</div>
+      <div class="service-tags"><span class="tag">IECEx CoPC</span><span class="tag">セミナー</span><span class="tag">研修</span></div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+      </div>
+      <div class="service-title" data-ja="海外市場参入支援" data-kr="해외 시장 진출 지원">海外市場参入支援</div>
+      <div class="service-desc" data-ja="ブラジルINMETRO・中国NEPSI・韓国KCsなど多国間認証の同時取得支援。現地パートナーとの連携で迅速対応。" data-kr="브라질 INMETRO·중국 NEPSI·한국 KCs 등 다국간 인증 동시 취득 지원. 현지 파트너와의 연계로 신속 대응합니다.">ブラジルINMETRO・中国NEPSI・韓国KCsなど多国間認証の同時取得支援。現地パートナーとの連携で迅速対応。</div>
+      <div class="service-tags"><span class="tag">INMETRO</span><span class="tag">NEPSI</span><span class="tag">多国同時</span></div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      </div>
+      <div class="service-title" data-ja="技術情報・規格情報" data-kr="기술 정보·규격 정보">技術情報・規格情報</div>
+      <div class="service-desc" data-ja="IEC・ISO・国内規格の改定情報を常時モニタリング。月次技術ニュースレターで最新動向をお届け。" data-kr="IEC·ISO·국내 규격 개정 정보를 상시 모니터링. 월간 기술 뉴스레터로 최신 동향을 전달합니다.">IEC・ISO・国内規格の改定情報を常時モニタリング。月次技術ニュースレターで最新動向をお届け。</div>
+      <div class="service-tags"><span class="tag">IEC 60079</span><span class="tag">規格改定</span><span class="tag">月次情報</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CERTIFICATIONS ─────────────────── -->
+<section class="certifications" id="certifications">
+  <div class="section-label" data-ja="対応認証" data-kr="대응 인증">対応認証</div>
+  <h2 class="section-title reveal" data-ja="主要防爆認証スキーム" data-kr="주요 방폭 인증 스킴">主要防爆認証スキーム</h2>
+  <p class="section-desc reveal" data-ja="世界各国の防爆認証制度に対応。IECEx認証をベースに各国ローカル認証取得を効率化します。" data-kr="전 세계 방폭 인증 제도에 대응합니다. IECEx 인증을 기반으로 각국 로컬 인증 취득을 효율화합니다.">世界各国の防爆認証制度に対応。IECEx認証をベースに各国ローカル認証取得を効率化します。</p>
+  <div class="cert-grid">
+    <div class="cert-card reveal"><div class="cert-name">IECEx</div><div class="cert-full">IEC防爆機器規格 適合試験制度</div><div class="cert-country">🌐 国際（35カ国+）</div></div>
+    <div class="cert-card reveal reveal-delay-1"><div class="cert-name">ATEX</div><div class="cert-full">欧州防爆指令 2014/34/EU</div><div class="cert-country">🇪🇺 欧州連合</div></div>
+    <div class="cert-card reveal reveal-delay-2"><div class="cert-name">TIIS</div><div class="cert-full">産業安全技術協会 型式検定</div><div class="cert-country">🇯🇵 日本</div></div>
+    <div class="cert-card reveal reveal-delay-3"><div class="cert-name">KCs</div><div class="cert-full">한국 산업안전인증 KC마크</div><div class="cert-country">🇰🇷 韓国</div></div>
+    <div class="cert-card reveal"><div class="cert-name">UL/FM</div><div class="cert-full">Underwriters Laboratories / FM Approvals</div><div class="cert-country">🇺🇸 米国</div></div>
+    <div class="cert-card reveal reveal-delay-1"><div class="cert-name">NEPSI</div><div class="cert-full">国家防爆电气产品质量检验检测中心</div><div class="cert-country">🇨🇳 中国</div></div>
+    <div class="cert-card reveal reveal-delay-2"><div class="cert-name">INMETRO</div><div class="cert-full">Instituto Nacional de Metrologia</div><div class="cert-country">🇧🇷 ブラジル</div></div>
+    <div class="cert-card reveal reveal-delay-3"><div class="cert-name">UKCA</div><div class="cert-full">UK Conformity Assessed</div><div class="cert-country">🇬🇧 英国</div></div>
+  </div>
+</section>
+
+<!-- ── MANUFACTURERS ──────────────────── -->
+<section class="manufacturers" id="manufacturers">
+  <div class="section-label" data-ja="認証取得メーカー" data-kr="인증 취득 제조사">認証取得メーカー</div>
+  <h2 class="section-title reveal" data-ja="TIIS 型式検定 合格品<br>申請者全社リスト" data-kr="TIIS 형식검정 합격품<br>신청자 전사 목록">TIIS 型式検定 合格品<br>申請者全社リスト</h2>
+  <p class="section-desc reveal" data-ja="産業安全技術協会公式リスト（2025年8月末現在）の全申請者50社。合格件数順に表示。検索・絞り込み可能。" data-kr="산업안전기술협회 공식 리스트（2025년 8월 말 현재）의 전체 신청자 50개사. 합격 건수 순으로 표시. 검색·필터 가능.">産業安全技術協会公式リスト（2025年8月末現在）の全申請者50社。合格件数順に表示。検索・絞り込み可能。</p>
+
+  <!-- Search + filter bar -->
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center;" class="reveal">
+    <div style="position:relative;flex:1;min-width:200px;">
+      <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--steel);fill:none;stroke-width:2;stroke-linecap:round;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="mfrSearch" type="text" placeholder="社名・品目で検索…" style="width:100%;padding:10px 12px 10px 38px;border:1.5px solid var(--border);border-radius:999px;font-size:0.875rem;background:var(--fog);color:var(--navy);outline:none;font-family:var(--font-body);" oninput="filterTable()" data-placeholder-ja="社名・品目で検索…" data-placeholder-kr="회사명·품목으로 검색…">
+    </div>
+    <select id="mfrCategory" onchange="filterTable()" style="padding:10px 16px;border:1.5px solid var(--border);border-radius:999px;font-size:0.875rem;background:var(--fog);color:var(--navy);outline:none;font-family:var(--font-body);cursor:pointer;">
+      <option value="" data-ja="全カテゴリ" data-kr="전체 카테고리">全カテゴリ</option>
+      <option value="モータ" data-ja="電動機・モータ" data-kr="전동기·모터">電動機・モータ</option>
+      <option value="スイッチ" data-ja="スイッチ・開閉器" data-kr="스위치·개폐기">スイッチ・開閉器</option>
+      <option value="バルブ" data-ja="バルブ・制御器" data-kr="밸브·제어기">バルブ・制御器</option>
+      <option value="熱電対" data-ja="センサ・計測器" data-kr="센서·계측기">センサ・計測器</option>
+      <option value="制御" data-ja="制御盤・操作盤" data-kr="제어반·조작반">制御盤・操作盤</option>
+      <option value="電磁弁" data-ja="電磁弁・電磁石" data-kr="전자밸브·전자석">電磁弁・電磁石</option>
+      <option value="ガス" data-ja="ガス検知器" data-kr="가스 검지기">ガス検知器</option>
+    </select>
+    <div id="mfrCount" style="font-size:0.8rem;color:var(--steel);white-space:nowrap;padding:0 8px;">全50社表示中</div>
+  </div>
+
+  <div class="mfr-table-wrap reveal">
+    <table class="mfr-table" id="mfrTable">
+      <thead>
+        <tr>
+          <th style="width:3%">#</th>
+          <th data-ja="申請者（製造者）" data-kr="신청자（제조사）">申請者（製造者）</th>
+          <th data-ja="主要品目" data-kr="주요 품목">主要品目</th>
+          <th data-ja="合格件数" data-kr="합격 건수">合格件数</th>
+          <th data-ja="TIIS認証" data-kr="TIIS 인증">TIIS認証</th>
+          <th data-ja="国際認証機会" data-kr="국제 인증 기회">国際認証機会</th>
+        </tr>
+      </thead>
+      <tbody id="mfrTbody">
+      </tbody>
+    </table>
+    <div id="mfrNoResult" style="display:none;text-align:center;padding:2rem;color:var(--text-soft);font-size:0.9rem;">該当する企業が見つかりませんでした</div>
+  </div>
+
+  <p style="margin-top:1rem;font-size:0.75rem;color:var(--text-soft);" class="reveal">
+    ※ 出典：公益社団法人 産業安全技術協会 防爆構造電気機械器具 検定合格品リスト（2025年8月末現在）<br>
+    ※ 合格件数は同一型式の複数品番を含む総合格番号数。「国際認証機会」は当社サポート対象認証の例示。
+  </p>
+</section>
+
+<!-- ── ROADMAP ─────────────────────────── -->
+<section class="roadmap" id="roadmap">
+  <div class="section-label" data-ja="事業計画" data-kr="사업 계획">事業計画</div>
+  <h2 class="section-title reveal" data-ja="フェーズ別<br>ロードマップ" data-kr="단계별<br>로드맵">フェーズ別<br>ロードマップ</h2>
+  <p class="section-desc reveal" data-ja="2026年5月の設立から、アジア防爆認証ハブへの3ステップ成長戦略。" data-kr="2026년 5월 설립부터 아시아 방폭 인증 허브까지의 3단계 성장 전략.">2026年5月の設立から、アジア防爆認証ハブへの3ステップ成長戦略。</p>
+  <div class="phases">
+    <div class="phase-card reveal">
+      <div class="phase-num">1</div>
+      <div class="phase-label" data-ja="Phase 1 · 2026年5月〜12月" data-kr="Phase 1 · 2026년 5월~12월">Phase 1 · 2026年5月〜12月</div>
+      <div class="phase-title" data-ja="基盤構築" data-kr="기반 구축">基盤構築</div>
+      <ul class="phase-items">
+        <li data-ja="法人設立・認定申請準備" data-kr="법인 설립·인정 신청 준비">法人設立・認定申請準備</li>
+        <li data-ja="KSCグループとの業務連携協定締結" data-kr="KSC 그룹과의 업무 연계 협정 체결">KSCグループとの業務連携協定締結</li>
+        <li data-ja="既存顧客への営業開始" data-kr="기존 고객 영업 개시">既存顧客への営業開始</li>
+        <li data-ja="専門サイト構築（日英韓対応）" data-kr="전문 사이트 구축（일·영·한 대응）">専門サイト構築（日英韓対応）</li>
+      </ul>
+      <div class="phase-revenue" data-ja="目標売上：1,500〜3,000万円/年" data-kr="목표 매출：1,500~3,000만 엔/년">目標売上：1,500〜3,000万円/年</div>
+    </div>
+    <div class="phase-card reveal reveal-delay-1">
+      <div class="phase-num">2</div>
+      <div class="phase-label" data-ja="Phase 2 · 2027年（通期）" data-kr="Phase 2 · 2027년（연간）">Phase 2 · 2027年（通期）</div>
+      <div class="phase-title" data-ja="事業展開" data-kr="사업 전개">事業展開</div>
+      <ul class="phase-items">
+        <li data-ja="IECEx認証機関との提携契約締結" data-kr="IECEx 인증기관과의 제휴 계약 체결">IECEx認証機関との提携契約締結</li>
+        <li data-ja="国内認証代行10件以上受注" data-kr="국내 인증 대행 10건 이상 수주">国内認証代行10件以上受注</li>
+        <li data-ja="防爆セミナー定期開催（四半期）" data-kr="방폭 세미나 정기 개최（분기）">防爆セミナー定期開催（四半期）</li>
+        <li data-ja="ブラジル・東南アジア連携開始" data-kr="브라질·동남아시아 연계 개시">ブラジル・東南アジア連携開始</li>
+      </ul>
+      <div class="phase-revenue" data-ja="目標売上：5,000〜8,000万円/年" data-kr="목표 매출：5,000~8,000만 엔/년">目標売上：5,000〜8,000万円/年</div>
+    </div>
+    <div class="phase-card reveal reveal-delay-2">
+      <div class="phase-num">3</div>
+      <div class="phase-label" data-ja="Phase 3 · 2028年以降" data-kr="Phase 3 · 2028년 이후">Phase 3 · 2028年以降</div>
+      <div class="phase-title" data-ja="アジア展開" data-kr="아시아 전개">アジア展開</div>
+      <ul class="phase-items">
+        <li data-ja="アジア防爆認証ハブ機能確立" data-kr="아시아 방폭 인증 허브 기능 확립">アジア防爆認証ハブ機能確立</li>
+        <li data-ja="年間認証支援50件以上" data-kr="연간 인증 지원 50건 이상">年間認証支援50件以上</li>
+        <li data-ja="IECEx CoPC 育成プログラム確立" data-kr="IECEx CoPC 육성 프로그램 확립">IECEx CoPC 育成プログラム確立</li>
+        <li data-ja="ブラジル・中東市場への展開検討" data-kr="브라질·중동 시장 진출 검토">ブラジル・中東市場への展開検討</li>
+      </ul>
+      <div class="phase-revenue" data-ja="目標売上：1〜2億円/年" data-kr="목표 매출：1~2억 엔/년">目標売上：1〜2億円/年</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ─────────────────────────── -->
+<section class="contact" id="contact">
+  <div class="contact-wrap">
+    <div>
+      <div class="section-label" data-ja="お問い合わせ" data-kr="문의하기">お問い合わせ</div>
+      <h2 class="section-title reveal" data-ja="認証の課題、<br>まずご相談を" data-kr="인증 과제,<br>먼저 상담을">認証の課題、<br>まずご相談を</h2>
+      <p style="font-size:0.95rem;color:var(--text-mid);line-height:1.8;margin-bottom:2rem;" class="reveal" data-ja="防爆認証に関するご質問・お見積りはお気軽にどうぞ。専門スタッフが日本語・韓国語・英語で対応します。" data-kr="방폭 인증에 관한 질문·견적 문의는 편하게 연락주세요. 전문 스태프가 일본어·한국어·영어로 대응합니다.">防爆認証に関するご質問・お見積りはお気軽にどうぞ。専門スタッフが日本語・韓国語・英語で対応します。</p>
+      <div class="contact-info-block reveal">
+        <div class="contact-info-label" data-ja="会社名" data-kr="회사명">会社名</div>
+        <div class="contact-info-value">株式会社KSCニッポン</div>
+      </div>
+      <div class="contact-info-block reveal">
+        <div class="contact-info-label" data-ja="所在地" data-kr="소재지">所在地</div>
+        <div class="contact-info-value" data-ja="東京都（設立準備中）" data-kr="도쿄도（설립 준비 중）">東京都（設立準備中）</div>
+      </div>
+      <div class="contact-info-block reveal">
+        <div class="contact-info-label" data-ja="対応言語" data-kr="대응 언어">対応言語</div>
+        <div class="contact-info-value" data-ja="🇯🇵 日本語　🇰🇷 한국어　🇬🇧 English" data-kr="🇯🇵 일본어　🇰🇷 한국어　🇬🇧 영어">🇯🇵 日本語　🇰🇷 한국어　🇬🇧 English</div>
+      </div>
+    </div>
+    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" data-ja="お名前 *" data-kr="성함 *">お名前 *</label>
+          <input class="form-input" type="text" required placeholder="山田 太郎" data-placeholder-ja="山田 太郎" data-placeholder-kr="홍길동">
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-ja="会社名 *" data-kr="회사명 *">会社名 *</label>
+          <input class="form-input" type="text" required placeholder="株式会社〇〇" data-placeholder-ja="株式会社〇〇" data-placeholder-kr="○○주식회사">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-ja="メールアドレス *" data-kr="이메일 주소 *">メールアドレス *</label>
+        <input class="form-input" type="email" required placeholder="example@company.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-ja="ご関心の認証" data-kr="관심 있는 인증">ご関心の認証</label>
+        <select class="form-select">
+          <option value="" data-ja="選択してください" data-kr="선택해 주세요">選択してください</option>
+          <option>IECEx</option><option>ATEX</option><option>TIIS / 型式検定</option>
+          <option>KCs（韓国）</option><option>UL/FM（米国）</option><option>NEPSI（中国）</option>
+          <option>INMETRO（ブラジル）</option><option data-ja="複数・その他" data-kr="복수·기타">複数・その他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-ja="お問い合わせ内容" data-kr="문의 내용">お問い合わせ内容</label>
+        <textarea class="form-textarea" placeholder="認証取得に関するご質問・ご相談内容をご記入ください。" data-placeholder-ja="認証取得に関するご質問・ご相談内容をご記入ください。" data-placeholder-kr="인증 취득에 관한 질문·상담 내용을 기재해 주세요."></textarea>
+      </div>
+      <button type="submit" class="form-submit" data-ja="送信する →" data-kr="전송하기 →">送信する →</button>
+      <div id="formMsg" style="display:none;margin-top:1rem;font-size:0.875rem;color:var(--azure);font-weight:500;"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">KSC Nippon</div>
+      <div class="footer-copy" data-ja="© 2026 株式会社KSCニッポン All Rights Reserved." data-kr="© 2026 KSC 니폰 주식회사 All Rights Reserved.">© 2026 株式会社KSCニッポン All Rights Reserved.</div>
+    </div>
+    <div class="footer-links">
+      <a href="#services" data-ja="サービス" data-kr="서비스">サービス</a>
+      <a href="#certifications" data-ja="認証一覧" data-kr="인증 현황">認証一覧</a>
+      <a href="#roadmap" data-ja="ロードマップ" data-kr="로드맵">ロードマップ</a>
+      <a href="#contact" data-ja="お問い合わせ" data-kr="문의하기">お問い合わせ</a>
+    </div>
+  </div>
+</footer>
+
+
+<script src="assets/main.js"></script>
+
+</body>
+</html>
