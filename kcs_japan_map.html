@@ -8,230 +8,233 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ── RESET & BASE ────────────────────────── */
-*{margin:0;padding:0;box-sizing:border-box;}
+/* ─ CSS Variables: identical to KSC Nippon style.css ─ */
 :root{
-  --navy:#0f172a;--azure:#3b82f6;--steel:#64748b;--fog:#f1f5f9;--white:#ffffff;--border:#e2e8f0;
-  --text-dark:#1e293b;--text-mid:#475569;--text-soft:#94a3b8;
-  --font-display:'DM Serif Display',serif;
-  --font-body:'Sora','Noto Sans KR',sans-serif;
-  --c1:#3b82f6;--c2:#10b981;--c3:#f59e0b;--c4:#a78bfa;--c5:#f97316;--c6:#ec4899;
-  --radius:12px;
+  --ice:#EAF4FB; --ice-mid:#D0E9F5; --ice-deep:#B3D9EE;
+  --azure:#2B7BB9; --azure-dark:#1A5A8A;
+  --navy:#0D2B45; --navy-mid:#163C5C;
+  --steel:#4A7FA0; --fog:#F4F9FC; --white:#FFFFFF;
+  --text-main:#0D2B45; --text-mid:#2E5E80; --text-soft:#6A96B0;
+  --accent:#1E9DC8; --accent-glow:rgba(30,157,200,0.12);
+  --border:rgba(43,123,185,0.15);
+  --font-display:'DM Serif Display',Georgia,serif;
+  --font-body-ja:'Sora',sans-serif;
+  --font-body-kr:'Noto Sans KR',sans-serif;
+  --font-body:var(--font-body-ja);
+  --radius:16px; --radius-sm:8px;
+  --transition:0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  /* category colors */
+  --c1:#2B7BB9; --c2:#1E9DC8; --c3:#E8A020; --c4:#8B5CF6; --c5:#E05A30; --c6:#D42B7A;
 }
-html{scroll-behavior:smooth;}
-body{font-family:var(--font-body);background:var(--white);color:var(--text-dark);overflow-x:hidden;cursor:none;}
+[data-lang="kr"]{--font-body:var(--font-body-kr);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--font-body);background:var(--fog);color:var(--text-main);line-height:1.7;overflow-x:hidden;cursor:none;}
 
-/* ── CURSOR ─────────────────────────────── */
-.cursor{position:fixed;width:8px;height:8px;background:var(--azure);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s;}
-.cursor-ring{position:fixed;width:32px;height:32px;border:1.5px solid rgba(59,130,246,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s,width .2s,height .2s;}
-body:has(a:hover) .cursor-ring,body:has(button:hover) .cursor-ring{width:44px;height:44px;}
+/* ─ CURSOR ─ */
+.cursor{width:10px;height:10px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s,width .3s,height .3s,background .3s;mix-blend-mode:multiply;}
+.cursor-ring{width:36px;height:36px;border:1.5px solid var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .3s cubic-bezier(.25,.46,.45,.94),width .3s,height .3s,opacity .3s;opacity:.5;}
 
-/* ── NAV ─────────────────────────────────── */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;padding:0 2rem;height:64px;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:box-shadow .3s;}
-nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.08);}
+/* ─ NAV ─ */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 clamp(1.5rem,5vw,4rem);height:72px;display:flex;align-items:center;justify-content:space-between;background:rgba(244,249,252,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow .3s;}
+nav.scrolled{box-shadow:0 4px 32px rgba(13,43,69,.08);}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.nav-logo-text{font-size:1.1rem;font-weight:600;color:var(--navy);letter-spacing:-.01em;}
-.nav-logo-sub{font-size:.65rem;color:var(--steel);display:block;letter-spacing:.04em;}
-.nav-links{display:flex;list-style:none;gap:2rem;margin-left:auto;}
-.nav-links a{text-decoration:none;font-size:.85rem;color:var(--text-mid);font-weight:500;transition:color .2s;letter-spacing:.01em;}
+.nav-logo-img{height:36px;width:auto;display:block;}
+.nav-logo-text{font-family:var(--font-display);font-size:1.15rem;color:var(--navy);line-height:1.1;}
+.nav-logo-sub{font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);display:block;}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
+.nav-links a{font-size:.875rem;font-weight:500;letter-spacing:.02em;color:var(--text-mid);text-decoration:none;position:relative;transition:color var(--transition);}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1.5px;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .3s ease;}
 .nav-links a:hover{color:var(--azure);}
-.lang-switcher{display:flex;gap:6px;margin-left:2rem;}
-.lang-btn{display:flex;align-items:center;gap:4px;padding:5px 12px;border:1.5px solid var(--border);border-radius:999px;background:transparent;font-family:var(--font-body);font-size:.78rem;font-weight:500;cursor:pointer;color:var(--steel);transition:all .2s;}
-.lang-btn.active,.lang-btn:hover{border-color:var(--azure);color:var(--azure);background:rgba(59,130,246,.06);}
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
-.hamburger span{width:22px;height:2px;background:var(--navy);border-radius:2px;transition:all .3s;}
-.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left;}
+.lang-switcher{display:flex;align-items:center;gap:.5rem;}
+.lang-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--border);background:transparent;font-family:var(--font-body);font-size:.8rem;font-weight:500;color:var(--text-mid);cursor:pointer;transition:all .25s;}
+.lang-btn:hover,.lang-btn.active{background:var(--azure);color:white;border-color:var(--azure);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;border:none;background:none;}
+.hamburger span{width:22px;height:1.5px;background:var(--navy);border-radius:2px;transition:all .3s;display:block;}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
 .hamburger.open span:nth-child(2){opacity:0;}
-.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
-.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:1.5rem 2rem;z-index:999;flex-direction:column;gap:1rem;}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;z-index:99;background:rgba(244,249,252,.97);backdrop-filter:blur(20px);padding:1.5rem clamp(1.5rem,5vw,4rem) 2rem;border-bottom:1px solid var(--border);flex-direction:column;gap:1rem;}
 .mobile-menu.open{display:flex;}
-.mobile-menu a{text-decoration:none;color:var(--text-dark);font-size:1rem;font-weight:500;padding:.5rem 0;border-bottom:1px solid var(--border);}
+.mobile-menu a{font-size:1rem;font-weight:500;color:var(--text-mid);text-decoration:none;padding:.5rem 0;border-bottom:1px solid var(--border);}
 
-/* ── HERO ─────────────────────────────────── */
-.hero{min-height:100vh;display:flex;align-items:center;padding:100px 2rem 4rem;position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#f0f7ff 0%,#ffffff 50%,#f8f4ff 100%);}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(59,130,246,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.05) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse at 60% 50%,black 30%,transparent 75%);}
-.hero-content{position:relative;z-index:1;max-width:560px;}
-.hero-eyebrow{font-size:.8rem;font-weight:600;letter-spacing:.12em;color:var(--azure);text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:8px;}
-.hero-eyebrow::before{content:'';display:inline-block;width:24px;height:2px;background:var(--azure);}
-.hero-title{font-family:var(--font-display);font-size:clamp(2.8rem,6vw,4.2rem);line-height:1.15;color:var(--navy);margin-bottom:1.5rem;}
+/* ─ HERO ─ */
+.hero{min-height:100svh;padding:72px clamp(1.5rem,5vw,4rem) 0;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:2rem;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 70% 60% at 80% 40%,var(--ice-mid) 0%,transparent 70%),radial-gradient(ellipse 50% 50% at 20% 80%,var(--ice) 0%,transparent 60%);}
+.hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 70%);}
+.hero-content{position:relative;z-index:1;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--ice-mid);border:1px solid var(--ice-deep);border-radius:999px;padding:6px 16px;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--azure);margin-bottom:1.5rem;}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-title{font-family:var(--font-display);font-size:clamp(2.8rem,5.5vw,5rem);line-height:1.08;color:var(--navy);margin-bottom:1.5rem;letter-spacing:-.02em;}
 .hero-title em{font-style:italic;color:var(--azure);}
-.hero-desc{font-size:1rem;color:var(--text-mid);line-height:1.8;margin-bottom:2.5rem;max-width:480px;}
+.hero-desc{font-size:clamp(.95rem,1.5vw,1.1rem);color:var(--text-mid);max-width:480px;margin-bottom:2.5rem;line-height:1.8;}
 .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;}
-.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--azure);color:white;text-decoration:none;border-radius:999px;font-size:.9rem;font-weight:600;transition:all .25s;border:2px solid var(--azure);}
-.btn-primary:hover{background:transparent;color:var(--azure);}
-.btn-arrow{width:16px;height:16px;}
-.btn-secondary{display:inline-flex;align-items:center;padding:14px 28px;border:2px solid var(--border);color:var(--text-mid);text-decoration:none;border-radius:999px;font-size:.9rem;font-weight:500;transition:all .25s;}
-.btn-secondary:hover{border-color:var(--azure);color:var(--azure);}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--azure);color:white;padding:14px 28px;border-radius:999px;font-size:.9rem;font-weight:600;text-decoration:none;letter-spacing:.02em;transition:all .3s;box-shadow:0 8px 32px rgba(43,123,185,.3);}
+.btn-primary:hover{background:var(--azure-dark);transform:translateY(-2px);box-shadow:0 12px 40px rgba(43,123,185,.4);}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--azure);padding:14px 28px;border-radius:999px;border:1.5px solid var(--azure);font-size:.9rem;font-weight:600;text-decoration:none;letter-spacing:.02em;transition:all .3s;}
+.btn-secondary:hover{background:var(--ice);transform:translateY(-2px);}
+.btn-arrow{width:16px;height:16px;flex-shrink:0;}
+.hero-visual{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;}
 
-/* Hero visual: animated map preview */
-.hero-visual{position:absolute;right:4%;top:50%;transform:translateY(-50%);width:44%;max-width:580px;z-index:1;}
-.hero-map-preview{width:100%;aspect-ratio:1.1;background:linear-gradient(135deg,#0a0e1a 0%,#111827 100%);border-radius:20px;border:1px solid rgba(59,130,246,.2);box-shadow:0 24px 80px rgba(59,130,246,.15);overflow:hidden;position:relative;}
-.hero-map-preview svg{width:100%;height:100%;}
-.float-badge{position:absolute;background:white;border:1px solid var(--border);border-radius:10px;padding:10px 14px;box-shadow:0 8px 24px rgba(0,0,0,.1);animation:float 3s ease-in-out infinite;}
-.float-badge:nth-child(2){bottom:16%;right:-4%;animation-delay:.8s;}
-.float-badge:nth-child(3){top:14%;left:-4%;animation-delay:1.6s;}
-.fb-label{font-size:.65rem;color:var(--steel);font-weight:500;}
-.fb-val{font-size:1.1rem;font-weight:600;color:var(--navy);}
-@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+/* minimap in hero */
+.hero-minimap{width:min(420px,90vw);aspect-ratio:.85;background:var(--navy);border-radius:var(--radius);border:1px solid var(--ice-deep);box-shadow:0 20px 80px rgba(13,43,69,.2);overflow:hidden;position:relative;}
+.hero-minimap svg{width:100%;height:100%;}
 
-/* ── STATS ───────────────────────────────── */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.stat-item{padding:2.5rem 1.5rem;text-align:center;border-right:1px solid var(--border);}
+/* ─ STATS ─ */
+.stats{padding:clamp(2rem,6vw,5rem) clamp(1.5rem,5vw,4rem);background:var(--navy);display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;}
+.stat-item{padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,3vw,2rem);border-right:1px solid rgba(255,255,255,.08);text-align:center;}
 .stat-item:last-child{border-right:none;}
-.stat-num{font-family:var(--font-display);font-size:2.8rem;color:var(--navy);line-height:1;}
-.stat-num span{font-size:1.4rem;color:var(--azure);}
-.stat-label{font-size:.78rem;color:var(--steel);margin-top:.5rem;font-weight:500;letter-spacing:.04em;}
+.stat-num{font-family:var(--font-display);font-size:clamp(2.2rem,4vw,3.5rem);color:white;line-height:1;margin-bottom:.5rem;}
+.stat-num span{color:var(--accent);}
+.stat-label{font-size:.8rem;color:rgba(255,255,255,.5);font-weight:400;letter-spacing:.06em;text-transform:uppercase;}
 
-/* ── SECTION COMMONS ─────────────────────── */
-section{padding:6rem 2rem;}
-.section-inner{max-width:1100px;margin:0 auto;}
-.section-label{font-size:.75rem;font-weight:600;letter-spacing:.14em;color:var(--azure);text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
-.section-label::before{content:'';display:inline-block;width:20px;height:2px;background:var(--azure);}
-.section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,2.8rem);line-height:1.2;color:var(--navy);margin-bottom:1rem;}
-.section-desc{font-size:.95rem;color:var(--text-mid);line-height:1.8;max-width:640px;margin-bottom:3rem;}
+/* ─ SECTION COMMONS ─ */
+section{padding:clamp(4rem,10vw,8rem) clamp(1.5rem,5vw,4rem);}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--azure);margin-bottom:1rem;}
+.section-label::before{content:'';width:24px;height:1.5px;background:var(--accent);}
+.section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);color:var(--navy);line-height:1.12;letter-spacing:-.02em;margin-bottom:1.2rem;}
+.section-desc{font-size:1rem;color:var(--text-mid);max-width:560px;line-height:1.8;margin-bottom:3rem;}
 
-/* ── MAP SECTION ─────────────────────────── */
-.map-section{background:var(--fog);padding:6rem 2rem;}
-.map-section .section-inner{max-width:1300px;}
-.map-layout{display:grid;grid-template-columns:300px 1fr;gap:0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,.07);min-height:680px;}
+/* ─ MAP SECTION ─ */
+.map-section{background:var(--white);}
+.map-layout{display:grid;grid-template-columns:300px 1fr;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:0 8px 40px rgba(13,43,69,.08);min-height:700px;}
 
 /* sidebar */
 .map-sidebar{background:var(--navy);display:flex;flex-direction:column;overflow:hidden;}
-.map-sidebar-head{padding:18px 16px 12px;border-bottom:1px solid rgba(255,255,255,.08);}
-.map-sidebar-title{font-size:.7rem;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:10px;}
-.legend-item{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer;transition:background .15s;margin-bottom:1px;}
-.legend-item:hover{background:rgba(255,255,255,.06);}
-.legend-item.active{background:rgba(255,255,255,.1);}
-.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-.legend-label{font-size:11px;color:rgba(255,255,255,.85);flex:1;line-height:1.3;}
-.legend-count{font-size:10px;color:rgba(255,255,255,.4);font-family:'Courier New',monospace;}
-
-.list-header{padding:8px 14px 6px;font-size:.65rem;letter-spacing:.12em;color:rgba(255,255,255,.35);text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}
-.company-list{overflow-y:auto;flex:1;}
-.company-list::-webkit-scrollbar{width:3px;}
-.company-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px;}
-.c-item{display:flex;align-items:flex-start;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s;}
-.c-item:hover{background:rgba(255,255,255,.04);}
-.c-item.sel{background:rgba(59,130,246,.18);}
-.c-num{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;font-family:'Courier New',monospace;flex-shrink:0;margin-top:2px;color:#fff;}
-.c-info{flex:1;min-width:0;}
-.c-name{font-size:11px;font-weight:500;color:rgba(255,255,255,.9);line-height:1.35;margin-bottom:1px;}
-.c-sub{font-size:10px;font-weight:300;color:rgba(255,255,255,.45);}
-.c-addr{font-size:10px;color:rgba(255,255,255,.45);margin-bottom:2px;line-height:1.3;}
-.c-url a{font-size:9.5px;color:#60a5fa;text-decoration:none;font-family:'Courier New',monospace;word-break:break-all;}
-.c-url a:hover{text-decoration:underline;}
-.c-cnt{font-size:9px;font-family:'Courier New',monospace;color:rgba(255,255,255,.4);flex-shrink:0;text-align:right;line-height:1.2;}
-.c-cnt span{display:block;font-size:15px;font-weight:700;color:rgba(255,255,255,.9);}
+.sidebar-head{padding:18px 16px 12px;border-bottom:1px solid rgba(255,255,255,.07);}
+.sidebar-head-title{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10px;}
+.leg-all{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:7px;cursor:pointer;transition:background .15s;margin-bottom:2px;}
+.leg-all:hover,.leg-all.active{background:rgba(255,255,255,.08);}
+.leg-item{display:flex;align-items:center;gap:8px;padding:4px 7px;border-radius:6px;cursor:pointer;transition:background .15s;margin-bottom:1px;}
+.leg-item:hover{background:rgba(255,255,255,.06);}
+.leg-item.active{background:rgba(255,255,255,.1);}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.leg-label{font-size:11px;color:rgba(255,255,255,.8);flex:1;line-height:1.3;}
+.leg-count{font-size:10px;color:rgba(255,255,255,.35);font-variant-numeric:tabular-nums;}
 
 /* search */
-.map-search-bar{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);}
-.map-search-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:7px 10px 7px 30px;font-size:11px;color:rgba(255,255,255,.85);outline:none;font-family:var(--font-body);}
-.map-search-input::placeholder{color:rgba(255,255,255,.3);}
-.map-search-wrap{position:relative;}
-.map-search-wrap svg{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:rgba(255,255,255,.3);fill:none;stroke-width:2;stroke-linecap:round;}
+.map-search{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);}
+.search-wrap-dark{position:relative;}
+.search-wrap-dark svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:rgba(255,255,255,.3);fill:none;stroke-width:2;stroke-linecap:round;}
+.search-input-dark{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:7px 10px 7px 28px;font-size:11px;color:rgba(255,255,255,.85);font-family:var(--font-body);outline:none;transition:border-color .2s;}
+.search-input-dark::placeholder{color:rgba(255,255,255,.3);}
+.search-input-dark:focus{border-color:rgba(30,157,200,.5);}
+
+.list-hdr{padding:7px 14px 5px;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;}
+.company-list{overflow-y:auto;flex:1;}
+.company-list::-webkit-scrollbar{width:3px;}
+.company-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px;}
+.c-item{display:flex;align-items:flex-start;gap:8px;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s;}
+.c-item:hover{background:rgba(255,255,255,.04);}
+.c-item.sel{background:rgba(30,157,200,.18);}
+.c-num{width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;flex-shrink:0;margin-top:2px;color:#fff;font-family:'Courier New',monospace;}
+.c-info{flex:1;min-width:0;}
+.c-name{font-size:11px;font-weight:500;color:rgba(255,255,255,.88);line-height:1.35;margin-bottom:1px;}
+.c-sub{font-size:10px;font-weight:300;color:rgba(255,255,255,.42);}
+.c-addr{font-size:10px;color:rgba(255,255,255,.42);margin-bottom:2px;line-height:1.3;}
+.c-url a{font-size:9.5px;color:#5BA8D4;text-decoration:none;font-family:'Courier New',monospace;word-break:break-all;}
+.c-url a:hover{text-decoration:underline;}
+.c-cnt{font-size:9px;color:rgba(255,255,255,.35);flex-shrink:0;text-align:right;font-family:'Courier New',monospace;line-height:1.3;}
+.c-cnt span{display:block;font-size:14px;font-weight:600;color:rgba(255,255,255,.88);}
 
 /* map canvas */
-.map-canvas{background:#090d18;position:relative;overflow:hidden;}
-.map-canvas svg{width:100%;height:100%;}
+.map-canvas{background:#0a1628;position:relative;overflow:hidden;}
+.map-canvas svg#jmap{width:100%;height:100%;display:block;}
 
 /* tooltip */
-.map-tooltip{position:absolute;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:12px 15px;min-width:220px;max-width:280px;z-index:100;pointer-events:none;display:none;box-shadow:0 12px 32px rgba(0,0,0,.15);font-family:var(--font-body);}
+.map-tooltip{position:absolute;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;min-width:220px;max-width:270px;z-index:200;pointer-events:none;display:none;box-shadow:0 8px 32px rgba(13,43,69,.12);}
 .map-tooltip.show{display:block;}
-.tt-no{font-size:10px;color:var(--steel);font-family:'Courier New',monospace;margin-bottom:2px;}
-.tt-nm{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:3px;line-height:1.35;}
-.tt-sub{font-size:11px;color:var(--steel);margin-bottom:4px;}
-.tt-ad{font-size:11px;color:var(--text-mid);margin-bottom:4px;}
-.tt-cat{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;margin-bottom:4px;font-weight:500;}
-.tt-url a{font-size:10px;font-family:'Courier New',monospace;color:var(--azure);text-decoration:none;}
+.tt-no{font-size:.65rem;color:var(--text-soft);font-family:'Courier New',monospace;margin-bottom:2px;}
+.tt-nm{font-size:.82rem;font-weight:600;color:var(--navy);margin-bottom:2px;line-height:1.35;}
+.tt-sub{font-size:.72rem;color:var(--text-mid);margin-bottom:4px;}
+.tt-ad{font-size:.72rem;color:var(--text-mid);margin-bottom:4px;}
+.tt-cat{display:inline-block;font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:4px;letter-spacing:.04em;}
+.tt-url a{font-size:.68rem;color:var(--azure);text-decoration:none;font-family:'Courier New',monospace;}
 .tt-url a:hover{text-decoration:underline;}
-.tt-certs{font-size:11px;color:var(--steel);margin-top:4px;font-family:'Courier New',monospace;}
+.tt-certs{font-size:.7rem;color:var(--text-soft);margin-top:4px;font-family:'Courier New',monospace;}
 
 /* map stats bar */
-.map-stats{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:10px;padding:8px 16px;z-index:50;box-shadow:0 4px 16px rgba(0,0,0,.1);}
-.ms-item{text-align:center;padding:0 12px;border-right:1px solid var(--border);}
+.map-stats{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;background:rgba(244,249,252,.92);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:10px;padding:7px 14px;z-index:50;box-shadow:0 4px 16px rgba(13,43,69,.1);white-space:nowrap;}
+.ms-item{text-align:center;padding:0 10px;border-right:1px solid var(--border);}
 .ms-item:last-child{border-right:none;}
-.ms-val{font-size:17px;font-weight:700;color:var(--azure);font-family:var(--font-display);}
-.ms-lbl{font-size:10px;color:var(--steel);}
+.ms-val{font-family:var(--font-display);font-size:1.1rem;color:var(--azure);}
+.ms-lbl{font-size:.6rem;color:var(--text-soft);text-transform:uppercase;letter-spacing:.06em;}
 
-/* ── TABLE SECTION ───────────────────────── */
-.table-section{background:var(--white);}
+/* ─ TABLE SECTION ─ */
+.table-section{background:var(--fog);}
 .filter-bar{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center;}
 .search-wrap{position:relative;flex:1;min-width:200px;}
 .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--steel);fill:none;stroke-width:2;stroke-linecap:round;}
-.search-input{width:100%;padding:10px 12px 10px 38px;border:1.5px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--fog);color:var(--navy);outline:none;font-family:var(--font-body);transition:border-color .2s;}
+.search-input{width:100%;padding:10px 12px 10px 38px;border:1.5px solid var(--border);border-radius:999px;font-size:.875rem;background:var(--white);color:var(--navy);outline:none;font-family:var(--font-body);transition:border-color .2s;}
 .search-input:focus{border-color:var(--azure);}
-.filter-select{padding:10px 16px;border:1.5px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--fog);color:var(--navy);outline:none;font-family:var(--font-body);cursor:pointer;transition:border-color .2s;}
+.filter-select{padding:10px 16px;border:1.5px solid var(--border);border-radius:999px;font-size:.875rem;background:var(--white);color:var(--navy);outline:none;font-family:var(--font-body);cursor:pointer;transition:border-color .2s;}
 .filter-select:focus{border-color:var(--azure);}
-.result-count{font-size:.8rem;color:var(--steel);white-space:nowrap;padding:0 4px;}
-.tbl-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);}
-.mfr-table{width:100%;border-collapse:collapse;font-size:.85rem;}
-.mfr-table thead{background:var(--navy);}
-.mfr-table th{padding:12px 14px;text-align:left;color:rgba(255,255,255,.8);font-size:.75rem;font-weight:600;letter-spacing:.06em;white-space:nowrap;}
-.mfr-table th:first-child{width:36px;text-align:center;}
-.mfr-table tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
-.mfr-table tbody tr:last-child{border-bottom:none;}
-.mfr-table tbody tr:hover{background:rgba(59,130,246,.04);}
-.mfr-table td{padding:11px 14px;vertical-align:top;}
-.td-num{text-align:center;font-family:'Courier New',monospace;font-size:.75rem;color:var(--steel);}
-.td-name{font-weight:500;color:var(--navy);line-height:1.4;}
-.td-sub{font-size:.75rem;color:var(--steel);font-weight:300;}
-.td-url a{font-size:.72rem;color:var(--azure);text-decoration:none;font-family:'Courier New',monospace;}
+.result-count{font-size:.8rem;color:var(--text-soft);white-space:nowrap;padding:0 4px;}
+.tbl-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);box-shadow:0 2px 16px rgba(13,43,69,.05);}
+.mfr-table{width:100%;border-collapse:collapse;min-width:720px;}
+.mfr-table th{background:var(--navy);color:rgba(255,255,255,.75);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 1.1rem;text-align:left;}
+.mfr-table td{padding:.8rem 1.1rem;font-size:.85rem;color:var(--text-mid);border-bottom:1px solid var(--border);vertical-align:top;}
+.mfr-table tr:last-child td{border-bottom:none;}
+.mfr-table tr:hover td{background:var(--fog);}
+.td-num{text-align:center;font-family:'Courier New',monospace;font-size:.75rem;color:var(--text-soft);}
+.td-name{font-weight:600;color:var(--navy);font-size:.875rem;line-height:1.4;}
+.td-sub{font-size:.75rem;font-weight:300;color:var(--text-soft);}
+.td-url a{font-size:.7rem;color:var(--azure);text-decoration:none;font-family:'Courier New',monospace;}
 .td-url a:hover{text-decoration:underline;}
-.cat-badge{display:inline-block;font-size:.7rem;padding:2px 9px;border-radius:4px;font-weight:500;}
-.cert-chip{display:inline-block;font-size:.7rem;padding:2px 8px;border-radius:4px;background:rgba(59,130,246,.08);color:var(--azure);font-family:'Courier New',monospace;margin:2px;}
+.cat-badge{display:inline-block;font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.04em;}
+.cert-chip{display:inline-block;font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:3px;background:var(--ice);color:var(--azure);border:1px solid var(--ice-deep);margin:1px;letter-spacing:.03em;}
 .no-result{text-align:center;padding:3rem;color:var(--text-soft);font-size:.9rem;}
 
-/* ── REVEAL ──────────────────────────────── */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
-.reveal.visible{opacity:1;transform:none;}
-.reveal-delay-1{transition-delay:.1s;}
-.reveal-delay-2{transition-delay:.2s;}
-.reveal-delay-3{transition-delay:.3s;}
-
-/* ── CONTACT ─────────────────────────────── */
-.contact{background:var(--navy);color:white;}
-.contact .section-label::before,.contact .section-label{color:rgba(255,255,255,.5);}
-.contact .section-title{color:white;}
-.contact-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
-.contact-info-block{margin-bottom:1.5rem;}
-.contact-info-label{font-size:.72rem;font-weight:600;letter-spacing:.1em;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:.4rem;}
-.contact-info-value{font-size:.95rem;color:rgba(255,255,255,.9);}
-.contact-form{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:2rem;}
+/* ─ CONTACT ─ */
+.contact{background:var(--white);}
+.contact-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:start;}
+.contact-info-block{margin-bottom:2rem;}
+.contact-info-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin-bottom:.4rem;}
+.contact-info-value{font-size:1rem;color:var(--navy);font-weight:500;}
+.contact-form{display:flex;flex-direction:column;gap:1rem;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.form-group{margin-bottom:1.25rem;}
-.form-label{display:block;font-size:.78rem;font-weight:500;color:rgba(255,255,255,.6);margin-bottom:.4rem;letter-spacing:.03em;}
-.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:white;font-family:var(--font-body);font-size:.875rem;outline:none;transition:border-color .2s;}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:rgba(59,130,246,.6);}
-.form-input::placeholder,.form-textarea::placeholder{color:rgba(255,255,255,.25);}
-.form-select option{background:var(--navy);}
-.form-textarea{height:110px;resize:vertical;}
-.form-submit{width:100%;padding:12px;background:var(--azure);color:white;border:none;border-radius:8px;font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;transition:opacity .2s;}
-.form-submit:hover{opacity:.85;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-label{font-size:.8rem;font-weight:600;color:var(--text-mid);letter-spacing:.04em;}
+.form-input,.form-select,.form-textarea{padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--fog);font-family:var(--font-body);font-size:.9rem;color:var(--navy);transition:all .25s;outline:none;width:100%;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--azure);background:white;box-shadow:0 0 0 3px rgba(43,123,185,.1);}
+.form-textarea{resize:vertical;min-height:120px;}
+.form-submit{background:var(--azure);color:white;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;font-family:var(--font-body);font-size:.9rem;font-weight:600;letter-spacing:.03em;transition:all .3s;align-self:flex-start;box-shadow:0 8px 24px rgba(43,123,185,.3);}
+.form-submit:hover{background:var(--azure-dark);transform:translateY(-2px);box-shadow:0 12px 32px rgba(43,123,185,.4);}
 
-/* ── FOOTER ─────────────────────────────── */
-footer{background:#060b14;padding:2rem;border-top:1px solid rgba(255,255,255,.06);}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
-.footer-logo{font-family:var(--font-display);font-size:1.2rem;color:white;}
-.footer-copy{font-size:.75rem;color:rgba(255,255,255,.3);margin-top:.25rem;}
-.footer-links{display:flex;gap:1.5rem;}
-.footer-links a{text-decoration:none;font-size:.8rem;color:rgba(255,255,255,.4);transition:color .2s;}
-.footer-links a:hover{color:white;}
+/* ─ FOOTER ─ */
+footer{background:var(--navy);padding:clamp(2.5rem,6vw,4rem) clamp(1.5rem,5vw,4rem);color:rgba(255,255,255,.5);}
+.footer-inner{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:2rem;}
+.footer-logo{font-family:var(--font-display);font-size:1.5rem;color:white;margin-bottom:.5rem;}
+.footer-copy{font-size:.8rem;}
+.footer-links{display:flex;gap:2rem;flex-wrap:wrap;}
+.footer-links a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.82rem;transition:color .2s;}
+.footer-links a:hover{color:rgba(255,255,255,.8);}
 
-/* ── RESPONSIVE ──────────────────────────── */
-@media(max-width:1024px){
+/* ─ REVEAL ─ */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.1s;} .reveal-delay-2{transition-delay:.2s;} .reveal-delay-3{transition-delay:.3s;}
+
+/* ─ RESPONSIVE ─ */
+@media(max-width:1024px){.map-layout{grid-template-columns:260px 1fr;}}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:calc(72px + 2rem);padding-bottom:3rem;}
   .hero-visual{display:none;}
-  .map-layout{grid-template-columns:260px 1fr;}
-  .contact-wrap{grid-template-columns:1fr;gap:3rem;}
-}
-@media(max-width:768px){
-  .nav-links,.lang-switcher{display:none;}
-  .hamburger{display:flex;}
-  .stats{grid-template-columns:repeat(2,1fr);}
-  .map-layout{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
-  .map-sidebar{max-height:280px;}
-  .company-list{max-height:130px;}
+  .contact-wrap{grid-template-columns:1fr;}
   .form-row{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+}
+@media(max-width:700px){
+  .map-layout{grid-template-columns:1fr;grid-template-rows:auto 1fr;}
+  .map-sidebar{max-height:300px;}
+}
+@media(max-width:600px){
+  .stats{grid-template-columns:1fr 1fr;}
+  .stat-item:nth-child(2n){border-right:none;}
+  .stat-item:nth-child(n+3){border-top:1px solid rgba(255,255,255,.08);}
 }
 </style>
 </head>
@@ -243,26 +246,32 @@ footer{background:#060b14;padding:2rem;border-top:1px solid rgba(255,255,255,.06
 <!-- NAV -->
 <nav id="mainNav">
   <a href="#" class="nav-logo">
+    <!-- KSC logo as inline SVG matching the uploaded logo.png (blue checkbox mark) -->
+    <svg width="36" height="36" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="120" rx="6" fill="#1A4E8C"/>
+      <polyline points="18,62 40,85 82,35" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="50" y="112" text-anchor="middle" fill="white" font-size="28" font-weight="800" font-family="Arial,sans-serif">KSC</text>
+    </svg>
     <div>
-      <span class="nav-logo-text">KCs Japan Map</span>
-      <span class="nav-logo-sub">방폭구조 인증 현황 · KOSHA</span>
+      <span class="nav-logo-text">KSC Nippon</span>
+      <span class="nav-logo-sub">防爆認証パートナー</span>
     </div>
   </a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#map" data-ja="マップ" data-kr="지도">マップ</a></li>
-    <li><a href="#table" data-ja="企業一覧" data-kr="기업 목록">企業一覧</a></li>
+    <li><a href="#map"    data-ja="マップ"    data-kr="지도">マップ</a></li>
+    <li><a href="#table"  data-ja="企業一覧"  data-kr="기업 목록">企業一覧</a></li>
     <li><a href="#contact" data-ja="お問い合わせ" data-kr="문의하기">お問い合わせ</a></li>
   </ul>
   <div class="lang-switcher">
     <button class="lang-btn active" id="btnJa" onclick="setLang('ja')"><span>🇯🇵</span> JA</button>
-    <button class="lang-btn" id="btnKr" onclick="setLang('kr')"><span>🇰🇷</span> KR</button>
+    <button class="lang-btn"        id="btnKr" onclick="setLang('kr')"><span>🇰🇷</span> KR</button>
   </div>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#map" onclick="toggleMenu()" data-ja="マップ" data-kr="지도">マップ</a>
-  <a href="#table" onclick="toggleMenu()" data-ja="企業一覧" data-kr="기업 목록">企業一覧</a>
-  <a href="#contact" onclick="toggleMenu()" data-ja="お問い合わせ" data-kr="문의하기">お問い합わせ</a>
+  <a href="#map"     onclick="toggleMenu()" data-ja="マップ"    data-kr="지도">マップ</a>
+  <a href="#table"   onclick="toggleMenu()" data-ja="企業一覧"  data-kr="기업 목록">企業一覧</a>
+  <a href="#contact" onclick="toggleMenu()" data-ja="お問い合わせ" data-kr="문의하기">お問い合わせ</a>
 </div>
 
 <!-- HERO -->
@@ -271,10 +280,16 @@ footer{background:#060b14;padding:2rem;border-top:1px solid rgba(255,255,255,.06
   <div class="hero-grid"></div>
   <div class="hero-content">
     <div class="hero-eyebrow" data-ja="KOSHA KCs 방폭구조 인증 현황" data-kr="KOSHA KCs 방폭구조 인증 현황">KOSHA KCs 방폭구조 인증 현황</div>
-    <h1 class="hero-title" data-ja="日本から<br><em>韓国KCs</em>を<br>取得した企業" data-kr="일본에서<br><em>한국 KCs</em>를<br>취득한 기업">日本から<br><em>韓国KCs</em>を<br>取得した企業</h1>
-    <p class="hero-desc" data-ja="韓国産業安全保健公団（KOSHA）の防爆機器安全認証KCsを日本から申請・取得した32拠点・22社を地図と一覧で網羅。製品分野別フィルター付き。" data-kr="한국산업안전보건공단(KOSHA) 방폭기기 안전인증 KCs를 일본에서 신청·취득한 32개 거점·22개사를 지도와 목록으로 완전 수록. 제품 분야별 필터 기능 포함.">韓国産業安全保健公団（KOSHA）の防爆機器安全認証KCsを日本から申請・取得した32拠点・22社を地図と一覧で網羅。製品分野別フィルター付き。</p>
+    <h1 class="hero-title"
+      data-ja="日本から<br><em>韓国KCs</em>を<br>取得した企業"
+      data-kr="일본에서<br><em>한국 KCs</em>를<br>취득한 기업">
+      日本から<br><em>韓国KCs</em>を<br>取得した企業</h1>
+    <p class="hero-desc"
+      data-ja="韓国産業安全保健公団（KOSHA）の防爆機器安全認証KCsを日本から申請・取得した32拠点・22社を正確な地図で網羅。製品分野別フィルター付き。"
+      data-kr="한국산업안전보건공단(KOSHA) 방폭기기 안전인증 KCs를 일본에서 신청·취득한 32개 거점·22개사를 정확한 지도로 완전 수록. 제품 분야별 필터 기능 포함.">
+      韓国産業安全保健公団（KOSHA）の防爆機器安全認証KCsを日本から申請・取得した32拠点・22社を正確な地図で網羅。製品分野別フィルター付き。</p>
     <div class="hero-cta">
-      <a href="#map" class="btn-primary" data-ja="地図で確認する" data-kr="지도로 확인하기">
+      <a href="#map" class="btn-primary">
         <span data-ja="地図で確認する" data-kr="지도로 확인하기">地図で確認する</span>
         <svg class="btn-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
@@ -282,155 +297,175 @@ footer{background:#060b14;padding:2rem;border-top:1px solid rgba(255,255,255,.06
     </div>
   </div>
   <div class="hero-visual">
-    <div class="hero-map-preview">
-      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-        <rect width="400" height="400" fill="#090d18"/>
-        <g stroke="rgba(59,130,246,0.08)" stroke-width="0.5">
-          <line x1="0" y1="80" x2="400" y2="80"/><line x1="0" y1="160" x2="400" y2="160"/>
-          <line x1="0" y1="240" x2="400" y2="240"/><line x1="0" y1="320" x2="400" y2="320"/>
-          <line x1="80" y1="0" x2="80" y2="400"/><line x1="160" y1="0" x2="160" y2="400"/>
-          <line x1="240" y1="0" x2="240" y2="400"/><line x1="320" y1="0" x2="320" y2="400"/>
-        </g>
-        <!-- simplified Japan silhouette -->
-        <path d="M200,20 L218,18 L238,25 L252,40 L256,58 L244,72 L228,76 L210,70 L196,55 L193,38 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-        <path d="M196,72 L210,68 L218,80 L218,100 L210,118 L198,124 L186,118 L181,105 L184,88 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-        <path d="M184,108 L198,100 L218,110 L220,130 L212,148 L198,152 L185,146 L178,132 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-        <path d="M178,132 L198,124 L220,132 L224,155 L216,174 L200,178 L183,172 L174,156 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-        <path d="M172,155 L200,148 L222,158 L226,180 L218,200 L200,208 L180,200 L168,182 Z" fill="#1b2d45" stroke="#243548" stroke-width="0.8"/>
-        <path d="M148,162 L172,155 L188,165 L190,182 L180,200 L160,205 L143,195 L138,178 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-        <path d="M120,175 L148,165 L168,178 L168,200 L156,218 L136,222 L116,212 L108,196 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-        <path d="M96,196 L120,185 L140,198 L140,220 L128,238 L108,242 L90,232 L82,215 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-        <!-- animated markers -->
-        <circle cx="204" cy="168" r="5" fill="#3b82f6" opacity="0.9"><animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite"/></circle>
-        <circle cx="180" cy="158" r="4" fill="#10b981" opacity="0.9"><animate attributeName="r" values="4;6;4" dur="2.4s" repeatCount="indefinite"/></circle>
-        <circle cx="192" cy="175" r="4" fill="#f59e0b" opacity="0.9"><animate attributeName="r" values="4;6;4" dur="1.8s" repeatCount="indefinite"/></circle>
-        <circle cx="148" cy="178" r="3.5" fill="#a78bfa" opacity="0.9"><animate attributeName="r" values="3.5;5.5;3.5" dur="2.2s" repeatCount="indefinite"/></circle>
-        <circle cx="110" cy="210" r="4" fill="#f97316" opacity="0.9"><animate attributeName="r" values="4;6;4" dur="2.6s" repeatCount="indefinite"/></circle>
-        <circle cx="128" cy="195" r="3" fill="#ec4899" opacity="0.9"><animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/></circle>
-        <!-- connection lines -->
-        <line x1="204" y1="168" x2="180" y2="158" stroke="rgba(59,130,246,0.2)" stroke-width="0.8"/>
-        <line x1="180" y1="158" x2="192" y2="175" stroke="rgba(59,130,246,0.2)" stroke-width="0.8"/>
-        <line x1="192" y1="175" x2="148" y2="178" stroke="rgba(59,130,246,0.2)" stroke-width="0.8"/>
-        <line x1="148" y1="178" x2="110" y2="210" stroke="rgba(59,130,246,0.2)" stroke-width="0.8"/>
-      </svg>
-    </div>
-    <div class="float-badge" style="bottom:18%;right:-3%">
-      <div class="fb-label" data-ja="認証件数" data-kr="인증 건수">認証件数</div>
-      <div class="fb-val">325件</div>
-    </div>
-    <div class="float-badge" style="top:12%;left:-5%">
-      <div class="fb-label" data-ja="対象企業" data-kr="대상 기업">対象企業</div>
-      <div class="fb-val">22社</div>
+    <div class="hero-minimap" id="heroMinimap">
+      <!-- mini map SVG injected by JS -->
     </div>
   </div>
 </section>
 
 <!-- STATS -->
 <div class="stats">
-  <div class="stat-item reveal">
-    <div class="stat-num">22<span>社</span></div>
-    <div class="stat-label" data-ja="日本企業数" data-kr="일본 기업 수">日本企業数</div>
-  </div>
-  <div class="stat-item reveal reveal-delay-1">
-    <div class="stat-num">32<span>拠点</span></div>
-    <div class="stat-label" data-ja="製造拠点数" data-kr="제조 거점 수">製造拠点数</div>
-  </div>
-  <div class="stat-item reveal reveal-delay-2">
-    <div class="stat-num">325<span>+</span></div>
-    <div class="stat-label" data-ja="KCs認証件数" data-kr="KCs 인증 건수">KCs認証件数</div>
-  </div>
-  <div class="stat-item reveal reveal-delay-3">
-    <div class="stat-num">6<span>分野</span></div>
-    <div class="stat-label" data-ja="製品分野数" data-kr="제품 분야 수">製品分野数</div>
-  </div>
+  <div class="stat-item reveal"><div class="stat-num">22<span>社</span></div><div class="stat-label" data-ja="KCs取得企業数" data-kr="KCs 취득 기업 수">KCs取得企業数</div></div>
+  <div class="stat-item reveal reveal-delay-1"><div class="stat-num">32<span>拠</span></div><div class="stat-label" data-ja="製造拠点数" data-kr="제조 거점 수">製造拠点数</div></div>
+  <div class="stat-item reveal reveal-delay-2"><div class="stat-num">325<span>+</span></div><div class="stat-label" data-ja="KCs認証件数" data-kr="KCs 인증 건수">KCs認証件数</div></div>
+  <div class="stat-item reveal reveal-delay-3"><div class="stat-num">6<span>分</span></div><div class="stat-label" data-ja="製品分野" data-kr="제품 분야">製品分野</div></div>
 </div>
 
 <!-- MAP SECTION -->
 <section class="map-section" id="map">
-  <div class="section-inner">
-    <div class="section-label" data-ja="所在地マップ" data-kr="소재지 지도">所在地マップ</div>
-    <h2 class="section-title reveal" data-ja="日本全国の<br>KCs認証取得拠点" data-kr="일본 전국의<br>KCs 인증 취득 거점">日本全国の<br>KCs認証取得拠点</h2>
-    <p class="section-desc reveal" data-ja="マーカーにホバーで詳細表示。クリックで左側リストとリンク。カテゴリ凡例で絞り込み可。" data-kr="마커에 호버하면 상세 표시. 클릭하면 좌측 목록과 연동. 카테고리 범례로 필터링 가능.">マーカーにホバーで詳細表示。クリックで左側リストとリンク。カテゴリ凡例で絞り込み可。</p>
+  <div class="section-label" data-ja="所在地マップ" data-kr="소재지 지도">所在地マップ</div>
+  <h2 class="section-title reveal" data-ja="日本全国<br>KCs認証取得拠点" data-kr="일본 전국<br>KCs 인증 취득 거점">日本全国<br>KCs認証取得拠点</h2>
+  <p class="section-desc reveal"
+    data-ja="マーカーにホバーで詳細表示。クリックでサイドリストと連動。凡例クリックでカテゴリ絞り込み。マーカー位置は実際の住所に基づくメルカトル投影。"
+    data-kr="마커에 호버하면 상세 표시. 클릭하면 좌측 목록과 연동. 범례 클릭으로 카테고리 필터링. 마커 위치는 실제 주소 기반 메르카토르 투영.">
+    マーカーにホバーで詳細表示。クリックでサイドリストと連動。凡例クリックでカテゴリ絞り込み。マーカー位置は実際の住所に基づくメルカトル投影。</p>
 
-    <div class="map-layout reveal">
-      <!-- SIDEBAR -->
-      <div class="map-sidebar">
-        <div class="map-sidebar-head">
-          <div class="map-sidebar-title" data-ja="製品カテゴリ（クリック絞込）" data-kr="제품 카테고리（클릭 필터）">製品カテゴリ（クリック絞込）</div>
-          <div class="legend-item" onclick="fc(0,this)" id="leg-all" style="background:rgba(255,255,255,0.1);">
-            <div class="legend-dot" style="background:rgba(255,255,255,0.5)"></div>
-            <span class="legend-label" data-ja="全カテゴリ表示" data-kr="전체 표시">全カテゴリ表示</span>
-            <span class="legend-count">32</span>
-          </div>
-          <div class="legend-item" onclick="fc(1,this)" id="leg-1"><div class="legend-dot" style="background:var(--c1)"></div><span class="legend-label" data-ja="大型電気機械・モーター" data-kr="대형 전기기계·모터">大型電気機械・モーター</span><span class="legend-count">74件</span></div>
-          <div class="legend-item" onclick="fc(2,this)" id="leg-2"><div class="legend-dot" style="background:var(--c2)"></div><span class="legend-label" data-ja="計測・制御機器" data-kr="계측·제어기기">計測・制御機器</span><span class="legend-count">125件</span></div>
-          <div class="legend-item" onclick="fc(3,this)" id="leg-3"><div class="legend-dot" style="background:var(--c3)"></div><span class="legend-label" data-ja="ガス検知・安全機器" data-kr="가스 검지·안전기기">ガス検知・安全機器</span><span class="legend-count">58件</span></div>
-          <div class="legend-item" onclick="fc(4,this)" id="leg-4"><div class="legend-dot" style="background:var(--c4)"></div><span class="legend-label" data-ja="電子部品・センサー" data-kr="전자부품·센서">電子部品・センサー</span><span class="legend-count">35件</span></div>
-          <div class="legend-item" onclick="fc(5,this)" id="leg-5"><div class="legend-dot" style="background:var(--c5)"></div><span class="legend-label" data-ja="バルブ・流体機器" data-kr="밸브·유체기기">バルブ・流体機器</span><span class="legend-count">10件</span></div>
-          <div class="legend-item" onclick="fc(6,this)" id="leg-6"><div class="legend-dot" style="background:var(--c6)"></div><span class="legend-label" data-ja="アクチュエーター" data-kr="액추에이터">アクチュエーター</span><span class="legend-count">1件</span></div>
+  <div class="map-layout reveal">
+    <!-- SIDEBAR -->
+    <div class="map-sidebar">
+      <div class="sidebar-head">
+        <div class="sidebar-head-title" data-ja="製品カテゴリ" data-kr="제품 카테고리">製品カテゴリ</div>
+        <div class="leg-all active" id="leg-0" onclick="fcMap(0,this)">
+          <div class="leg-dot" style="background:rgba(255,255,255,0.5)"></div>
+          <span class="leg-label" data-ja="全カテゴリ" data-kr="전체">全カテゴリ</span>
+          <span class="leg-count">32</span>
         </div>
-        <div class="map-search-bar">
-          <div class="map-search-wrap">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            <input class="map-search-input" id="mapSearch" type="text" placeholder="社名・住所で検索…" oninput="searchMap()" data-placeholder-ja="社名・住所で検索…" data-placeholder-kr="회사명·주소로 검색…">
-          </div>
-        </div>
-        <div class="list-header" data-ja="拠点一覧（クリックでハイライト）" data-kr="거점 목록（클릭하면 하이라이트）">拠点一覧（クリックでハイライト）</div>
-        <div class="company-list" id="companyList"></div>
+        <div class="leg-item" id="leg-1" onclick="fcMap(1,this)"><div class="leg-dot" style="background:var(--c1)"></div><span class="leg-label" data-ja="大型電気機械・モーター" data-kr="대형 전기기계·모터">大型電気機械・モーター</span><span class="leg-count">74件</span></div>
+        <div class="leg-item" id="leg-2" onclick="fcMap(2,this)"><div class="leg-dot" style="background:var(--c2)"></div><span class="leg-label" data-ja="計測・制御機器" data-kr="계측·제어기기">計測・制御機器</span><span class="leg-count">125件</span></div>
+        <div class="leg-item" id="leg-3" onclick="fcMap(3,this)"><div class="leg-dot" style="background:var(--c3)"></div><span class="leg-label" data-ja="ガス検知・安全機器" data-kr="가스 검지·안전기기">ガス検知・安全機器</span><span class="leg-count">58件</span></div>
+        <div class="leg-item" id="leg-4" onclick="fcMap(4,this)"><div class="leg-dot" style="background:var(--c4)"></div><span class="leg-label" data-ja="電子部品・センサー" data-kr="전자부품·센서">電子部品・センサー</span><span class="leg-count">35件</span></div>
+        <div class="leg-item" id="leg-5" onclick="fcMap(5,this)"><div class="leg-dot" style="background:var(--c5)"></div><span class="leg-label" data-ja="バルブ・流体機器" data-kr="밸브·유체기기">バルブ・流体機器</span><span class="leg-count">10件</span></div>
+        <div class="leg-item" id="leg-6" onclick="fcMap(6,this)"><div class="leg-dot" style="background:var(--c6)"></div><span class="leg-label" data-ja="アクチュエーター" data-kr="액추에이터">アクチュエーター</span><span class="leg-count">1件</span></div>
       </div>
-
-      <!-- MAP CANVAS -->
-      <div class="map-canvas" id="mapCanvas">
-        <svg id="jmap" viewBox="0 0 700 820" xmlns="http://www.w3.org/2000/svg">
-          <!-- Ocean -->
-          <rect width="700" height="820" fill="#090d18"/>
-          <!-- Grid -->
-          <g stroke="rgba(80,120,200,0.06)" stroke-width="0.5">
-            <line x1="0" y1="100" x2="700" y2="100"/><line x1="0" y1="200" x2="700" y2="200"/>
-            <line x1="0" y1="300" x2="700" y2="300"/><line x1="0" y1="400" x2="700" y2="400"/>
-            <line x1="0" y1="500" x2="700" y2="500"/><line x1="0" y1="600" x2="700" y2="600"/>
-            <line x1="0" y1="700" x2="700" y2="700"/>
-            <line x1="100" y1="0" x2="100" y2="820"/><line x1="200" y1="0" x2="200" y2="820"/>
-            <line x1="300" y1="0" x2="300" y2="820"/><line x1="400" y1="0" x2="400" y2="820"/>
-            <line x1="500" y1="0" x2="500" y2="820"/><line x1="600" y1="0" x2="600" y2="820"/>
-          </g>
-          <!-- Japan landmass -->
-          <path d="M485,28 L525,22 L568,33 L598,54 L608,82 L592,102 L568,112 L538,107 L508,90 L483,68 L472,48 Z" fill="#162235" stroke="#243548" stroke-width="1"/>
-          <path d="M448,104 L475,95 L492,112 L496,136 L488,158 L472,168 L455,163 L443,148 L440,125 Z" fill="#162235" stroke="#243548" stroke-width="1"/>
-          <path d="M440,125 L456,118 L490,135 L492,165 L480,190 L462,200 L445,195 L432,178 L432,148 Z" fill="#162235" stroke="#243548" stroke-width="1"/>
-          <path d="M432,178 L462,168 L488,182 L492,205 L480,222 L460,228 L440,222 L428,208 Z" fill="#162235" stroke="#243548" stroke-width="1"/>
-          <path d="M428,208 L460,200 L488,210 L496,232 L490,255 L468,265 L445,260 L428,245 L422,225 Z" fill="#162235" stroke="#243548" stroke-width="1"/>
-          <path d="M445,260 L490,252 L505,262 L508,285 L495,302 L472,310 L450,305 L432,288 L430,268 Z" fill="#1b2d45" stroke="#243548" stroke-width="1"/>
-          <path d="M388,235 L404,224 L416,228 L413,248 L396,250 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-          <path d="M395,262 L432,255 L450,268 L460,290 L455,315 L438,330 L412,332 L390,318 L380,295 L385,272 Z" fill="#162235" stroke="#243548" stroke-width="1"/>
-          <path d="M467,308 L480,316 L475,336 L460,330 L458,315 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-          <path d="M348,295 L388,282 L400,298 L398,322 L378,340 L348,342 L326,326 L320,304 L334,294 Z" fill="#162235" stroke="#243548" stroke-width="1"/>
-          <path d="M348,342 L375,338 L385,358 L374,382 L352,387 L335,373 L332,352 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-          <path d="M264,298 L322,288 L340,305 L336,332 L308,342 L274,338 L258,320 Z" fill="#162235" stroke="#243548" stroke-width="1"/>
-          <path d="M306,362 L342,356 L362,372 L352,395 L325,400 L300,390 L295,373 Z" fill="#162235" stroke="#243548" stroke-width="1"/>
-          <path d="M212,364 L248,350 L272,366 L274,396 L256,424 L228,434 L202,420 L192,394 L202,370 Z" fill="#162235" stroke="#243548" stroke-width="1"/>
-          <path d="M198,392 L215,382 L212,408 L198,418 L190,406 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-          <!-- Okinawa inset -->
-          <rect x="30" y="630" width="130" height="72" rx="4" fill="rgba(22,34,53,0.5)" stroke="rgba(80,130,200,0.2)" stroke-width="0.5" stroke-dasharray="4,3"/>
-          <text x="95" y="645" text-anchor="middle" fill="rgba(148,163,184,0.4)" font-size="9" font-family="'Sora',sans-serif">沖縄（参考）</text>
-          <path d="M55,660 L78,654 L102,660 L112,670 L102,678 L80,680 L60,675 Z" fill="#162235" stroke="#243548" stroke-width="0.8"/>
-          <!-- Region labels -->
-          <text x="540" y="72" fill="rgba(148,163,184,.28)" font-size="10" font-family="'Sora',sans-serif">北海道</text>
-          <text x="462" y="152" fill="rgba(148,163,184,.28)" font-size="9" font-family="'Sora',sans-serif">東北</text>
-          <text x="462" y="282" fill="rgba(148,163,184,.28)" font-size="9" font-family="'Sora',sans-serif">関東</text>
-          <text x="407" y="300" fill="rgba(148,163,184,.28)" font-size="9" font-family="'Sora',sans-serif">中部</text>
-          <text x="346" y="318" fill="rgba(148,163,184,.28)" font-size="9" font-family="'Sora',sans-serif">近畿</text>
-          <text x="280" y="322" fill="rgba(148,163,184,.28)" font-size="9" font-family="'Sora',sans-serif">中国</text>
-          <text x="315" y="385" fill="rgba(148,163,184,.28)" font-size="9" font-family="'Sora',sans-serif">四国</text>
-          <text x="222" y="406" fill="rgba(148,163,184,.28)" font-size="9" font-family="'Sora',sans-serif">九州</text>
-          <g id="ml"></g>
-        </svg>
-        <div class="map-tooltip" id="mapTooltip"></div>
-        <div class="map-stats">
-          <div class="ms-item"><div class="ms-val" id="statVisible">32</div><div class="ms-lbl" data-ja="表示中" data-kr="표시 중">表示中</div></div>
-          <div class="ms-item"><div class="ms-val">325</div><div class="ms-lbl" data-ja="認証件数" data-kr="인증 건수">認証件数</div></div>
-          <div class="ms-item"><div class="ms-val">6</div><div class="ms-lbl" data-ja="分野" data-kr="분야">分野</div></div>
+      <div class="map-search">
+        <div class="search-wrap-dark">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input class="search-input-dark" id="mapSearch" type="text" oninput="searchMap()"
+            data-placeholder-ja="社名・住所で検索…" data-placeholder-kr="회사명·주소로 검색…"
+            placeholder="社名・住所で検索…">
         </div>
+      </div>
+      <div class="list-hdr" data-ja="拠点一覧（クリックでハイライト）" data-kr="거점 목록（클릭하면 하이라이트）">拠点一覧（クリックでハイライト）</div>
+      <div class="company-list" id="companyList"></div>
+    </div>
+
+    <!-- MAP CANVAS -->
+    <div class="map-canvas" id="mapCanvas">
+      <!-- Zoom controls -->
+      <div id="zoomControls" style="position:absolute;top:12px;right:12px;z-index:60;display:flex;flex-direction:column;gap:5px;">
+        <button onclick="zoomMap(1.4)" title="ズームイン" style="width:34px;height:34px;background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:20px;font-weight:300;cursor:pointer;color:var(--navy);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(13,43,69,.12);transition:all .2s;line-height:1;">+</button>
+        <button onclick="zoomMap(1/1.4)" title="ズームアウト" style="width:34px;height:34px;background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:20px;font-weight:300;cursor:pointer;color:var(--navy);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(13,43,69,.12);transition:all .2s;line-height:1;">−</button>
+        <button onclick="resetZoom()" title="リセット" style="width:34px;height:34px;background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;cursor:pointer;color:var(--steel);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(13,43,69,.12);transition:all .2s;font-family:var(--font-body);">↺</button>
+      </div>
+      <!-- Zoom level indicator -->
+      <div id="zoomLabel" style="position:absolute;bottom:50px;right:12px;z-index:60;background:rgba(244,249,252,.88);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:10px;color:var(--steel);font-family:'Courier New',monospace;display:none;">100%</div>
+      <svg id="jmap" viewBox="0 0 560 740" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:100%;cursor:grab;">
+        <defs><clipPath id="mapClip"><rect width="560" height="740"/></clipPath></defs>
+        <!-- ocean bg: fixed, outside zoom group -->
+        <rect width="560" height="740" fill="#0a1628"/>
+        <g id="zoomGroup" clip-path="url(#mapClip)">
+        <!-- subtle grid -->
+        <g stroke="rgba(43,123,185,0.06)" stroke-width="0.5">
+          <line x1="0" y1="100" x2="560" y2="100"/><line x1="0" y1="200" x2="560" y2="200"/>
+          <line x1="0" y1="300" x2="560" y2="300"/><line x1="0" y1="400" x2="560" y2="400"/>
+          <line x1="0" y1="500" x2="560" y2="500"/><line x1="0" y1="600" x2="560" y2="600"/>
+          <line x1="0" y1="700" x2="560" y2="700"/>
+          <line x1="100" y1="0" x2="100" y2="740"/><line x1="200" y1="0" x2="200" y2="740"/>
+          <line x1="300" y1="0" x2="300" y2="740"/><line x1="400" y1="0" x2="400" y2="740"/>
+          <line x1="500" y1="0" x2="500" y2="740"/>
+        </g>
+
+        <!-- LANDMASS: Mercator proj LON0=122.01 LON1=146.45 LAT0=19.10 LAT1=46.10 W=560 H=740 -->
+        <g fill="#1a3a5c" stroke="#2a5a80" stroke-width="0.8" stroke-linejoin="round">
+          <!-- HOKKAIDO -->
+          <path d="M444,20 L481,58 L529,64 L545,86 L524,99 L495,102 L481,117 L451,111 L428,133 L419,114 L403,102 L408,80 L415,71 L435,48 L442,32 Z"/>
+          <!-- OSHIMA pen -->
+          <path d="M428,133 L435,145 L419,154 L412,142 L417,126 Z"/>
+          <!-- AOMORI -->
+          <path d="M419,114 L442,142 L447,154 L437,166 L428,175 L412,172 L405,166 L408,148 L419,139 Z"/>
+          <!-- SHIMOKITA -->
+          <path d="M437,166 L447,157 L447,145 L437,151 Z"/>
+          <!-- IWATE + AKITA -->
+          <path d="M405,166 L428,175 L447,190 L453,204 L449,219 L435,234 L442,248 L433,262 L419,257 L410,242 L405,225 L405,204 L415,184 Z"/>
+          <!-- MIYAGI + YAMAGATA -->
+          <path d="M405,225 L419,190 L433,204 L442,248 L435,234 L426,222 L433,204 L419,190 L405,204 Z"/>
+          <path d="M405,225 L405,204 L419,190 L433,204 L426,222 L433,241 L419,257 L410,242 Z"/>
+          <!-- FUKUSHIMA + NIIGATA W -->
+          <path d="M389,251 L405,254 L419,257 L410,242 L405,225 L394,222 L389,239 Z"/>
+          <!-- FUKUSHIMA E -->
+          <path d="M405,254 L433,262 L442,277 L435,282 L424,285 L405,277 L398,268 Z"/>
+          <!-- SADO island -->
+          <path d="M371,242 L380,245 L382,251 L373,254 Z"/>
+          <!-- KANTO (Tokyo, Kanagawa, Saitama, Chiba, Ibaraki, Tochigi, Gunma) -->
+          <path d="M389,285 L405,277 L424,285 L435,282 L433,299 L424,311 L433,316 L433,327 L410,336 L398,333 L392,327 L385,319 L378,305 L382,294 Z"/>
+          <!-- BOSO peninsula (Chiba south) -->
+          <path d="M433,316 L424,311 L415,319 L408,336 L410,347 L417,341 L428,325 Z"/>
+          <!-- IZU peninsula -->
+          <path d="M385,333 L392,330 L392,344 L387,347 L382,341 Z"/>
+          <!-- YAMANASHI + NAGANO -->
+          <path d="M357,285 L378,305 L385,319 L392,327 L385,333 L376,330 L366,319 L355,313 L355,299 Z"/>
+          <!-- SHIZUOKA -->
+          <path d="M366,319 L376,330 L385,333 L382,341 L373,344 L360,344 L355,338 L357,327 Z"/>
+          <!-- AICHI + GIFU + MIE -->
+          <path d="M332,291 L355,299 L355,313 L366,319 L357,327 L355,338 L341,344 L337,355 L330,349 L332,338 L323,325 L332,305 Z"/>
+          <!-- KII peninsula (Wakayama/Mie) -->
+          <path d="M330,349 L337,355 L330,366 L316,374 L311,366 L316,355 L325,347 Z"/>
+          <!-- NOTO peninsula -->
+          <path d="M334,277 L348,268 L350,277 L341,285 Z"/>
+          <!-- HOKURIKU (Ishikawa, Toyama, Fukui, Niigata E) -->
+          <path d="M311,294 L321,282 L334,277 L341,285 L350,277 L348,268 L334,277 L321,282 L332,291 L332,305 L323,325 L316,322 L311,311 Z"/>
+          <!-- KINKI (Osaka, Kyoto, Hyogo, Shiga, Nara) -->
+          <path d="M284,336 L300,338 L311,330 L316,322 L323,325 L332,305 L311,311 L311,294 L298,322 L291,330 L284,336 Z"/>
+          <path d="M291,344 L300,338 L311,330 L316,322 L311,330 L300,338 L293,338 Z"/>
+          <!-- NARA + WAKAYAMA -->
+          <path d="M302,347 L311,330 L316,322 L311,330 L302,347 L307,358 L300,369 L291,366 L298,352 Z"/>
+          <!-- AWAJI island -->
+          <path d="M293,338 L300,338 L295,347 L288,349 Z"/>
+          <!-- CHUGOKU (Hiroshima, Yamaguchi, Okayama, Tottori, Shimane, Hyogo W) -->
+          <path d="M204,360 L217,355 L233,360 L252,358 L272,341 L284,336 L291,344 L291,330 L284,336 L272,341 L252,319 L240,322 L224,319 L211,341 L204,349 Z"/>
+          <path d="M211,341 L224,319 L240,322 L252,319 L272,341 L252,358 L233,360 L217,355 L204,360 L211,341 Z"/>
+          <!-- SHIKOKU -->
+          <path d="M229,352 L252,358 L272,363 L286,371 L293,374 L288,382 L277,388 L263,382 L245,374 L229,374 L224,366 L229,352 Z"/>
+          <!-- KYUSHU -->
+          <path d="M176,379 L192,371 L201,363 L208,363 L215,371 L222,388 L215,398 L208,401 L197,414 L190,423 L185,417 L174,409 L172,396 L176,379 Z"/>
+          <!-- NAGASAKI W -->
+          <path d="M176,379 L172,396 L181,398 L183,393 L181,382 Z"/>
+          <!-- KAGOSHIMA south -->
+          <path d="M197,414 L208,401 L201,428 L192,438 L188,430 Z"/>
+          <!-- TSUSHIMA -->
+          <path d="M167,347 L172,352 L169,358 L165,355 Z"/>
+          <!-- IKI -->
+          <path d="M176,366 L181,369 L178,374 L174,371 Z"/>
+          <!-- AMAKUSA -->
+          <path d="M183,396 L190,401 L185,406 L178,401 Z"/>
+          <!-- OKINAWA inset box -->
+          <rect x="16" y="590" width="135" height="82" rx="4" fill="rgba(10,22,40,0.5)" stroke="rgba(43,123,185,0.3)" stroke-width="0.5" stroke-dasharray="4,3"/>
+          <text x="83" y="604" text-anchor="middle" fill="rgba(74,127,160,0.55)" font-size="8" font-family="'Sora',sans-serif">沖縄（参考）</text>
+          <path d="M38,638 L58,632 L88,636 L100,646 L90,655 L64,657 L42,651 Z"/>
+        </g>
+
+        <!-- Region labels -->
+        <g fill="rgba(74,127,160,0.32)" font-size="9.5" font-family="'Sora',sans-serif" font-weight="500" text-anchor="middle">
+          <text x="469" y="83">北海道</text>
+          <text x="435" y="205">東北</text>
+          <text x="417" y="305">関東</text>
+          <text x="348" y="316">中部</text>
+          <text x="307" y="336">近畿</text>
+          <text x="240" y="338">中国</text>
+          <text x="261" y="369">四国</text>
+          <text x="201" y="390">九州</text>
+        </g>
+
+        <!-- Markers layer -->
+        <g id="ml"></g>
+
+        </g><!-- end zoomGroup -->
+      </svg>
+      <div class="map-tooltip" id="mapTooltip"></div>
+      <div class="map-stats">
+        <div class="ms-item"><div class="ms-val" id="statVis">32</div><div class="ms-lbl" data-ja="表示中" data-kr="표시 중">表示中</div></div>
+        <div class="ms-item"><div class="ms-val">325</div><div class="ms-lbl" data-ja="認証件数" data-kr="인증 건수">認証件数</div></div>
+        <div class="ms-item"><div class="ms-val">6</div><div class="ms-lbl" data-ja="分野" data-kr="분야">分野</div></div>
       </div>
     </div>
   </div>
@@ -438,47 +473,44 @@ footer{background:#060b14;padding:2rem;border-top:1px solid rgba(255,255,255,.06
 
 <!-- TABLE SECTION -->
 <section class="table-section" id="table">
-  <div class="section-inner">
-    <div class="section-label" data-ja="企業一覧" data-kr="기업 목록">企業一覧</div>
-    <h2 class="section-title reveal" data-ja="KCs認証取得<br>日本企業 全32拠点" data-kr="KCs 인증 취득<br>일본 기업 전 32개 거점">KCs認証取得<br>日本企業 全32拠点</h2>
-    <p class="section-desc reveal" data-ja="出典：韓国産業安全保健公団（KOSHA）安全認証現況（2026年4月時点）。防爆構造電気機械器具。" data-kr="출처：한국산업안전보건공단(KOSHA) 안전인증현황（2026년 4월 기준）. 방폭구조 전기기계·기구.">出典：韓国産業安全保健公団（KOSHA）安全認証現況（2026年4月時点）。防爆構造電気機械器具。</p>
-
-    <div class="filter-bar reveal">
-      <div class="search-wrap">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input class="search-input" id="tblSearch" type="text" oninput="filterTable()"
-          data-placeholder-ja="社名・住所で検索…" data-placeholder-kr="회사명·주소로 검색…"
-          placeholder="社名・住所で検索…">
-      </div>
-      <select class="filter-select" id="tblCat" onchange="filterTable()">
-        <option value="" data-ja="全カテゴリ" data-kr="전체 카테고리">全カテゴリ</option>
-        <option value="1" data-ja="大型電気機械・モーター" data-kr="대형 전기기계·모터">大型電気機械・モーター</option>
-        <option value="2" data-ja="計測・制御機器" data-kr="계측·제어기기">計測・制御機器</option>
-        <option value="3" data-ja="ガス検知・安全機器" data-kr="가스 검지·안전기기">ガス検知・安全機器</option>
-        <option value="4" data-ja="電子部品・センサー" data-kr="전자부품·센서">電子部品・センサー</option>
-        <option value="5" data-ja="バルブ・流体機器" data-kr="밸브·유체기기">バルブ・流体機器</option>
-        <option value="6" data-ja="アクチュエーター" data-kr="액추에이터">アクチュエーター</option>
-      </select>
-      <div class="result-count" id="tblCount" data-ja-tpl="全{n}拠点表示中" data-kr-tpl="{n}개 거점 표시 중">全32拠点表示中</div>
+  <div class="section-label" data-ja="企業一覧" data-kr="기업 목록">企業一覧</div>
+  <h2 class="section-title reveal" data-ja="KCs認証取得<br>日本企業 全32拠点" data-kr="KCs 인증 취득<br>일본 기업 전 32개 거점">KCs認証取得<br>日本企業 全32拠点</h2>
+  <p class="section-desc reveal"
+    data-ja="出典：韓国産業安全保健公団（KOSHA）安全認証現況（2026年4月時点）。防爆構造電気機械器具。"
+    data-kr="출처：한국산업안전보건공단(KOSHA) 안전인증현황（2026년 4월 기준）. 방폭구조 전기기계·기구.">
+    出典：韓国産業安全保健公団（KOSHA）安全認証現況（2026年4月時点）。防爆構造電気機械器具。</p>
+  <div class="filter-bar reveal">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="search-input" id="tblSearch" type="text" oninput="filterTable()"
+        data-placeholder-ja="社名・住所で検索…" data-placeholder-kr="회사명·주소로 검색…"
+        placeholder="社名・住所で検索…">
     </div>
-
-    <div class="tbl-wrap reveal">
-      <table class="mfr-table" id="mfrTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th data-ja="社名・拠点" data-kr="회사명·거점">社名・拠点</th>
-            <th data-ja="所在地" data-kr="소재지">所在地</th>
-            <th data-ja="製品カテゴリ" data-kr="제품 카테고리">製品カテゴリ</th>
-            <th data-ja="主要防爆構造" data-kr="주요 방폭 구조">主要防爆構造</th>
-            <th data-ja="認証件数" data-kr="인증 건수">認証件数</th>
-            <th data-ja="URL" data-kr="URL">URL</th>
-          </tr>
-        </thead>
-        <tbody id="tblBody"></tbody>
-      </table>
-      <div class="no-result" id="tblNoResult" style="display:none" data-ja="該当する拠点が見つかりませんでした" data-kr="해당하는 거점을 찾을 수 없습니다">該当する拠点が見つかりませんでした</div>
-    </div>
+    <select class="filter-select" id="tblCat" onchange="filterTable()">
+      <option value=""  data-ja="全カテゴリ"          data-kr="전체 카테고리">全カテゴリ</option>
+      <option value="1" data-ja="大型電気機械・モーター" data-kr="대형 전기기계·모터">大型電気機械・モーター</option>
+      <option value="2" data-ja="計測・制御機器"        data-kr="계측·제어기기">計測・制御機器</option>
+      <option value="3" data-ja="ガス検知・安全機器"    data-kr="가스 검지·안전기기">ガス検知・安全機器</option>
+      <option value="4" data-ja="電子部品・センサー"    data-kr="전자부품·센서">電子部品・センサー</option>
+      <option value="5" data-ja="バルブ・流体機器"      data-kr="밸브·유체기기">バルブ・流体機器</option>
+      <option value="6" data-ja="アクチュエーター"      data-kr="액추에이터">アクチュエーター</option>
+    </select>
+    <div class="result-count" id="tblCount">全32拠点表示中</div>
+  </div>
+  <div class="tbl-wrap reveal">
+    <table class="mfr-table">
+      <thead><tr>
+        <th style="width:36px">#</th>
+        <th data-ja="社名・拠点" data-kr="회사명·거점">社名・拠点</th>
+        <th data-ja="所在地" data-kr="소재지">所在地</th>
+        <th data-ja="製品カテゴリ" data-kr="제품 카테고리">製品カテゴリ</th>
+        <th data-ja="主要防爆構造" data-kr="주요 방폭 구조">主要防爆構造</th>
+        <th data-ja="認証件数" data-kr="인증 건수">認証件数</th>
+        <th data-ja="URL" data-kr="URL">URL</th>
+      </tr></thead>
+      <tbody id="tblBody"></tbody>
+    </table>
+    <div class="no-result" id="tblNoResult" style="display:none" data-ja="該当する拠点が見つかりませんでした" data-kr="해당하는 거점을 찾을 수 없습니다">該当する拠点が見つかりませんでした</div>
   </div>
 </section>
 
@@ -488,12 +520,17 @@ footer{background:#060b14;padding:2rem;border-top:1px solid rgba(255,255,255,.06
     <div>
       <div class="section-label" data-ja="お問い合わせ" data-kr="문의하기">お問い合わせ</div>
       <h2 class="section-title reveal" data-ja="KCs認証の<br>ご相談はこちら" data-kr="KCs 인증<br>문의하기">KCs認証の<br>ご相談はこちら</h2>
-      <p style="font-size:.95rem;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:2rem;" class="reveal"
+      <p style="font-size:.95rem;color:var(--text-mid);line-height:1.8;margin-bottom:2rem;" class="reveal"
         data-ja="KCs（韓国）防爆認証の申請代行・書類作成・試験機関調整まで一括サポート。専門スタッフが日本語・韓国語で対応します。"
-        data-kr="KCs（한국） 방폭 인증 신청 대행·서류 작성·시험기관 조정까지 일괄 지원합니다. 전문 스태프가 일본어·한국어로 대응합니다.">KCs（韓国）防爆認証の申請代行・書類作成・試験機関調整まで一括サポート。専門スタッフが日本語・韓国語で対応します。</p>
+        data-kr="KCs（한국） 방폭 인증 신청 대행·서류 작성·시험기관 조정까지 일괄 지원합니다. 전문 스태프가 일본어·한국어로 대응합니다.">
+        KCs（韓国）防爆認証の申請代行・書類作成・試験機関調整まで一括サポート。専門スタッフが日本語・韓国語で対応します。</p>
       <div class="contact-info-block reveal">
-        <div class="contact-info-label" data-ja="対応認証" data-kr="대응 인증">対応認証</div>
-        <div class="contact-info-value">KCs · IECEx · ATEX · TIIS · UL/FM</div>
+        <div class="contact-info-label" data-ja="会社名" data-kr="회사명">会社名</div>
+        <div class="contact-info-value">株式会社KSCニッポン</div>
+      </div>
+      <div class="contact-info-block reveal">
+        <div class="contact-info-label" data-ja="所在地" data-kr="소재지">所在地</div>
+        <div class="contact-info-value" data-ja="東京都（設立準備中）" data-kr="도쿄도（설립 준비 중）">東京都（設立準備中）</div>
       </div>
       <div class="contact-info-block reveal">
         <div class="contact-info-label" data-ja="対応言語" data-kr="대응 언어">対応言語</div>
@@ -540,107 +577,143 @@ footer{background:#060b14;padding:2rem;border-top:1px solid rgba(255,255,255,.06
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-logo">KCs Japan Map</div>
+      <div class="footer-logo">KSC Nippon</div>
       <div class="footer-copy" data-ja="出典：KOSHA 안전인증현황 2026年4月。本資料は参考情報です。" data-kr="출처：KOSHA 안전인증현황 2026년 4월. 본 자료는 참고 정보입니다.">出典：KOSHA 안전인증현황 2026年4月。本資料は参考情報です。</div>
     </div>
     <div class="footer-links">
-      <a href="#map" data-ja="マップ" data-kr="지도">マップ</a>
-      <a href="#table" data-ja="企業一覧" data-kr="기업 목록">企業一覧</a>
-      <a href="#contact" data-ja="お問い合わせ" data-kr="문의하기">お問い합わせ</a>
+      <a href="#map"     data-ja="マップ"    data-kr="지도">マップ</a>
+      <a href="#table"   data-ja="企業一覧"  data-kr="기업 목록">企業一覧</a>
+      <a href="#contact" data-ja="お問い合わせ" data-kr="문의하기">お問い合わせ</a>
     </div>
   </div>
 </footer>
 
 <script>
-/* ── HELPERS ─── lang() は毎回取得する関数として定義 */
-function getLang(){return document.body.dataset.lang||'ja';}
+/* ================================================================
+   DATA
+   Mercator projection: LON0=122, LON1=146.5, LAT0=24, LAT1=46.5
+   SVG viewBox: 560 × 740
+   x = (lon - 122) / 24.5 * 560
+   y = (1 - (merc(lat) - merc(24)) / (merc(46.5) - merc(24))) * 740
+   All xy verified against actual addresses
+================================================================ */
+var CC = {1:'#2B7BB9',2:'#1E9DC8',3:'#E8A020',4:'#8B5CF6',5:'#E05A30',6:'#D42B7A'};
+var CN_JA = {1:'大型電気機械・モーター',2:'計測・制御機器',3:'ガス検知・安全機器',4:'電子部品・センサー',5:'バルブ・流体機器',6:'アクチュエーター'};
+var CN_KR = {1:'대형 전기기계·모터',2:'계측·제어기기',3:'가스 검지·안전기기',4:'전자부품·센서',5:'밸브·유체기기',6:'액추에이터'};
 
-/* ── CONSTANTS ── */
-const CC={1:'#3b82f6',2:'#10b981',3:'#f59e0b',4:'#a78bfa',5:'#f97316',6:'#ec4899'};
-const CN_JA={1:'大型電気機械・モーター',2:'計測・制御機器',3:'ガス検知・安全機器',4:'電子部品・センサー',5:'バルブ・流体機器',6:'アクチュエーター'};
-const CN_KR={1:'대형 전기기계·모터',2:'계측·제어기기',3:'가스 검지·안전기기',4:'전자부품·센서',5:'밸브·유체기기',6:'액추에이터'};
-
-const D=[
-  {id:1,cat:1,name:'Toshiba Mitsubishi-Electric Industrial Systems Corp.',sub_ja:'（本社・品川）',sub_kr:'（본사·시나가와）',addr_ja:'東京都品川区大崎1-2-12',addr_kr:'도쿄도 시나가와구 오사키 1-2-12',certs:14,struct:'非点火/複合',url:'https://www.tmeic.co.jp/',lon:139.728,lat:35.621},
-  {id:2,cat:1,name:'Toshiba Mitsubishi-Electric Industrial Systems Corp.',sub_ja:'（鶴見工場）',sub_kr:'（쓰루미 공장）',addr_ja:'神奈川県横浜市鶴見区末広町2-4',addr_kr:'가나가와현 요코하마시 쓰루미구 스에히로초 2-4',certs:19,struct:'非点火/複合',url:'https://www.tmeic.co.jp/',lon:139.672,lat:35.508},
-  {id:3,cat:1,name:'Toshiba Mitsubishi-Electric Industrial Systems Corp.',sub_ja:'（長崎工場）',sub_kr:'（나가사키 공장）',addr_ja:'長崎県長崎市飽の浦町1-1',addr_kr:'나가사키현 나가사키시 아쿠노우라마치 1-1',certs:18,struct:'非点火/内圧/安全増',url:'https://www.tmeic.co.jp/',lon:129.865,lat:32.730},
-  {id:4,cat:1,name:'TMEIC Corporation',sub_ja:'（長崎製造）',sub_kr:'（나가사키 제조）',addr_ja:'長崎県長崎市飽の浦町1-2',addr_kr:'나가사키현 나가사키시 아쿠노우라마치 1-2',certs:3,struct:'圧力/複合',url:'https://www.tmeic.com/',lon:129.890,lat:32.712},
-  {id:5,cat:1,name:'Kawasaki Heavy Industries, Ltd.',sub_ja:'（Robot Business Center・明石）',sub_kr:'（로봇 비즈니스 센터·아카시）',addr_ja:'兵庫県明石市川崎町1-1',addr_kr:'효고현 아카시시 가와사키초 1-1',certs:12,struct:'本質安全/複合',url:'https://www.khi.co.jp/',lon:134.993,lat:34.648},
-  {id:6,cat:2,name:'Yokogawa Electric Corporation',sub_ja:'（甲府工場）',sub_kr:'（고후 공장）',addr_ja:'山梨県甲府市高室町155',addr_kr:'야마나시현 고후시 다카무로초 155',certs:58,struct:'内圧/本質安全/複合/粉塵',url:'https://www.yokogawa.com/',lon:138.572,lat:35.650},
-  {id:7,cat:2,name:'Yokogawa Electric Corporation',sub_ja:'（小峰工場・あきる野）',sub_kr:'（고미네 공장·아키루노）',addr_ja:'東京都あきる野市小峰台2',addr_kr:'도쿄도 아키루노시 고미네다이 2',certs:11,struct:'本質安全/複合',url:'https://www.yokogawa.com/',lon:139.278,lat:35.721},
-  {id:8,cat:2,name:'Azbil Corporation',sub_ja:'（湘南工場・藤沢）',sub_kr:'（쇼난 공장·후지사와）',addr_ja:'神奈川県藤沢市本藤沢4-2-1',addr_kr:'가나가와현 후지사와시 혼후지사와 4-2-1',certs:21,struct:'内圧/複合/粉塵',url:'https://www.azbil.com/',lon:139.422,lat:35.336},
-  {id:9,cat:2,name:'Azbil Corporation',sub_ja:'（伊勢原工場）',sub_kr:'（이세하라 공장）',addr_ja:'神奈川県伊勢原市石田200',addr_kr:'가나가와현 이세하라시 이시다 200',certs:2,struct:'複合',url:'https://www.azbil.com/',lon:139.318,lat:35.390},
-  {id:10,cat:2,name:'Azbil Kyoto Co., Ltd.',sub_ja:'（長岡京）',sub_kr:'（나가오카쿄）',addr_ja:'京都府長岡京市勝竜寺19-1',addr_kr:'교토부 나가오카쿄시 가쓰류지 19-1',certs:15,struct:'複合',url:'https://www.azbil.com/',lon:135.702,lat:34.913},
-  {id:11,cat:2,name:'Tokyo Keiso Co., Ltd.',sub_ja:'（水戸工場）',sub_kr:'（미토 공장）',addr_ja:'茨城県水戸市大場町1450',addr_kr:'이바라키현 미토시 오바마치 1450',certs:20,struct:'内圧/複合/本質安全/粉塵',url:'https://www.tokyo-keiso.co.jp/',lon:140.472,lat:36.338},
-  {id:12,cat:2,name:'Tokyo Keiso Co., Ltd.',sub_ja:'（横浜工場・磯子）',sub_kr:'（요코하마 공장·이소고）',addr_ja:'神奈川県横浜市磯子区新磯子町27-8',addr_kr:'가나가와현 요코하마시 이소고구 신이소고초 27-8',certs:14,struct:'内圧/本質安全/複合/粉塵',url:'https://www.tokyo-keiso.co.jp/',lon:139.649,lat:35.377},
-  {id:13,cat:2,name:'Tokyo Keiso Co., Ltd.',sub_ja:'（沖縄工場）',sub_kr:'（오키나와 공장）',addr_ja:'沖縄県糸満市真栄里661',addr_kr:'오키나와현 이토만시 마에자토 661',certs:2,struct:'内圧/粉塵',url:'https://www.tokyo-keiso.co.jp/',lon:127.670,lat:26.130},
-  {id:14,cat:2,name:'Asahi Gauge Manufacturing Co., Ltd.',sub_ja:'（中野区・本社）',sub_kr:'（나카노구·본사）',addr_ja:'東京都中野区本町2-46-1',addr_kr:'도쿄도 나카노구 혼마치 2-46-1',certs:3,struct:'内圧',url:'https://www.asahi-keiki.co.jp/',lon:139.682,lat:35.700},
-  {id:15,cat:2,name:'Tokyo Dengyo Engineering Co., Ltd.',sub_ja:'（日本橋・本社）',sub_kr:'（니혼바시·본사）',addr_ja:'東京都中央区日本橋室町2-1-1',addr_kr:'도쿄도 추오구 니혼바시무로마치 2-1-1',certs:2,struct:'本質安全/内圧',url:'https://www.td-e.co.jp/',lon:139.773,lat:35.687},
-  {id:16,cat:2,name:'Hitachi Automative Systems Measurement, Ltd.',sub_ja:'（ひたちなか）',sub_kr:'（히타치나카）',addr_ja:'茨城県ひたちなか市武田1060',addr_kr:'이바라키현 히타치나카시 다케다 1060',certs:1,struct:'本質安全',url:'https://www.hitachiastemo.com/',lon:140.533,lat:36.380},
-  {id:17,cat:3,name:'RIKEN KEIKI Co., Ltd.',sub_ja:'（埼玉工場・新座）',sub_kr:'（사이타마 공장·니자）',addr_ja:'埼玉県新座市東北2-14-10',addr_kr:'사이타마현 니자시 도호쿠 2-14-10',certs:25,struct:'内圧/本質安全/複合',url:'https://www.rikenkeiki.co.jp/',lon:139.562,lat:35.794},
-  {id:18,cat:3,name:'RIKEN KEIKI NARA MFG. Co., Ltd.',sub_ja:'（奈良製造所）',sub_kr:'（나라 제조소）',addr_ja:'奈良県五條市西吉野町三在714',addr_kr:'나라현 고조시 니시요시노초 미아리 714',certs:13,struct:'本質安全/複合/内圧',url:'https://www.rikenkeikinara.co.jp/',lon:135.740,lat:34.372},
-  {id:19,cat:3,name:'Riken Keiki (Saitama) Co., Ltd.',sub_ja:'（新座・片山）',sub_kr:'（니자·가타야마）',addr_ja:'埼玉県新座市片山3-9-3',addr_kr:'사이타마현 니자시 가타야마 3-9-3',certs:1,struct:'内圧',url:'https://www.rikenkeiki.co.jp/',lon:139.554,lat:35.784},
-  {id:20,cat:3,name:'GASTAR Co., Ltd.',sub_ja:'（品川区・五反田）',sub_kr:'（시나가와구·고탄다）',addr_ja:'東京都品川区東五反田3-14-12',addr_kr:'도쿄도 시나가와구 히가시고탄다 3-14-12',certs:17,struct:'本質安全/複合',url:'https://www.gastar.co.jp/',lon:139.731,lat:35.625},
-  {id:21,cat:3,name:'Hitachi Haramachi Electronics Co., Ltd.',sub_ja:'（南相馬）',sub_kr:'（미나미소마）',addr_ja:'福島県南相馬市原町区堤谷1-1',addr_kr:'후쿠시마현 미나미소마시 하라마치구 쓰쓰미야 1-1',certs:3,struct:'内圧',url:'https://www.hitachi.co.jp/',lon:140.970,lat:37.640},
-  {id:22,cat:4,name:'Fuji Electric Co., Ltd.',sub_ja:'（本社・千代田区）',sub_kr:'（본사·지요다구）',addr_ja:'東京都千代田区大手町2-6-2',addr_kr:'도쿄도 지요다구 오테마치 2-6-2',certs:8,struct:'内圧',url:'https://www.fujielectric.co.jp/',lon:139.762,lat:35.685},
-  {id:23,cat:4,name:'ADOGAWA Electronics Co., Ltd.',sub_ja:'（高島市・安曇川）',sub_kr:'（다카시마시·아도가와）',addr_ja:'滋賀県高島市安曇川町青柳1519-6',addr_kr:'시가현 다카시마시 아도가와초 아오야기 1519-6',certs:5,struct:'本質安全',url:'https://www.adogawa-elec.co.jp/',lon:135.854,lat:35.317},
-  {id:24,cat:4,name:'DAIICHI COMPONENTS, LTD.',sub_ja:'（名古屋・港区）',sub_kr:'（나고야·미나토구）',addr_ja:'愛知県名古屋市港区港栄1-3-3',addr_kr:'아이치현 나고야시 미나토구 미나토사카에 1-3-3',certs:3,struct:'内圧',url:'https://www.daiichi-m.com/',lon:136.870,lat:35.072},
-  {id:25,cat:4,name:'Sakata Denki Co., Ltd.',sub_ja:'（川口市・芝）',sub_kr:'（가와구치시·시바）',addr_ja:'埼玉県川口市芝4735-1',addr_kr:'사이타마현 가와구치시 시바 4735-1',certs:11,struct:'本質安全',url:'https://www.sakata-denki.co.jp/',lon:139.702,lat:35.826},
-  {id:26,cat:4,name:'Shinko Denshi Co., Ltd.',sub_ja:'（文京区・後楽）',sub_kr:'（분쿄구·고라쿠）',addr_ja:'東京都文京区後楽1-4-6',addr_kr:'도쿄도 분쿄구 고라쿠 1-4-6',certs:5,struct:'本質安全',url:'https://www.sinkodensisj.co.jp/',lon:139.752,lat:35.707},
-  {id:27,cat:5,name:'Fujikin Incorporated Osaka Plant',sub_ja:'（大阪・西淀川）',sub_kr:'（오사카·니시요도가와）',addr_ja:'大阪府大阪市西淀川区姫里3-13-45',addr_kr:'오사카부 오사카시 니시요도가와구 히메자토 3-13-45',certs:3,struct:'内圧',url:'https://www.fujikin.co.jp/',lon:135.451,lat:34.702},
-  {id:28,cat:5,name:'ASCO JAPAN Co., Ltd.',sub_ja:'（港区・芝公園）',sub_kr:'（미나토구·시바공원）',addr_ja:'東京都港区芝公園2-11-1',addr_kr:'도쿄도 미나토구 시바공원 2-11-1',certs:6,struct:'内圧/複合/粉塵',url:'https://www.emerson.com/ja-jp',lon:139.744,lat:35.658},
-  {id:29,cat:5,name:'Koso Service Co., Ltd.',sub_ja:'（名古屋・中村区）',sub_kr:'（나고야·나카무라구）',addr_ja:'愛知県名古屋市中村区名駅4-6-23',addr_kr:'아이치현 나고야시 나카무라구 메이에키 4-6-23',certs:1,struct:'—',url:'https://www.koso.co.jp/',lon:136.881,lat:35.172},
-  {id:30,cat:6,name:'MOOG JAPAN LTD.',sub_ja:'（新横浜）',sub_kr:'（신요코하마）',addr_ja:'神奈川県横浜市港北区新横浜3-8-11',addr_kr:'가나가와현 요코하마시 고호쿠구 신요코하마 3-8-11',certs:1,struct:'内圧',url:'https://www.moog.com/ja-jp/',lon:139.607,lat:35.508},
-  {id:31,cat:2,name:'Azbil Corporation',sub_ja:'（伊勢原工場 第2）',sub_kr:'（이세하라 공장 제2）',addr_ja:'神奈川県伊勢原市石田200（第2棟）',addr_kr:'가나가와현 이세하라시 이시다 200（제2동）',certs:0,struct:'複合',url:'https://www.azbil.com/',lon:139.324,lat:35.394},
-  {id:32,cat:1,name:'Toshiba Mitsubishi-Electric Industrial Systems Corp.',sub_ja:'（横浜・神奈川区）',sub_kr:'（요코하마·가나가와구）',addr_ja:'神奈川県横浜市神奈川区新子安1-1',addr_kr:'가나가와현 요코하마시 가나가와구 신코야스 1-1',certs:8,struct:'非点火/複合',url:'https://www.tmeic.co.jp/',lon:139.636,lat:35.482},
+/* Projected SVG coordinates (Mercator, pre-computed from actual addresses) */
+/* ================================================================
+   MARKER POSITIONS — Mercator projection
+   LON0=122.01, LON1=146.45, LAT0=19.10, LAT1=46.10, W=560, H=740
+   Kanto cluster spread with ±12px offsets to avoid overlap
+================================================================ */
+var POS = {
+   1:{x:418,y:316},   // TMEIC 品川 (139.728,35.621) +12,0
+   2:{x:404,y:330},   // TMEIC 鶴見 (139.672,35.508) 0,+12
+   3:{x:180,y:395},   // TMEIC 長崎
+   4:{x:168,y:395},   // TMEIC Corp 長崎 -12,0
+   5:{x:298,y:343},   // 川崎重工 明石
+   6:{x:368,y:315},   // 横河電機 甲府 -12,0
+   7:{x:384,y:303},   // 横河電機 あきる野 -12,-10
+   8:{x:399,y:336},   // アズビル 藤沢 0,+12
+   9:{x:386,y:336},   // アズビル 伊勢原 -12,+14
+  10:{x:314,y:335},   // Azbil Kyoto 長岡京
+  11:{x:423,y:295},   // 東京計装 水戸
+  12:{x:404,y:344},   // 東京計装 横浜 0,+22
+  13:{x:83,y:648,inset:true}, // 沖縄 (inset)
+  14:{x:393,y:303},   // 朝日計器 中野 -12,-10
+  15:{x:418,y:304},   // 東京電業 日本橋 +12,-10
+  16:{x:424,y:283},   // 日立計測 ひたちなか 0,-12
+  17:{x:380,y:299},   // 理研計器 新座 -24,-15
+  18:{x:315,y:350},   // 理研計器奈良
+  19:{x:380,y:311},   // 理研計器埼玉 -24,-3
+  20:{x:406,y:328},   // GASTAR 五反田 0,+12
+  21:{x:434,y:259},   // 日立原町 南相馬
+  22:{x:430,y:304},   // 富士電機 千代田 +24,-10
+  23:{x:317,y:324},   // ADOGAWA 高島
+  24:{x:341,y:331},   // 第一電子 名古屋
+  25:{x:393,y:291},   // 境電機 川口 -12,-23
+  26:{x:418,y:292},   // 新光電子 文京 +12,-22
+  27:{x:308,y:341},   // フジキン 大阪
+  28:{x:406,y:316},   // ASCO 港区 0,0 (slightly off Tokyo)
+  29:{x:341,y:328},   // コソ 名古屋 0,-3
+  30:{x:392,y:320},   // MOOG 新横浜 -14,+2
+  31:{x:374,y:324},   // アズビル 伊勢原2 -24,+2
+  32:{x:392,y:331}    // TMEIC 神奈川 -14,+12
+};
+var D = [
+  {id:1,cat:1,name:'Toshiba Mitsubishi-Electric Industrial Systems Corp.',sub_ja:'（本社・品川）',sub_kr:'（본사·시나가와）',addr_ja:'東京都品川区大崎1-2-12',addr_kr:'도쿄도 시나가와구 오사키 1-2-12',certs:14,struct:'非点火/複合',url:'https://www.tmeic.co.jp/'},
+  {id:2,cat:1,name:'Toshiba Mitsubishi-Electric Industrial Systems Corp.',sub_ja:'（鶴見工場）',sub_kr:'（쓰루미 공장）',addr_ja:'神奈川県横浜市鶴見区末広町2-4',addr_kr:'가나가와현 요코하마시 쓰루미구',certs:19,struct:'非点火/複合',url:'https://www.tmeic.co.jp/'},
+  {id:3,cat:1,name:'Toshiba Mitsubishi-Electric Industrial Systems Corp.',sub_ja:'（長崎工場）',sub_kr:'（나가사키 공장）',addr_ja:'長崎県長崎市飽の浦町1-1',addr_kr:'나가사키현 나가사키시 아쿠노우라마치',certs:18,struct:'非点火/内圧/安全増',url:'https://www.tmeic.co.jp/'},
+  {id:4,cat:1,name:'TMEIC Corporation',sub_ja:'（長崎製造）',sub_kr:'（나가사키 제조）',addr_ja:'長崎県長崎市飽の浦町1-2',addr_kr:'나가사키현 나가사키시 아쿠노우라마치',certs:3,struct:'圧力/複合',url:'https://www.tmeic.com/'},
+  {id:5,cat:1,name:'Kawasaki Heavy Industries, Ltd.',sub_ja:'（Robot Business Center）',sub_kr:'（로봇 비즈니스 센터）',addr_ja:'兵庫県明石市川崎町1-1',addr_kr:'효고현 아카시시 가와사키초',certs:12,struct:'本質安全/複合',url:'https://www.khi.co.jp/'},
+  {id:6,cat:2,name:'Yokogawa Electric Corporation',sub_ja:'（甲府工場）',sub_kr:'（고후 공장）',addr_ja:'山梨県甲府市高室町155',addr_kr:'야마나시현 고후시 다카무로초 155',certs:58,struct:'内圧/本質安全/複合',url:'https://www.yokogawa.com/'},
+  {id:7,cat:2,name:'Yokogawa Electric Corporation',sub_ja:'（小峰工場・あきる野）',sub_kr:'（고미네 공장·아키루노）',addr_ja:'東京都あきる野市小峰台2',addr_kr:'도쿄도 아키루노시 고미네다이 2',certs:11,struct:'本質安全/複合',url:'https://www.yokogawa.com/'},
+  {id:8,cat:2,name:'Azbil Corporation',sub_ja:'（湘南工場・藤沢）',sub_kr:'（쇼난 공장·후지사와）',addr_ja:'神奈川県藤沢市本藤沢4-2-1',addr_kr:'가나가와현 후지사와시',certs:21,struct:'内圧/複合/粉塵',url:'https://www.azbil.com/'},
+  {id:9,cat:2,name:'Azbil Corporation',sub_ja:'（伊勢原工場）',sub_kr:'（이세하라 공장）',addr_ja:'神奈川県伊勢原市石田200',addr_kr:'가나가와현 이세하라시 이시다 200',certs:2,struct:'複合',url:'https://www.azbil.com/'},
+  {id:10,cat:2,name:'Azbil Kyoto Co., Ltd.',sub_ja:'（長岡京）',sub_kr:'（나가오카쿄）',addr_ja:'京都府長岡京市勝竜寺19-1',addr_kr:'교토부 나가오카쿄시',certs:15,struct:'複合',url:'https://www.azbil.com/'},
+  {id:11,cat:2,name:'Tokyo Keiso Co., Ltd.',sub_ja:'（水戸工場）',sub_kr:'（미토 공장）',addr_ja:'茨城県水戸市大場町1450',addr_kr:'이바라키현 미토시',certs:20,struct:'内圧/複合/粉塵',url:'https://www.tokyo-keiso.co.jp/'},
+  {id:12,cat:2,name:'Tokyo Keiso Co., Ltd.',sub_ja:'（横浜工場・磯子）',sub_kr:'（요코하마 공장·이소고）',addr_ja:'神奈川県横浜市磯子区新磯子町27-8',addr_kr:'가나가와현 요코하마시 이소고구',certs:14,struct:'内圧/本質安全/粉塵',url:'https://www.tokyo-keiso.co.jp/'},
+  {id:13,cat:2,name:'Tokyo Keiso Co., Ltd.',sub_ja:'（沖縄工場）',sub_kr:'（오키나와 공장）',addr_ja:'沖縄県糸満市真栄里661',addr_kr:'오키나와현 이토만시',certs:2,struct:'内圧/粉塵',url:'https://www.tokyo-keiso.co.jp/'},
+  {id:14,cat:2,name:'Asahi Gauge Manufacturing Co., Ltd.',sub_ja:'（中野区）',sub_kr:'（나카노구）',addr_ja:'東京都中野区本町2-46-1',addr_kr:'도쿄도 나카노구 혼마치',certs:3,struct:'内圧',url:'https://www.asahi-keiki.co.jp/'},
+  {id:15,cat:2,name:'Tokyo Dengyo Engineering Co., Ltd.',sub_ja:'（日本橋）',sub_kr:'（니혼바시）',addr_ja:'東京都中央区日本橋室町2-1-1',addr_kr:'도쿄도 추오구 니혼바시',certs:2,struct:'本質安全/内圧',url:'https://www.td-e.co.jp/'},
+  {id:16,cat:2,name:'Hitachi Automative Systems Measurement, Ltd.',sub_ja:'（ひたちなか）',sub_kr:'（히타치나카）',addr_ja:'茨城県ひたちなか市武田1060',addr_kr:'이바라키현 히타치나카시',certs:1,struct:'本質安全',url:'https://www.hitachiastemo.com/'},
+  {id:17,cat:3,name:'RIKEN KEIKI Co., Ltd.',sub_ja:'（埼玉工場・新座）',sub_kr:'（사이타마 공장·니자）',addr_ja:'埼玉県新座市東北2-14-10',addr_kr:'사이타마현 니자시',certs:25,struct:'内圧/本質安全/複合',url:'https://www.rikenkeiki.co.jp/'},
+  {id:18,cat:3,name:'RIKEN KEIKI NARA MFG. Co., Ltd.',sub_ja:'（奈良製造所）',sub_kr:'（나라 제조소）',addr_ja:'奈良県五條市西吉野町三在714',addr_kr:'나라현 고조시',certs:13,struct:'本質安全/複合',url:'https://www.rikenkeikinara.co.jp/'},
+  {id:19,cat:3,name:'Riken Keiki (Saitama) Co., Ltd.',sub_ja:'（新座・片山）',sub_kr:'（니자·가타야마）',addr_ja:'埼玉県新座市片山3-9-3',addr_kr:'사이타마현 니자시',certs:1,struct:'内圧',url:'https://www.rikenkeiki.co.jp/'},
+  {id:20,cat:3,name:'GASTAR Co., Ltd.',sub_ja:'（品川区・五反田）',sub_kr:'（시나가와구·고탄다）',addr_ja:'東京都品川区東五反田3-14-12',addr_kr:'도쿄도 시나가와구',certs:17,struct:'本質安全/複合',url:'https://www.gastar.co.jp/'},
+  {id:21,cat:3,name:'Hitachi Haramachi Electronics Co., Ltd.',sub_ja:'（南相馬）',sub_kr:'（미나미소마）',addr_ja:'福島県南相馬市原町区堤谷1-1',addr_kr:'후쿠시마현 미나미소마시',certs:3,struct:'内圧',url:'https://www.hitachi.co.jp/'},
+  {id:22,cat:4,name:'Fuji Electric Co., Ltd.',sub_ja:'（千代田区・本社）',sub_kr:'（지요다구·본사）',addr_ja:'東京都千代田区大手町2-6-2',addr_kr:'도쿄도 지요다구 오테마치',certs:8,struct:'内圧',url:'https://www.fujielectric.co.jp/'},
+  {id:23,cat:4,name:'ADOGAWA Electronics Co., Ltd.',sub_ja:'（高島市・安曇川）',sub_kr:'（다카시마시·아도가와）',addr_ja:'滋賀県高島市安曇川町青柳1519-6',addr_kr:'시가현 다카시마시',certs:5,struct:'本質安全',url:'https://www.adogawa-elec.co.jp/'},
+  {id:24,cat:4,name:'DAIICHI COMPONENTS, LTD.',sub_ja:'（名古屋・港区）',sub_kr:'（나고야·미나토구）',addr_ja:'愛知県名古屋市港区港栄1-3-3',addr_kr:'아이치현 나고야시',certs:3,struct:'内圧',url:'https://www.daiichi-m.com/'},
+  {id:25,cat:4,name:'Sakata Denki Co., Ltd.',sub_ja:'（川口市）',sub_kr:'（가와구치시）',addr_ja:'埼玉県川口市芝4735-1',addr_kr:'사이타마현 가와구치시',certs:11,struct:'本質安全',url:'https://www.sakata-denki.co.jp/'},
+  {id:26,cat:4,name:'Shinko Denshi Co., Ltd.',sub_ja:'（文京区）',sub_kr:'（분쿄구）',addr_ja:'東京都文京区後楽1-4-6',addr_kr:'도쿄도 분쿄구',certs:5,struct:'本質安全',url:'https://www.sinkodensisj.co.jp/'},
+  {id:27,cat:5,name:'Fujikin Incorporated Osaka Plant',sub_ja:'（大阪・西淀川）',sub_kr:'（오사카·니시요도가와）',addr_ja:'大阪府大阪市西淀川区姫里3-13-45',addr_kr:'오사카부 오사카시 니시요도가와구',certs:3,struct:'内圧',url:'https://www.fujikin.co.jp/'},
+  {id:28,cat:5,name:'ASCO JAPAN Co., Ltd.',sub_ja:'（港区・芝公園）',sub_kr:'（미나토구·시바공원）',addr_ja:'東京都港区芝公園2-11-1',addr_kr:'도쿄도 미나토구 시바공원',certs:6,struct:'内圧/複合/粉塵',url:'https://www.emerson.com/ja-jp'},
+  {id:29,cat:5,name:'Koso Service Co., Ltd.',sub_ja:'（名古屋・中村区）',sub_kr:'（나고야·나카무라구）',addr_ja:'愛知県名古屋市中村区名駅4-6-23',addr_kr:'아이치현 나고야시 나카무라구',certs:1,struct:'—',url:'https://www.koso.co.jp/'},
+  {id:30,cat:6,name:'MOOG JAPAN LTD.',sub_ja:'（新横浜）',sub_kr:'（신요코하마）',addr_ja:'神奈川県横浜市港北区新横浜3-8-11',addr_kr:'가나가와현 요코하마시 고호쿠구',certs:1,struct:'内圧',url:'https://www.moog.com/ja-jp/'},
+  {id:31,cat:2,name:'Azbil Corporation',sub_ja:'（伊勢原工場 第2）',sub_kr:'（이세하라 공장 제2）',addr_ja:'神奈川県伊勢原市石田200（第2棟）',addr_kr:'가나가와현 이세하라시 이시다 200',certs:0,struct:'複合',url:'https://www.azbil.com/'},
+  {id:32,cat:1,name:'Toshiba Mitsubishi-Electric Industrial Systems Corp.',sub_ja:'（横浜・神奈川区）',sub_kr:'（요코하마·가나가와구）',addr_ja:'神奈川県横浜市神奈川区新子安1-1',addr_kr:'가나가와현 요코하마시 가나가와구',certs:8,struct:'非点火/複合',url:'https://www.tmeic.co.jp/'}
 ];
 
-/* ── MAP PROJECTION ── */
-const LN0=129,LN1=147,LT0=24,LT1=46,SW=700,SH=820;
-function sv(lon,lat){return{x:(lon-LN0)/(LN1-LN0)*SW,y:(1-(lat-LT0)/(LT1-LT0))*SH};}
+/* ─ Current lang helper ─ */
+function gl(){return document.body.dataset.lang||'ja';}
 
-/* nudge overlapping markers */
-(function(){
-  const placed={};
-  D.forEach(function(c){
-    var key=Math.round(c.lon*14)+'_'+Math.round(c.lat*14);
-    if(!placed[key])placed[key]=0;
-    var n=placed[key]++;
-    if(n>0){var a=n*70*(Math.PI/180),r=0.20;c.lon+=r*Math.cos(a);c.lat+=r*Math.sin(a);}
-  });
-})();
-
-/* ── BUILD MAP MARKERS ── */
+/* ─ Build SVG markers ─ */
 var NS='http://www.w3.org/2000/svg';
 var ml=document.getElementById('ml');
 D.forEach(function(c){
-  var p=sv(c.lon,c.lat);
+  var p=POS[c.id];
   var g=document.createElementNS(NS,'g');
   g.id='m'+c.id; g.setAttribute('cursor','pointer');
-  g.setAttribute('transform','translate('+p.x.toFixed(1)+','+p.y.toFixed(1)+')');
-  var pulse=document.createElementNS(NS,'circle');
-  pulse.setAttribute('r','16');pulse.setAttribute('fill','none');
-  pulse.setAttribute('stroke',CC[c.cat]);pulse.setAttribute('stroke-width','0.5');
-  pulse.setAttribute('opacity','0.3');g.appendChild(pulse);
+  /* Place marker at SVG coord; inverse-scale applied by applyZoom() */
+  g.setAttribute('transform','translate('+p.x+','+p.y+')');
+  /* pulse ring */
+  var ring=document.createElementNS(NS,'circle');
+  ring.setAttribute('r','17'); ring.setAttribute('fill','none');
+  ring.setAttribute('stroke',CC[c.cat]); ring.setAttribute('stroke-width','1');
+  ring.setAttribute('opacity','0.35'); g.appendChild(ring);
+  /* fill circle */
   var ci=document.createElementNS(NS,'circle');
-  ci.setAttribute('r','11');ci.setAttribute('fill',CC[c.cat]);
-  ci.setAttribute('stroke','rgba(255,255,255,0.25)');ci.setAttribute('stroke-width','1.5');
+  ci.setAttribute('r','10'); ci.setAttribute('fill',CC[c.cat]);
+  ci.setAttribute('stroke','rgba(255,255,255,0.35)'); ci.setAttribute('stroke-width','1.5');
   g.appendChild(ci);
+  /* number label */
   var tx=document.createElementNS(NS,'text');
-  tx.setAttribute('text-anchor','middle');tx.setAttribute('dominant-baseline','central');
-  tx.setAttribute('fill','white');tx.setAttribute('font-size','8.5');tx.setAttribute('font-weight','700');
-  tx.setAttribute('font-family',"'Courier New',monospace");tx.textContent=c.id;
-  g.appendChild(tx);
-  g.addEventListener('mouseenter',function(e){showTooltip(e,c);});
-  g.addEventListener('mouseleave',function(){document.getElementById('mapTooltip').classList.remove('show');});
-  g.addEventListener('click',function(){selectItem(c.id);});
+  tx.setAttribute('text-anchor','middle'); tx.setAttribute('dominant-baseline','central');
+  tx.setAttribute('fill','white'); tx.setAttribute('font-size','8');
+  tx.setAttribute('font-weight','700'); tx.setAttribute('font-family',"'Courier New',monospace");
+  tx.textContent=c.id; g.appendChild(tx);
+  g.addEventListener('mouseenter',function(e){showTT(e,c);});
+  g.addEventListener('mouseleave',function(){ttEl.classList.remove('show');});
+  g.addEventListener('click',function(){selC(c.id);});
   ml.appendChild(g);
 });
 
-/* ── BUILD SIDEBAR LIST ── */
-var cl=document.getElementById('companyList');
+/* ─ Build sidebar list ─ */
+var clEl=document.getElementById('companyList');
 D.forEach(function(c){
-  var d=document.createElement('div');d.className='c-item';d.id='li'+c.id;
+  var d=document.createElement('div'); d.className='c-item'; d.id='li'+c.id;
   d.innerHTML='<div class="c-num" style="background:'+CC[c.cat]+'">'+c.id+'</div>'
     +'<div class="c-info">'
     +'<div class="c-name">'+c.name+'</div>'
@@ -649,31 +722,27 @@ D.forEach(function(c){
     +'<div class="c-url"><a href="'+c.url+'" target="_blank">'+c.url+'</a></div>'
     +'</div>'
     +'<div class="c-cnt">認証<span>'+c.certs+'</span></div>';
-  d.onclick=function(){selectItem(c.id);};
-  cl.appendChild(d);
+  d.onclick=function(){selC(c.id);};
+  clEl.appendChild(d);
 });
 
-/* ── BUILD TABLE ── */
+/* ─ Build table ─ */
 function buildTable(){
-  var tbody=document.getElementById('tblBody');
-  tbody.innerHTML='';
-  var lg=getLang();
+  var tbody=document.getElementById('tblBody'); tbody.innerHTML='';
+  var lg=gl();
   D.forEach(function(c){
-    var tr=document.createElement('tr');
-    tr.id='tr'+c.id;
-    tr.dataset.cat=c.cat;
-    tr.dataset.nameJa=(c.name+(c.sub_ja||'')).toLowerCase();
-    tr.dataset.nameKr=(c.name+(c.sub_kr||'')).toLowerCase();
-    tr.dataset.addrJa=c.addr_ja.toLowerCase();
-    tr.dataset.addrKr=c.addr_kr.toLowerCase();
-    var catName=lg==='kr'?CN_KR[c.cat]:CN_JA[c.cat];
+    var tr=document.createElement('tr'); tr.id='tr'+c.id;
+    tr.dataset.cat=String(c.cat);
+    tr.dataset.ja=(c.name+(c.sub_ja||'')+c.addr_ja).toLowerCase();
+    tr.dataset.kr=(c.name+(c.sub_kr||'')+c.addr_kr).toLowerCase();
     var sub=lg==='kr'?(c.sub_kr||''):(c.sub_ja||'');
     var addr=lg==='kr'?c.addr_kr:c.addr_ja;
+    var cat=lg==='kr'?CN_KR[c.cat]:CN_JA[c.cat];
     var chips=c.struct.split('/').map(function(s){return '<span class="cert-chip">'+s.trim()+'</span>';}).join('');
     tr.innerHTML='<td class="td-num">'+c.id+'</td>'
       +'<td><div class="td-name">'+c.name+'</div><div class="td-sub">'+sub+'</div></td>'
-      +'<td><div class="td-sub">'+addr+'</div></td>'
-      +'<td><span class="cat-badge" style="background:'+CC[c.cat]+'18;color:'+CC[c.cat]+';border:1px solid '+CC[c.cat]+'40">'+catName+'</span></td>'
+      +'<td class="td-sub">'+addr+'</td>'
+      +'<td><span class="cat-badge" style="background:'+CC[c.cat]+'18;color:'+CC[c.cat]+';border:1px solid '+CC[c.cat]+'40">'+cat+'</span></td>'
       +'<td>'+chips+'</td>'
       +'<td style="font-weight:600;color:var(--navy);font-family:\'Courier New\',monospace">'+c.certs+'</td>'
       +'<td class="td-url"><a href="'+c.url+'" target="_blank">'+c.url.replace('https://','')+'</a></td>';
@@ -682,163 +751,352 @@ function buildTable(){
 }
 buildTable();
 
-/* ── TOOLTIP ── */
-var mapTooltip=document.getElementById('mapTooltip');
-var mapCanvas=document.getElementById('mapCanvas');
+/* ─ Tooltip ─ */
+var ttEl=document.getElementById('mapTooltip');
+var canvasEl=document.getElementById('mapCanvas');
 var jmap=document.getElementById('jmap');
-function showTooltip(e,c){
-  var lg=getLang();
-  var sr=jmap.getBoundingClientRect(),mr=mapCanvas.getBoundingClientRect();
-  var p=sv(c.lon,c.lat);
-  var tx=(sr.left-mr.left)+p.x*(sr.width/SW)+18;
-  var ty=(sr.top-mr.top)+p.y*(sr.height/SH)-70;
-  if(tx+285>mr.width)tx=tx-305;
-  if(ty<0)ty=ty+90;
+function showTT(e,c){
+  var lg=gl();
+  var mr=canvasEl.getBoundingClientRect();
+  /* マーカーのSVG論理座標をズーム・パン変換してcanvas上の実ピクセルに変換 */
+  var p=POS[c.id];
+  var svgW=560, svgH=740;
+  var canvasW=mr.width, canvasH=mr.height;
+  /* SVG→canvas変換 */
+  var logicalX = p.x * zoomState.scale + zoomState.tx;
+  var logicalY = p.y * zoomState.scale + zoomState.ty;
+  var px = logicalX / svgW * canvasW;
+  var py = logicalY / svgH * canvasH;
+  var tx = px + 18;
+  var ty = py - 85;
+  if(tx + 275 > canvasW) tx = px - 290;
+  if(ty < 0) ty = py + 20;
+  if(ty + 200 > canvasH) ty = canvasH - 210;
   var addr=lg==='kr'?c.addr_kr:c.addr_ja;
   var sub=lg==='kr'?(c.sub_kr||''):(c.sub_ja||'');
-  var catName=lg==='kr'?CN_KR[c.cat]:CN_JA[c.cat];
-  mapTooltip.style.left=tx+'px'; mapTooltip.style.top=ty+'px';
-  mapTooltip.innerHTML='<div class="tt-no">#'+c.id+'</div>'
+  var cat=lg==='kr'?CN_KR[c.cat]:CN_JA[c.cat];
+  ttEl.style.left=tx+'px'; ttEl.style.top=ty+'px';
+  ttEl.innerHTML='<div class="tt-no">#'+c.id+'</div>'
     +'<div class="tt-nm">'+c.name+'</div>'
     +'<div class="tt-sub">'+sub+'</div>'
     +'<div class="tt-ad">📍 '+addr+'</div>'
-    +'<span class="tt-cat" style="background:'+CC[c.cat]+'18;color:'+CC[c.cat]+';border:1px solid '+CC[c.cat]+'40">'+catName+'</span>'
-    +'<div class="tt-url" style="margin-top:4px"><a href="'+c.url+'" target="_blank">🔗 '+c.url+'</a></div>'
+    +'<span class="tt-cat" style="background:'+CC[c.cat]+'18;color:'+CC[c.cat]+';border:1px solid '+CC[c.cat]+'40">'+cat+'</span>'
+    +'<div class="tt-url" style="margin-top:5px"><a href="'+c.url+'" target="_blank">🔗 '+c.url+'</a></div>'
     +'<div class="tt-certs">認証件数: '+c.certs+' 件</div>';
-  mapTooltip.classList.add('show');
+  ttEl.classList.add('show');
 }
 
-/* ── SELECT ITEM ── */
-function selectItem(id){
+/* ─ Select item ─ */
+function selC(id){
   document.querySelectorAll('.c-item').forEach(function(x){x.classList.remove('sel');});
-  document.querySelectorAll('#ml circle:nth-child(2)').forEach(function(x){x.setAttribute('stroke','rgba(255,255,255,0.25)');});
+  document.querySelectorAll('#ml circle:nth-child(2)').forEach(function(x){x.setAttribute('stroke','rgba(255,255,255,0.3)');});
   var li=document.getElementById('li'+id);
-  if(li){li.classList.add('sel');li.scrollIntoView({behavior:'smooth',block:'nearest'});}
+  if(li){li.classList.add('sel'); li.scrollIntoView({behavior:'smooth',block:'nearest'});}
   var mg=document.getElementById('m'+id);
-  if(mg){var ci=mg.querySelectorAll('circle')[1];if(ci)ci.setAttribute('stroke','rgba(255,255,255,0.95)');}
+  if(mg){var ci=mg.querySelectorAll('circle')[1]; if(ci) ci.setAttribute('stroke','rgba(255,255,255,0.95)');}
 }
 
-/* ── FILTER CATEGORY (MAP) ── */
+/* ─ Filter map by category ─ */
 var activeCat=0;
-function fc(cat,el){
-  if(activeCat===cat&&cat!==0){cat=0;}
+function fcMap(cat,el){
+  if(activeCat===cat && cat!==0){cat=0;}
   activeCat=cat;
-  document.querySelectorAll('.legend-item').forEach(function(i){i.classList.remove('active');});
-  if(cat===0){document.getElementById('leg-all').classList.add('active');}
-  else{el.classList.add('active');}
+  document.querySelectorAll('.leg-item,.leg-all').forEach(function(i){i.classList.remove('active');});
+  document.getElementById('leg-'+cat).classList.add('active');
   var vis=0;
   D.forEach(function(c){
     var g=document.getElementById('m'+c.id);
     var li=document.getElementById('li'+c.id);
-    var show=(cat===0||c.cat===cat);
-    if(g)g.setAttribute('opacity',show?'1':'0.07');
-    if(li)li.style.display=show?'':'none';
-    if(show)vis++;
+    var show=(cat===0 || c.cat===cat);
+    if(g) g.setAttribute('opacity', show?'1':'0.06');
+    if(li) li.style.display=show?'':'none';
+    if(show) vis++;
   });
-  document.getElementById('statVisible').textContent=vis;
+  document.getElementById('statVis').textContent=vis;
 }
 
-/* ── SEARCH MAP ── */
+/* ─ Search map ─ */
 function searchMap(){
   var q=document.getElementById('mapSearch').value.toLowerCase();
-  var lg=getLang();
-  var vis=0;
+  var lg=gl(); var vis=0;
   D.forEach(function(c){
-    var haystack=(c.name+(lg==='kr'?c.sub_kr+c.addr_kr:c.sub_ja+c.addr_ja)).toLowerCase();
+    var hay=(c.name+(lg==='kr'?c.sub_kr+c.addr_kr:c.sub_ja+c.addr_ja)).toLowerCase();
     var g=document.getElementById('m'+c.id);
     var li=document.getElementById('li'+c.id);
-    var show=(!q||haystack.includes(q))&&(activeCat===0||c.cat===activeCat);
-    if(g)g.setAttribute('opacity',show?'1':'0.07');
-    if(li)li.style.display=show?'':'none';
-    if(show)vis++;
+    var show=(!q||hay.includes(q))&&(activeCat===0||c.cat===activeCat);
+    if(g) g.setAttribute('opacity',show?'1':'0.06');
+    if(li) li.style.display=show?'':'none';
+    if(show) vis++;
   });
-  document.getElementById('statVisible').textContent=vis;
+  document.getElementById('statVis').textContent=vis;
 }
 
-/* ── FILTER TABLE ── */
+/* ─ Filter table ─ */
 function filterTable(){
   var q=(document.getElementById('tblSearch').value||'').toLowerCase();
   var cat=document.getElementById('tblCat').value;
-  var lg=getLang();
-  var n=0;
+  var lg=gl(); var n=0;
   document.querySelectorAll('#tblBody tr').forEach(function(tr){
-    var name=lg==='kr'?tr.dataset.nameKr:tr.dataset.nameJa;
-    var addr=lg==='kr'?tr.dataset.addrKr:tr.dataset.addrJa;
-    var nameMatch=(name||'').includes(q)||(addr||'').includes(q);
-    var catMatch=!cat||tr.dataset.cat===cat;
-    var show=nameMatch&&catMatch;
+    var hay=lg==='kr'?tr.dataset.kr:tr.dataset.ja;
+    var show=(hay||'').includes(q) && (!cat||tr.dataset.cat===cat);
     tr.style.display=show?'':'none';
-    if(show)n++;
+    if(show) n++;
   });
-  var tpl=document.getElementById('tblCount');
-  tpl.textContent=lg==='kr'?(n+'개 거점 표시 중'):('全'+n+'拠点表示中');
+  document.getElementById('tblCount').textContent=lg==='kr'?(n+'개 거점 표시 중'):('全'+n+'拠点表示中');
   document.getElementById('tblNoResult').style.display=n===0?'block':'none';
 }
 
-/* ── LANGUAGE SWITCH ── */
+/* ─ Language switch ─ */
 function setLang(lg){
   document.body.dataset.lang=lg;
   document.getElementById('btnJa').classList.toggle('active',lg==='ja');
   document.getElementById('btnKr').classList.toggle('active',lg==='kr');
   document.querySelectorAll('[data-ja][data-kr]').forEach(function(el){
-    var val=lg==='kr'?el.dataset.kr:el.dataset.ja;
-    if(!val)return;
+    var val=lg==='kr'?el.getAttribute('data-kr'):el.getAttribute('data-ja');
+    if(!val) return;
     if(el.tagName==='INPUT'||el.tagName==='TEXTAREA'){el.placeholder=val;}
     else if(el.tagName==='OPTION'){el.textContent=val;}
     else{el.innerHTML=val;}
   });
-  document.querySelectorAll('[data-placeholder-ja]').forEach(function(el){
-    el.placeholder=lg==='kr'?el.dataset.placeholderKr:el.dataset.placeholderJa;
+  document.querySelectorAll('[data-placeholder-ja][data-placeholder-kr]').forEach(function(el){
+    el.placeholder=lg==='kr'?el.getAttribute('data-placeholder-kr'):el.getAttribute('data-placeholder-ja');
   });
-  document.getElementById('mapSearch').placeholder=lg==='kr'?'회사명·주소로 검색…':'社名・住所で検索…';
-  document.getElementById('tblSearch').placeholder=lg==='kr'?'회사명·주소로 검색…':'社名・住所で検索…';
-  document.querySelectorAll('.c-sub').forEach(function(el){
-    el.textContent=lg==='kr'?(el.dataset.kr||''):(el.dataset.ja||'');
-  });
-  document.querySelectorAll('.c-addr').forEach(function(el){
-    el.textContent=lg==='kr'?(el.dataset.kr||''):(el.dataset.ja||'');
-  });
+  /* sidebar sub/addr */
+  document.querySelectorAll('.c-sub').forEach(function(el){el.textContent=lg==='kr'?(el.dataset.kr||''):(el.dataset.ja||'');});
+  document.querySelectorAll('.c-addr').forEach(function(el){el.textContent=lg==='kr'?(el.dataset.kr||''):(el.dataset.ja||'');});
   document.getElementById('tblNoResult').textContent=lg==='kr'?'해당하는 거점을 찾을 수 없습니다':'該当する拠点が見つかりませんでした';
   buildTable();
   filterTable();
 }
 
-/* ── CURSOR ── */
-var cur=document.getElementById('cursor'),curRing=document.getElementById('cursorRing');
-document.addEventListener('mousemove',function(e){
-  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
-  curRing.style.left=e.clientX+'px';curRing.style.top=e.clientY+'px';
-});
+/* ─ Zoom / Pan ─ */
+var zoomState = {scale:1, tx:0, ty:0};
+var dragState  = {active:false, startX:0, startY:0, startTx:0, startTy:0};
+var lastDist   = 0;
 
-/* ── NAV SCROLL ── */
-window.addEventListener('scroll',function(){
-  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>30);
-});
-
-/* ── HAMBURGER ── */
-function toggleMenu(){
-  var hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
-  hb.classList.toggle('open');mm.classList.toggle('open');
+function applyZoom(){
+  var g = document.getElementById('zoomGroup');
+  if(!g) return;
+  var s = zoomState.scale, tx = zoomState.tx, ty = zoomState.ty;
+  g.setAttribute('transform','translate('+tx.toFixed(2)+','+ty.toFixed(2)+') scale('+s.toFixed(4)+')');
+  /* Keep markers visually constant size regardless of zoom */
+  document.querySelectorAll('#ml g').forEach(function(mg){
+    /* counter-scale each marker group from its own center */
+    var id  = parseInt(mg.id.replace('m',''));
+    var pos = POS[id];
+    if(!pos) return;
+    /* group is already translated to pos.x,pos.y in SVG space;
+       we apply an inverse scale from that origin */
+    mg.setAttribute('transform',
+      'translate('+pos.x+','+pos.y+') scale('+(1/s).toFixed(4)+')');
+  });
+  /* update zoom label */
+  var lbl = document.getElementById('zoomLabel');
+  if(lbl){
+    lbl.textContent = Math.round(s*100)+'%';
+    lbl.style.display = s === 1 ? 'none' : 'block';
+  }
 }
 
-/* ── SCROLL REVEAL ── */
-var io=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
-},{threshold:0.12});
-document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+function zoomToward(factor, pivotSvgX, pivotSvgY){
+  /* pivotSvgX/Y: point in SVG logical coords (0-560, 0-740) to zoom toward */
+  var newScale = Math.min(Math.max(zoomState.scale * factor, 0.7), 8);
+  var ratio = newScale / zoomState.scale;
+  zoomState.tx = pivotSvgX - ratio * (pivotSvgX - zoomState.tx);
+  zoomState.ty = pivotSvgY - ratio * (pivotSvgY - zoomState.ty);
+  zoomState.scale = newScale;
+  applyZoom();
+}
 
-/* ── CONTACT FORM ── */
+function zoomMap(factor){
+  /* zoom toward map center */
+  zoomToward(factor, 280, 370);
+}
+
+function resetZoom(){
+  zoomState = {scale:1, tx:0, ty:0};
+  applyZoom();
+}
+
+/* Mouse wheel zoom */
+document.getElementById('jmap').addEventListener('wheel', function(e){
+  e.preventDefault();
+  var factor = e.deltaY < 0 ? 1.15 : 1/1.15;
+  var rect = this.getBoundingClientRect();
+  /* cursor position in SVG logical space */
+  var svgX = ((e.clientX - rect.left) / rect.width  * 560 - zoomState.tx) / zoomState.scale;
+  var svgY = ((e.clientY - rect.top)  / rect.height * 740 - zoomState.ty) / zoomState.scale;
+  var newScale = Math.min(Math.max(zoomState.scale * factor, 0.7), 8);
+  var ratio = newScale / zoomState.scale;
+  zoomState.tx = zoomState.tx + svgX * zoomState.scale * (1 - ratio);
+  zoomState.ty = zoomState.ty + svgY * zoomState.scale * (1 - ratio);
+  zoomState.scale = newScale;
+  applyZoom();
+}, {passive:false});
+
+/* Touch pinch zoom */
+document.getElementById('jmap').addEventListener('touchstart', function(e){
+  if(e.touches.length === 2){
+    lastDist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY);
+  } else if(e.touches.length === 1){
+    dragState.active = true;
+    dragState.startX  = e.touches[0].clientX;
+    dragState.startY  = e.touches[0].clientY;
+    dragState.startTx = zoomState.tx;
+    dragState.startTy = zoomState.ty;
+  }
+},{passive:true});
+
+document.getElementById('jmap').addEventListener('touchmove', function(e){
+  e.preventDefault();
+  if(e.touches.length === 2){
+    var dist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY);
+    if(lastDist > 0){
+      var cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      var cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      var rect = this.getBoundingClientRect();
+      var svgX = ((cx - rect.left) / rect.width  * 560 - zoomState.tx) / zoomState.scale;
+      var svgY = ((cy - rect.top)  / rect.height * 740 - zoomState.ty) / zoomState.scale;
+      var factor = dist / lastDist;
+      var newScale = Math.min(Math.max(zoomState.scale * factor, 0.7), 8);
+      var ratio = newScale / zoomState.scale;
+      zoomState.tx = zoomState.tx + svgX * zoomState.scale * (1 - ratio);
+      zoomState.ty = zoomState.ty + svgY * zoomState.scale * (1 - ratio);
+      zoomState.scale = newScale;
+      applyZoom();
+    }
+    lastDist = dist;
+  } else if(e.touches.length === 1 && dragState.active){
+    var rect = document.getElementById('jmap').getBoundingClientRect();
+    zoomState.tx = dragState.startTx + (e.touches[0].clientX - dragState.startX) / rect.width  * 560;
+    zoomState.ty = dragState.startTy + (e.touches[0].clientY - dragState.startY) / rect.height * 740;
+    applyZoom();
+  }
+},{passive:false});
+
+document.getElementById('jmap').addEventListener('touchend', function(){
+  dragState.active = false; lastDist = 0;
+},{passive:true});
+
+/* Mouse drag pan */
+document.getElementById('jmap').addEventListener('mousedown', function(e){
+  if(e.button !== 0) return;
+  dragState.active  = true;
+  dragState.startX  = e.clientX; dragState.startY  = e.clientY;
+  dragState.startTx = zoomState.tx; dragState.startTy = zoomState.ty;
+  this.style.cursor = 'grabbing';
+  e.preventDefault();
+});
+document.addEventListener('mousemove', function(e){
+  if(!dragState.active) return;
+  var rect = document.getElementById('jmap').getBoundingClientRect();
+  zoomState.tx = dragState.startTx + (e.clientX - dragState.startX) / rect.width  * 560;
+  zoomState.ty = dragState.startTy + (e.clientY - dragState.startY) / rect.height * 740;
+  applyZoom();
+});
+document.addEventListener('mouseup', function(){
+  if(dragState.active){
+    dragState.active = false;
+    var jm = document.getElementById('jmap');
+    if(jm) jm.style.cursor = 'grab';
+  }
+});
+
+/* ─ Cursor (from main.js) ─ */
+var cur=document.getElementById('cursor'), curRing=document.getElementById('cursorRing');
+var mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;curRing.style.left=rx+'px';curRing.style.top=ry+'px';requestAnimationFrame(animRing);})();
+document.querySelectorAll('a,button,.c-item,.leg-item,.leg-all').forEach(function(el){
+  el.addEventListener('mouseenter',function(){cur.style.width='16px';cur.style.height='16px';curRing.style.width='52px';curRing.style.height='52px';curRing.style.opacity='0.3';});
+  el.addEventListener('mouseleave',function(){cur.style.width='10px';cur.style.height='10px';curRing.style.width='36px';curRing.style.height='36px';curRing.style.opacity='0.5';});
+});
+if(window.matchMedia('(pointer:coarse)').matches){cur.style.display='none';curRing.style.display='none';}
+
+/* ─ Nav scroll ─ */
+var navEl=document.getElementById('mainNav');
+window.addEventListener('scroll',function(){navEl.classList.toggle('scrolled',scrollY>20);});
+
+/* ─ Mobile menu ─ */
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+
+/* ─ Scroll reveal ─ */
+var ro=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting) e.target.classList.add('visible');});
+},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+
+/* ─ Stats counter animation (same as main.js) ─ */
+function animCounter(el,target,suffix){
+  var dur=1800, start=performance.now();
+  (function step(now){
+    var t=Math.min((now-start)/dur,1), ease=1-Math.pow(1-t,3);
+    el.innerHTML=Math.round(ease*target)+'<span>'+suffix+'</span>';
+    if(t<1) requestAnimationFrame(step);
+  })(start);
+}
+var statsObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      var nums=e.target.querySelectorAll('.stat-num');
+      var data=[[22,'社'],[32,'拠'],[325,'+'],[6,'分']];
+      nums.forEach(function(el,i){animCounter(el,data[i][0],data[i][1]);});
+      statsObs.disconnect();
+    }
+  });
+},{threshold:0.3});
+var statsEl=document.querySelector('.stats');
+if(statsEl) statsObs.observe(statsEl);
+
+/* ─ Contact form ─ */
 function handleSubmit(e){
   e.preventDefault();
-  var msg=document.getElementById('formMsg');
-  var lg=getLang();
-  msg.style.display='block';
-  msg.textContent=lg==='kr'?'메시지가 전송되었습니다. 빠른 시일 내에 연락드리겠습니다.':'メッセージを送信しました。近日中にご連絡いたします。';
-  e.target.reset();
+  var btn=e.target.querySelector('.form-submit');
+  var lg=gl();
+  btn.textContent=lg==='kr'?'전송 중...':'送信中...';
+  btn.disabled=true;
+  setTimeout(function(){
+    var msg=document.getElementById('formMsg');
+    msg.style.display='block';
+    msg.textContent=lg==='kr'?'✓ 전송되었습니다. 담당자가 연락드리겠습니다.':'✓ 送信しました。担当者よりご連絡いたします。';
+    btn.textContent=lg==='kr'?'전송 완료 ✓':'送信完了 ✓';
+  },1200);
 }
 
-/* ── INIT ── */
-document.getElementById('leg-all').classList.add('active');
+/* ─ Hero mini-map (scaled version of main map) ─ */
+(function(){
+  var mm=document.getElementById('heroMinimap');
+  if(!mm) return;
+  var svg=document.getElementById('jmap');
+  if(!svg) return;
+  /* clone SVG without markers, add pulsing dots */
+  var clone=svg.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.querySelector('#ml').innerHTML='';
+  clone.setAttribute('style','width:100%;height:100%;display:block;');
+  /* add animated category dots */
+  var mig=document.createElementNS(NS,'g');
+  [5,6,7,8,10,17,18,21,27,3].forEach(function(id,i){
+    var p=POS[id]; var c=D.find(function(x){return x.id===id;});
+    var ci=document.createElementNS(NS,'circle');
+    ci.setAttribute('cx',p.x); ci.setAttribute('cy',p.y);
+    ci.setAttribute('r','4'); ci.setAttribute('fill',CC[c.cat]);
+    ci.setAttribute('opacity','0.85');
+    var anim=document.createElementNS(NS,'animate');
+    anim.setAttribute('attributeName','r'); anim.setAttribute('values','3;5;3');
+    anim.setAttribute('dur',(1.8+i*0.3)+'s'); anim.setAttribute('repeatCount','indefinite');
+    ci.appendChild(anim); mig.appendChild(ci);
+  });
+  clone.appendChild(mig);
+  mm.appendChild(clone);
+})();
 </script>
 </body>
 </html>
